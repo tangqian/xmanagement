@@ -12,11 +12,11 @@
 
 	<context:component-scan base-package="com.gvtv.base,com.gvtv.learn" />
 
-	<task:scheduled-tasks>
+	<!-- <task:scheduled-tasks>
 
 		<task:scheduled ref="cronExpression" method="method"
 			cron="0 15 10 * * ?" />
 
-	</task:scheduled-tasks>
+	</task:scheduled-tasks> -->
 
 </beans>

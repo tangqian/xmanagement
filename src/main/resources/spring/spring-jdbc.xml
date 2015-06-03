@@ -17,7 +17,8 @@
 
 	<context:annotation-config />
 	<!-- 扫描组件，完成自动装配 -->
-	<context:component-scan base-package="com.gvtv.app.epg.dao,com.gvtv.app.epg.service,com.gvtv.app.epg.core" />
+	<context:component-scan
+		base-package="com.gvtv.app.epg.dao,com.gvtv.app.epg.service,com.gvtv.app.epg.core" />
 
 	<bean id="propertyConfigurer"
 		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
@@ -28,25 +29,51 @@
 			</list>
 		</property>
 	</bean>
-	<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource"
-		destroy-method="close" lazy-init="true" depends-on="propertyConfigurer">
-		<property name="driverClass" value="${driverClassName}" />
-		<property name="jdbcUrl" value="${db.mysql.url}" />
-		<property name="user" value="${db.mysql.username}" />
+
+	<!-- 阿里 druid数据库连接池 -->
+	<bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource"
+		init-method="init" destroy-method="close">
+		<!-- 基本属性 url、user、password -->
+		<property name="url" value="${db.mysql.url}" />
+		<property name="username" value="${db.mysql.username}" />
 		<property name="password" value="${db.mysql.password}" />
-		<property name="autoCommitOnClose" value="true" />
-		<property name="minPoolSize" value="5" />
-		<property name="maxPoolSize" value="80" />
-		<property name="maxIdleTime" value="1800" />
-		<property name="maxStatements" value="100" />
-		<property name="acquireIncrement" value="5" />
-		<property name="idleConnectionTestPeriod" value="6000" />
-		<property name="testConnectionOnCheckout" value="true" />
-		<property name="checkoutTimeout" value="10000" />
+		<property name="driverClassName" value="${driverClassName}" />
+		
+		<!-- 配置初始化大小、最小、最大 -->
+		<property name="initialSize" value="5" />
+		<property name="minIdle" value="10" />
+		<property name="maxActive" value="20" />
+		
+		<!-- 配置获取连接等待超时的时间 -->
+		<property name="maxWait" value="60000" />
+
+		<!-- 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒 -->
+		<property name="timeBetweenEvictionRunsMillis" value="60000" />
+		
+		<!-- 配置一个连接在池中最小生存的时间，单位是毫秒 -->
+		<property name="minEvictableIdleTimeMillis" value="300000" />
+		
+		<property name="validationQuery" value="SELECT 'x'" />
+		<property name="testWhileIdle" value="true" />
+		<property name="testOnBorrow" value="false" />
+		<property name="testOnReturn" value="false" />
+		
+		<!-- 打开PSCache，并且指定每个连接上PSCache的大小,mysql不支持PSCache -->
+      	<property name="poolPreparedStatements" value="false" />
+      	
+		<!-- 连接泄漏处理。Druid提供了RemoveAbandanded相关配置，用来关闭长时间不使用的连接（例如忘记关闭连接）。 -->
+		<property name="removeAbandoned" value="true" />
+		<!-- 1800秒，也就是30分钟 -->
+		<property name="removeAbandonedTimeout" value="1800" />
+		<!-- 关闭abanded连接时输出错误日志 -->
+		<property name="logAbandoned" value="true" />
+		
+		<!-- 配置监控统计拦截的filters, 监控统计："stat",防SQL注入："wall",组合使用： "stat,wall" -->
+		<property name="filters" value="stat" />
 	</bean>
-	
-	<bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate"> 
-        <property name="dataSource" ref="dataSource" /> 
-    </bean>
-    
+
+	<bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+
 </beans>
