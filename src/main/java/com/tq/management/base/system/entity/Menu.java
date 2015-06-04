@@ -12,24 +12,6 @@ import java.util.List;
  * @author tangqian
  */
 public class Menu implements java.io.Serializable {
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
-
-	private Integer id;
-	private String menuName;
-	private String menuUrl;
-	private Integer parentId;
-	private Integer menuOrder;
-	private String menuIcon;
-	private Integer menuType;
-	private Integer removable;
-	private String description;
-	private Integer status;
-
-	private Menu parentMenu;
-	private List<Menu> subMenu;
 
 	public Integer getId() {
 		return id;
@@ -126,5 +108,33 @@ public class Menu implements java.io.Serializable {
 	public void setSubMenu(List<Menu> subMenu) {
 		this.subMenu = subMenu;
 	}
+
+	public List<Authority> getAuthorities() {
+		return authorities;
+	}
+
+	public void setAuthorities(List<Authority> authorities) {
+		this.authorities = authorities;
+	}
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	private Menu parentMenu;
+	private List<Menu> subMenu;
+	private List<Authority> authorities;
+
+	private Integer id;
+	private String menuName;
+	private String menuUrl;
+	private Integer parentId;
+	private Integer menuOrder;
+	private String menuIcon;
+	private Integer menuType;
+	private Integer removable;
+	private String description;
+	private Integer status;
 
 }
