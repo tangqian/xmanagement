@@ -74,7 +74,7 @@
 			<artifactId>mysql-connector-java</artifactId>
 			<version>${mysql.version}</version>
 		</dependency>
-		
+
 		<!-- DB + DataSource start -->
 		<dependency>
 			<groupId>com.alibaba</groupId>
@@ -82,7 +82,20 @@
 			<version>1.0.13</version>
 		</dependency>
 		<!-- DB + DataSource end -->
-		
+
+		<!-- myBatis + spring start -->
+		<dependency>
+			<groupId>org.mybatis</groupId>
+			<artifactId>mybatis</artifactId>
+			<version>3.2.8</version>
+		</dependency>
+		<dependency>
+			<groupId>org.mybatis</groupId>
+			<artifactId>mybatis-spring</artifactId>
+			<version>1.2.2</version>
+		</dependency>
+		<!-- myBatis + spring end -->
+
 		<dependency>
 			<groupId>com.alibaba</groupId>
 			<artifactId>fastjson</artifactId>
@@ -113,7 +126,7 @@
 			<version>1.1.2</version>
 		</dependency>
 		<!-- Jsp&Servlet dependency end -->
-		
+
 		<dependency>
 			<groupId>org.apache.shiro</groupId>
 			<artifactId>shiro-all</artifactId>
