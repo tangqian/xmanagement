@@ -7,8 +7,6 @@ package com.tq.management.base.controller;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
@@ -16,8 +14,6 @@ import org.springframework.web.context.request.ServletRequestAttributes;
  * @version 1.0
  * @author tangqian
  */
-@Controller
-@RequestMapping(value = "/base")
 public class BaseController {
 	
 	public HttpServletRequest getRequest() {

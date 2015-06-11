@@ -17,6 +17,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.tq.management.base.controller.BaseController;
 import com.tq.management.base.system.entity.Menu;
+import com.tq.management.base.system.entity.User;
 import com.tq.management.base.system.service.MenuService;
 import com.tq.management.base.system.service.UserService;
 import com.tq.management.base.utils.WebDto;
@@ -42,7 +43,8 @@ public class MenuController extends BaseController {
 	public ModelAndView menu(){
 		List<Menu> list = menuService.getList();
 		logger.info("" + list.size());
-		userService.getUser(1);
+		User user = userService.getUser(1);
+		System.out.println(user);
 		ModelAndView mv = new ModelAndView();
 		mv.setViewName("system/menu/menu_list");
 		return mv;
