@@ -38,6 +38,11 @@ public class ShowSqlInterceptor implements Interceptor {
 
 	private static Logger logger = LoggerFactory.getLogger(ShowSqlInterceptor.class);
 
+	/**
+	 * 当sql语句执行时间大于该值时，以warn级别打印日志，并在日志中提示"too slow",单位毫秒
+	 */
+	private static final int WARN_VALUE = 1000;
+
 	public Object intercept(Invocation invocation) throws Throwable {
 		MappedStatement mappedStatement = (MappedStatement) invocation.getArgs()[0];
 		Object parameter = null;
@@ -54,9 +59,9 @@ public class ShowSqlInterceptor implements Interceptor {
 		long time = (end - start);
 		if (time > 1) {
 			String sql = getSql(configuration, boundSql, sqlId, time);
-			if(time > 1000){
+			if (time > WARN_VALUE) {
 				logger.warn(sql);
-			}else{
+			} else {
 				logger.info(sql);
 			}
 		}
@@ -66,6 +71,8 @@ public class ShowSqlInterceptor implements Interceptor {
 	public static String getSql(Configuration configuration, BoundSql boundSql, String sqlId, long time) {
 		String sql = showSql(configuration, boundSql);
 		StringBuilder sb = new StringBuilder(100);
+		if (time > WARN_VALUE)
+			sb.append("too slow");
 		sb.append('[').append(time).append("ms ").append(sqlId).append(']').append(sql);
 		return sb.toString();
 	}

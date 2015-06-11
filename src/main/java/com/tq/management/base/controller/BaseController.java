@@ -5,14 +5,12 @@
  */
 package com.tq.management.base.controller;
 
-import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.servlet.ModelAndView;
-
-import com.tq.management.base.system.entity.User;
-import com.tq.management.base.system.service.UserService;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
 /**
  * @version 1.0
@@ -22,16 +20,9 @@ import com.tq.management.base.system.service.UserService;
 @RequestMapping(value = "/base")
 public class BaseController {
 	
-	@Resource
-	private UserService service;
-	
-	@RequestMapping
-	public ModelAndView page(){
-		ModelAndView mv = new ModelAndView("system/test");
-		mv.addObject("path", "d2222");
-		User user = service.getUser(1);
-		System.out.println(user);
-		return mv;
+	public HttpServletRequest getRequest() {
+		HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
+		return request;
 	}
 
 }

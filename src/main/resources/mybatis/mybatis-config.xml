@@ -11,6 +11,7 @@
     </settings>
     
     <plugins>
+    	<!-- 开启sql执行时间监控拦截器,在系统稳定后,可关闭该拦截以提高系统效率-->
     	<plugin interceptor="com.tq.management.base.plugin.ShowSqlInterceptor"></plugin>
     </plugins>
 	
