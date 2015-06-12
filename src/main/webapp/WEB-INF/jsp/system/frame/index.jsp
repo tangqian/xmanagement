@@ -37,32 +37,37 @@
 <body class="skin-blue fixed" data-spy="scroll" data-target="#scrollspy">
 
 	<div class="wrapper">
+		<jsp:include page="./main-header.jsp"></jsp:include>
+		<jsp:include page="./main-sidebar.jsp"></jsp:include>
 
-		<header class="main-header">
-			<!-- Logo -->
-			<!-- Logo -->
-			<a href="../index2.html" class="logo"> <!-- mini logo for sidebar mini 50x50 pixels -->
-				<span class="logo-mini"><b>A</b>LT</span> <!-- logo for regular state and mobile devices -->
-				<span class="logo-lg"><b>Admin</b>LTE</span>
-			</a>
-			<!-- Header Navbar: style can be found in header.less -->
-			<nav class="navbar navbar-static-top" role="navigation">
-				<!-- Sidebar toggle button-->
-				<a href="#" class="sidebar-toggle" data-toggle="offcanvas"
-					role="button"> <span class="sr-only">Toggle navigation</span>
-				</a>
-				<!-- Navbar Right Menu -->
-				<div class="navbar-custom-menu">
-					<ul class="nav navbar-nav">
-						<li><a href="http://almsaeedstudio.com">Almsaeed Studio</a></li>
-						<li><a href="http://almsaeedstudio.com/premium">Premium
-								Templates</a></li>
-					</ul>
-				</div>
-			</nav>
-		</header>
+		<!-- Content Wrapper. Contains page content -->
+		<div class="content-wrapper">
+			<!-- Content Header (Page header) -->
+			<section class="content-header">
+				<h1>
+					系统管理 <small>菜单</small>
+				</h1>
+				<ol class="breadcrumb">
+					<li><a href="#"><i class="fa fa-dashboard"></i> 主页</a></li>
+					<li class="active">系统管理</li>
+				</ol>
+			</section>
+
+			<!-- Main content -->
+			<section class="content">
+
+				<!-- Your Page Content Here -->
+
+			</section>
+			<!-- /.content -->
+		</div>
+		<!-- /.content-wrapper -->
+
+		<jsp:include page="./main-footer.jsp"></jsp:include>
+		<jsp:include page="./control-sidebar.jsp"></jsp:include>
 	</div>
 	<!-- ./wrapper -->
+
 
 	<!-- jQuery 2.1.4 -->
 	<script
@@ -70,6 +75,10 @@
 	<!-- Bootstrap 3.3.2 JS -->
 	<script
 		src="${pageContext.request.contextPath}/static/AdminLTE/bootstrap/js/bootstrap.min.js"
+		type="text/javascript"></script>
+	<!-- AdminLTE App -->
+	<script
+		src="${pageContext.request.contextPath}/static/AdminLTE/dist/js/app.min.js"
 		type="text/javascript"></script>
 
 
