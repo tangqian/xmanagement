@@ -55,7 +55,6 @@
 			<section class="content">
 
 				<!-- Your Page Content Here -->
-
 			</section>
 			<!-- /.content -->
 		</div>
@@ -65,6 +64,7 @@
 		<jsp:include page="./control-sidebar.jsp"></jsp:include>
 	</div>
 	<!-- ./wrapper -->
+	<jsp:include page="./modal-placeholder.jsp"></jsp:include>
 
 
 	<!-- jQuery 2.1.4 -->
@@ -80,6 +80,7 @@
 		src="${ctx}/static/AdminLTE/plugins/slimScroll/jquery.slimscroll.min.js"
 		type="text/javascript"></script>
 
-
+	<!-- custom js -->
+	<script src="${ctx}/static/js/adjust.js" type="text/javascript"></script>
 </body>
 </html>

@@ -36,5 +36,12 @@ public class UserController extends BaseController {
 		mv.setViewName("system/user/user_list");
 		return mv;
 	}
+	
+	@RequestMapping(value="/add")
+	public ModelAndView add() {
+		ModelAndView mv = new ModelAndView();
+		mv.setViewName("system/user/user_add");
+		return mv;
+	}
 
 }
