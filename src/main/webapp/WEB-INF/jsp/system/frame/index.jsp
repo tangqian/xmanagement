@@ -39,7 +39,7 @@
 		<jsp:include page="./main-sidebar.jsp"></jsp:include>
 
 		<!-- Content Wrapper. Contains page content -->
-		<div class="content-wrapper" id="content-container33">
+		<div class="content-wrapper" id="content-container">
 			<!-- Content Header (Page header) -->
 			<section class="content-header">
 				<h1>

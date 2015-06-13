@@ -38,8 +38,8 @@
 		<ul class="sidebar-menu">
 			<li class="header">菜单</li>
 			<!-- Optionally, you can add icons to the links -->
-			<li class="active"><a href="user" data-target="content-container33"><i class='fa fa-link'></i> <span>用户管理</span></a></li>
-			<li><a href="menu" data-target="content-container33"><i class='fa fa-link'></i> <span>菜单管理</span></a></li>
+			<li class="active"><a href="user" data-target="content"><i class='fa fa-link'></i> <span>用户管理</span></a></li>
+			<li><a href="menu" data-target="content"><i class='fa fa-link'></i> <span>菜单管理</span></a></li>
 			<li class="treeview"><a href="#"><i class='fa fa-link'></i>
 					<span>系统运营</span> <i class="fa fa-angle-left pull-right"></i></a>
 				<ul class="treeview-menu">
