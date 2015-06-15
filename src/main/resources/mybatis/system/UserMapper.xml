@@ -6,11 +6,26 @@
 	<sql id="columns">id,login_name,name,password,last_login,ip,status,description,email,phone,skin
 	</sql>
 
-	<select id="getUserInfo" resultType="User">
+	<select id="get" resultType="User">
 		select
 		<include refid="columns" />
 		from sys_user
 		where id = #{userId}
+	</select>
+
+	<select id="count" parameterType="map">
+		select
+		count(1)
+		from sys_user
+		where status != -1
+	</select>
+
+	<select id="list" resultType="User">
+		select
+		<include refid="columns" />
+		from sys_user
+		where status != -1
+		limit #{start},#{length}
 	</select>
 
 </mapper>

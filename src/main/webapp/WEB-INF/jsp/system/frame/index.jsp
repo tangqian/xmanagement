@@ -31,6 +31,9 @@
 	rel="stylesheet" type="text/css" />
 <link href="${ctx}/static/AdminLTE/dist/css/skins/_all-skins.min.css"
 	rel="stylesheet" type="text/css" />
+<link
+	href="${ctx}/static/AdminLTE/plugins/datatables/dataTables.bootstrap.css"
+	rel="stylesheet" type="text/css">
 </head>
 <body class="skin-blue fixed" data-spy="scroll" data-target="#scrollspy">
 
@@ -40,23 +43,7 @@
 
 		<!-- Content Wrapper. Contains page content -->
 		<div class="content-wrapper" id="content-container">
-			<!-- Content Header (Page header) -->
-			<section class="content-header">
-				<h1>
-					系统管理 <small>菜单</small>
-				</h1>
-				<ol class="breadcrumb">
-					<li><a href="#"><i class="fa fa-dashboard"></i> 主页</a></li>
-					<li class="active">系统管理</li>
-				</ol>
-			</section>
-
-			<!-- Main content -->
-			<section class="content">
-
-				<!-- Your Page Content Here -->
-			</section>
-			<!-- /.content -->
+			<jsp:include page="./content.jsp"></jsp:include>
 		</div>
 		<!-- /.content-wrapper -->
 
@@ -79,6 +66,11 @@
 	<script
 		src="${ctx}/static/AdminLTE/plugins/slimScroll/jquery.slimscroll.min.js"
 		type="text/javascript"></script>
+	<!-- DataTables plugin -->
+	<script
+		src="${ctx}/static/AdminLTE/plugins/datatables/jquery.dataTables.min.js"></script>
+	<script
+		src="${ctx}/static/AdminLTE/plugins/datatables/dataTables.bootstrap.min.js"></script>
 
 	<!-- custom js -->
 	<script src="${ctx}/static/js/adjust.js" type="text/javascript"></script>

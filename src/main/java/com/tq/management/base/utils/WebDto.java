@@ -34,6 +34,24 @@ public class WebDto implements Map<String, Object> {
 		}
 	}
 
+	public Integer getInteger(String key) {
+		Integer ret = null;
+		Object obj = get(key);
+		if (obj != null) {
+			if (obj instanceof Integer) {
+				ret = (Integer) obj;
+			} else {
+				try {
+					Integer.valueOf(obj.toString());
+				} catch (NumberFormatException e) {
+					ret = null;
+				}
+
+			}
+		}
+		return ret;
+	}
+
 	@Override
 	public int size() {
 		return _map.size();
