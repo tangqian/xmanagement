@@ -16,8 +16,23 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 public class LoginController {
 
-	@RequestMapping(value="/index")
-	public ModelAndView page(){
+	/**
+	 * 访问登录页
+	 * @return
+	 */
+	@RequestMapping(value = "/login")
+	public ModelAndView login() {
+		ModelAndView mv = new ModelAndView();
+		mv.setViewName("system/login");
+		return mv;
+	}
+	
+	/**
+	 * 
+	 * @return
+	 */
+	@RequestMapping(value = "/index")
+	public ModelAndView index() {
 		ModelAndView mv = new ModelAndView();
 		mv.setViewName("system/frame/index");
 		return mv;
