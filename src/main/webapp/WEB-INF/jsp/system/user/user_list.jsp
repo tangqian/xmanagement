@@ -18,20 +18,25 @@
 
 <!-- Main content -->
 <section class="content">
-
 	<div class="row">
 		<div class="col-xs-12">
 			<div class="box">
 				<div class="box-header">
-					<h3 class="box-title">Hover Data Table</h3>
+					<a class="btn btn-primary" title="增加用户" role="button" data-toggle="modal" href="user/add" data-target="#defaultModal">增加</a>
+					<button data-url="user/add" title="点击新增用户" data-toggle="modal" data-target="#defaultModal" class="btn btn-primary">
+						<i class="glyphicon glyphicon-plus"></i>新增
+					</button>
+					<button type="button" data-url="user/batchDelete" data-msg="确定批量删除吗？"
+						data-model="ajaxToDo" data-targetid="my_delete_modal" class="btn btn-danger">
+						<i class="glyphicon glyphicon-remove"></i>批量删除
+					</button>
 				</div>
 				<!-- /.box-header -->
 				<div class="box-body">
-					<table id="default_table" class="table table-bordered table-hover">
+					<table id="default_table" class="table table-bordered table-hover table-striped">
 						<thead>
 							<tr>
-								<th width="10px"><input type='checkbox' data-aim='reselect'
-									data-name='chx_user' /></th>
+								<th width="10px"><button class="btn btn-default btn-sm checkbox-toggle" style="font-size: 13px;"><span></span><i class="fa fa-square-o"></i></button></th>
 								<th>用户名</th>
 								<th>邮箱</th>
 								<th>电话</th>
@@ -72,10 +77,10 @@
                 
 			},
 			"createdRow": function (row, data, index ) {
-				$('td:eq(0)', row).html("<input type='checkbox' name='chx_user' value='" + data.userId + "'/>");
+				$('td:eq(0)', row).html("<input type='checkbox' name='checks' value='" + data.id + "'/>");
 	        },
 			"columns": [
-			            { "data": "userId" },
+			            { "data": "id" },
 				        { "data": "loginName" },
 				        { "data": "email" },
 				        { "data": "phone" },
@@ -88,21 +93,50 @@
 		          "render": function(data, type, row) {
 		        	  var html = "";
 		           	  //<shiro:hasPermission name="user/edit">
-		              html += '<a href="javascript: void(0)" data-url="user/edit?userId='+row.userId+'" data-model="dialog" data-targetid="my_modal" data-backdrop="static"><i title="修改" class="glyphicon glyphicon-pencil"></i></a>';
+		              html += '<a href="javascript: void(0)" data-url="user/edit?id='+row.id+'" data-model="dialog" data-targetid="my_modal" data-backdrop="static"><i title="修改" class="glyphicon glyphicon-pencil"></i></a>';
 		              //</shiro:hasPermission>
 		              //<shiro:hasPermission name="user/delete">
-		              html += '<a href="javascript: void(0)" data-url="user/delete?userId='+row.userId+'" data-msg="确定删除吗？" data-model="ajaxToDo" data-targetid="my_delete_modal" data-form-btn="userListFormBtn"><i title="删除" class="glyphicon glyphicon-trash"></i></a>';
+		              html += '<a href="javascript: void(0)" data-url="user/delete?id='+row.id+'" data-msg="确定删除吗？" data-model="ajaxToDo" data-targetid="my_delete_modal" data-form-btn="userListFormBtn"><i title="删除" class="glyphicon glyphicon-trash"></i></a>';
 		              //</shiro:hasPermission>
 		              //<shiro:hasPermission name="user/editRole">
-		              html += '<a href="javascript: void(0)" data-url="user/editRole?userId='+row.userId+'" data-model="dialog" data-targetid="my_modal" data-backdrop="static"><i title="授权" class="glyphicon glyphicon-wrench"></i></a>';
+		              html += '<a href="javascript: void(0)" data-url="user/editRole?id='+row.id+'" data-model="dialog" data-targetid="my_modal" data-backdrop="static"><i title="授权" class="glyphicon glyphicon-wrench"></i></a>';
 		              //</shiro:hasPermission>
 		              return html;
 		          }
-		      }]
+		      }],
+		      "initComplete": function () {
+					//Enable iCheck plugin for checkboxes
+					//iCheck for checkbox and radio inputs
+					$('.box-body input[type="checkbox"]').iCheck({
+						checkboxClass : 'icheckbox_flat-blue',
+						radioClass : 'iradio_flat-blue'
+					});
+		      }
 	  	});
+		
+
+		// Enable check and uncheck all functionality
+		$(".checkbox-toggle").click(function() {
+			var clicks = $(this).data('clicks');
+			if (clicks) {
+				// Uncheck all checkboxes
+				$(".box-body input[type='checkbox']").iCheck("uncheck");
+				$(".fa", this).removeClass("fa-check-square-o").addClass(
+						'fa-square-o');
+			} else {
+				// Check all checkboxes
+				$(".table input[type='checkbox']").iCheck("check");
+				$(".fa", this).removeClass("fa-square-o").addClass(
+						'fa-check-square-o');
+			}
+			$(this).data("clicks", !clicks);
+		});
 	});
 	
 	function refreshTable() {
 		defaultTable.draw(true);
 	}
+	
+
+	
 </script>

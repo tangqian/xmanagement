@@ -34,6 +34,10 @@
 <link
 	href="${ctx}/static/AdminLTE/plugins/datatables/dataTables.bootstrap.css"
 	rel="stylesheet" type="text/css">
+<link href="${ctx}/static/AdminLTE/plugins/iCheck/flat/blue.css"
+	rel="stylesheet" type="text/css">
+<link href="${ctx}/static/css/adjust.css" rel="stylesheet"
+	type="text/css">
 </head>
 <body class="skin-blue fixed" data-spy="scroll" data-target="#scrollspy">
 
@@ -66,11 +70,20 @@
 	<script
 		src="${ctx}/static/AdminLTE/plugins/slimScroll/jquery.slimscroll.min.js"
 		type="text/javascript"></script>
+	<!-- jquery form 3.51.0 -->
+	<script src="${ctx}/static/js/jquery.form.min.js"
+		type="text/javascript"></script>
+	<!-- jquery valid 1.13.1 -->
+	<script src="${ctx}/static/js/jquery.validate.min.js"
+		type="text/javascript"></script>
+	<script src="${ctx}/static/js/jquery.validate.custom.js"
+		type="text/javascript"></script>
 	<!-- DataTables plugin -->
 	<script
 		src="${ctx}/static/AdminLTE/plugins/datatables/jquery.dataTables.min.js"></script>
 	<script
 		src="${ctx}/static/AdminLTE/plugins/datatables/dataTables.bootstrap.min.js"></script>
+	<script src="${ctx}/static/AdminLTE/plugins/iCheck/icheck.min.js"></script>
 
 	<!-- custom js -->
 	<script src="${ctx}/static/js/adjust.js" type="text/javascript"></script>

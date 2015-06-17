@@ -32,6 +32,8 @@ public class WebDto implements Map<String, Object> {
 		for (Entry<String, String[]> entry : set) {
 			_map.put(entry.getKey(), ArrayUtils.toString(entry.getValue()));
 		}
+		_map.put("start", getInteger("start"));
+		_map.put("length", getInteger("length"));
 	}
 
 	public Integer getInteger(String key) {
@@ -42,7 +44,7 @@ public class WebDto implements Map<String, Object> {
 				ret = (Integer) obj;
 			} else {
 				try {
-					Integer.valueOf(obj.toString());
+					ret = Integer.valueOf(obj.toString());
 				} catch (NumberFormatException e) {
 					ret = null;
 				}

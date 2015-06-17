@@ -13,7 +13,7 @@
 		where id = #{userId}
 	</select>
 
-	<select id="count" parameterType="map">
+	<select id="count" parameterType="map" resultType="int">
 		select
 		count(1)
 		from sys_user
