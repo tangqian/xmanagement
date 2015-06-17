@@ -16,20 +16,24 @@ jQuery.validator.setDefaults({
 		$(form).ajaxSubmit({
             type: 'post', // 提交方式 get/post
             dataType:"json",
-            success: function(data) { // data 保存提交后返回的数据，一般为 json 数据
-                alert('提交成功！');
-            },
-			error: function(msg) {
-				$(form).clearForm();
-				$.dialog.alert("删除简历成功！");
-                if($(form).find("*[data-dismiss='modal']").length>0){
-	                $(form).find("*[data-dismiss='modal']").click();
-	                var callfn = $(form).attr("callfn");
-	                if(callfn)
-	                {
-	                	eval(callfn+"()");
-	                }
+            success: function(responseText) { // data 保存提交后返回的数据，一般为 json 数据
+            	if( "1" == responseText.status){
+            		$(form).clearForm();
+                    if($(form).find("*[data-dismiss='modal']").length > 0){
+                    	$(form).find("*[data-dismiss='modal']").click();
+    	                var callfn = $(form).attr("callfn");
+    	                if(callfn){
+    	                	eval(callfn+"()");
+    	                }
+                    }
+                    customMsg.success(responseText.msg || "成功", true);
                 }
+                else{
+                	customMsg.warning(responseText.msg || "警告", false);
+                }
+            },
+			error: function(XmlHttpRequest, textStatus, errorThrown) {
+				customMsg.error("操作失败,状态信息为:" + textStatus + ",异常详细信息为:" + errorThrown.message, false);
 			}
         });
 	}
@@ -46,10 +50,10 @@ jQuery.extend(jQuery.validator.messages, {
     digits: "只能输入整数",
     creditcard: "请输入合法的信用卡号",
     equalTo: "请输入相同的值",
-    accept: "请输入拥有合法后缀名的字符串",
-    maxlength: jQuery.validator.format("请输入一个 长度最多是 {0} 的字符串"),
-    minlength: jQuery.validator.format("请输入一个 长度最少是 {0} 的字符串"),
-    rangelength: jQuery.validator.format("请输入 一个长度介于 {0} 和 {1} 之间的字符串"),
+    accept: "请输入拥有合法后缀名的文本",
+    maxlength: jQuery.validator.format("输入的文本长度请小于 {0} "),
+    minlength: jQuery.validator.format("输入的文本长度请大于 {0} "),
+    rangelength: jQuery.validator.format("输入的文本长度请介于 {0} 和 {1} "),
     range: jQuery.validator.format("请输入一个介于 {0} 和 {1} 之间的值"),
     max: jQuery.validator.format("请输入一个最大为{0} 的值"),
     min: jQuery.validator.format("请输入一个最小为{0} 的值")

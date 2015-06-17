@@ -35,9 +35,19 @@ public class UserService {
 		DataTables.map(map, dto, totalNum, totalNum, lists);
 		return map;
 	}
+	
+	public void add(WebDto dto) {
+		template.insert("UserMapper.add", dto);
+		if(true){
+			throw new NullPointerException();
+		}
+	}
 
-	public User getUser(Integer userId) {
-		return template.selectOne("UserMapper.getUserInfo", userId);
+	public User get(Integer id) {
+		if(true){
+			throw new NullPointerException();
+		}
+		return template.selectOne("UserMapper.get", id);
 
 	}
 }

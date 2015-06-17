@@ -36,7 +36,7 @@
 					<table id="default_table" class="table table-bordered table-hover table-striped">
 						<thead>
 							<tr>
-								<th width="10px"><button class="btn btn-default btn-sm checkbox-toggle" style="font-size: 13px;"><span></span><i class="fa fa-square-o"></i></button></th>
+								<th width="10px"><button class="btn btn-default btn-xs checkbox-toggle" style="font-size: 13px;"><span></span><i class="fa fa-square-o"></i></button></th>
 								<th>用户名</th>
 								<th>邮箱</th>
 								<th>电话</th>

@@ -36,6 +36,11 @@ public class WebDto implements Map<String, Object> {
 		_map.put("length", getInteger("length"));
 	}
 
+	public String getString(Object key) {
+		Object obj = get(key);
+		return obj == null ? null : obj.toString();
+	}
+
 	public Integer getInteger(String key) {
 		Integer ret = null;
 		Object obj = get(key);

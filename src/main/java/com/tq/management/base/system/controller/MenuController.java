@@ -43,7 +43,7 @@ public class MenuController extends BaseController {
 	public ModelAndView menu(){
 		List<Menu> list = menuService.getList();
 		logger.info("" + list.size());
-		User user = userService.getUser(1);
+		User user = userService.get(1);
 		System.out.println(user);
 		ModelAndView mv = new ModelAndView();
 		mv.setViewName("system/menu/menu_list");

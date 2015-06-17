@@ -14,6 +14,11 @@ import java.util.Map;
  */
 public abstract class DataTables {
 	
+	public static void doService(){
+		
+		
+	}
+	
 	/**
 	 * 映射分页数据到相应key上,以支持插件Data Tables显示数据
 	 * @param map 容器类,存储将返回给页面的key-value对

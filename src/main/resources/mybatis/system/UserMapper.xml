@@ -3,10 +3,34 @@
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="UserMapper">
 	<cache flushInterval="60000" />
-	<sql id="columns">id,login_name,name,password,last_login,ip,status,description,email,phone,skin
+	<sql id="columnsExcludeId">login_name,name,password,last_login,ip,status,description,email,phone,skin
+	</sql>
+	<sql id="columns">
+		id,
+		<include refid="columnsExcludeId" />
 	</sql>
 
-	<select id="get" resultType="User">
+	<insert id="add" parameterType="map">
+		insert into sys_user (
+			login_name,
+			password,
+			name,
+			status,
+			description,
+			email,
+			phone
+		) values (
+			#{loginName},
+			#{password},
+			#{name},
+			#{status},
+			#{description},
+			#{email},
+			#{phone}
+		)
+	</insert>
+
+	<select id="get" parameterType="int" resultType="User">
 		select
 		<include refid="columns" />
 		from sys_user
