@@ -13,6 +13,8 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.SimpleMappingExceptionResolver;
 
@@ -23,6 +25,9 @@ import com.alibaba.druid.support.json.JSONUtils;
  * @author tangqian
  */
 public class ViewExceptionHandler extends SimpleMappingExceptionResolver {
+	
+	private static Logger logger = LoggerFactory.getLogger(ViewExceptionHandler.class);
+	
 	@Override
 	protected ModelAndView doResolveException(HttpServletRequest request, HttpServletResponse response, Object arg2, Exception ex) {
 		System.out.println("resolver ...");
@@ -55,9 +60,11 @@ public class ViewExceptionHandler extends SimpleMappingExceptionResolver {
 			if (!(request.getHeader("accept").indexOf("application/json") > -1 || (request.getHeader("X-Requested-With") != null && request
 					.getHeader("X-Requested-With").indexOf("XMLHttpRequest") > -1))) {
 				System.out.println("not ajax");
+				logger.error("view exception", ex);
 				return new ModelAndView("system/frame/500_independ");
 			}else {
 				System.out.println("ajax");
+				logger.error("view exception", ex);
 				return new ModelAndView("system/frame/500");
 				/*try {
 					PrintWriter writer = response.getWriter();

@@ -38,15 +38,9 @@ public class UserService {
 	
 	public void add(WebDto dto) {
 		template.insert("UserMapper.add", dto);
-		if(true){
-			throw new NullPointerException();
-		}
 	}
 
 	public User get(Integer id) {
-		if(true){
-			throw new NullPointerException();
-		}
 		return template.selectOne("UserMapper.get", id);
 
 	}

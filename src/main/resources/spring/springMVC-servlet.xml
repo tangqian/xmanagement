@@ -31,7 +31,22 @@
 		<property name="suffix" value=".jsp"></property>
 	</bean>
 
-	<bean id="exceptionResolver" class="com.tq.management.base.interceptor.ViewExceptionHandler"></bean>
+	<bean id="exceptionResolver" class="com.tq.management.base.interceptor.ViewExceptionHandler">
+		<property name="exceptionMappings">  
+	        <props>  
+	            <prop key="NumberFormatException">number</prop><!-- 表示当抛出NumberFormatException的时候就返回名叫number的视图 -->  
+	            <prop key="NullPointerException">null</prop>  
+	        </props>  
+	    </property>  
+		<property name="statusCodes">     
+             <props>     
+                 <prop key="number">500</prop>     
+                 <prop key="errors/404">404</prop>     
+             </props>     
+         </property>
+         <!-- 默认错误页面，当找不到上面mappings中指定的异常对应视图时，使用本默认配置 -->     
+         <property name="defaultErrorView" value="errors/error"></property>
+	</bean>
 
 	<!-- 上传拦截，如最大上传值及最小上传值 -->
 	<bean id="multipartResolver"
