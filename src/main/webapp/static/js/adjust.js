@@ -1,8 +1,6 @@
 customMsg = {
 	htmlContent:{
-        warning:"<div class='alert alert-warning'><a href='#' class='close' data-dismiss='alert'>&times;</a><strong>警告！</strong>#msg。 </div>",
-        success:"<div class='alert alert-success'><a href='#' class='close' data-dismiss='alert'>&times;</a><strong>成功！</strong>#msg。 </div>",
-        modal: "<div class='modal fade' id='showMsgModal' tabindex='-1' role='dialog' data-backdrop='static' aria-hidden='true'>"
+        modal: "<div class='modal bootstrap-dialog type-primary fade size-normal in' id='showMsgModal' tabindex='-1' role='dialog' data-backdrop='static' aria-hidden='true'>"
         		+	"<div class='modal-dialog'>"
         			+	"<div class='modal-content'>"
         				+	"<div class='modal-header'>"

@@ -2,9 +2,6 @@
 	pageEncoding="UTF-8"%>
 <!-- Content Header (Page header) -->
 <section class="content-header">
-	<h1>
-		小控件 <small>演示</small>
-	</h1>
 	<ol class="breadcrumb">
 		<li class="active"><i class="fa fa-dashboard"></i> 主页</li>
 	</ol>

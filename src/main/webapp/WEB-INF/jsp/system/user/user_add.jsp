@@ -7,9 +7,13 @@
 <form class="form-horizontal" role="form" action="user/add"
 	method="post" id="defForm" callfn="refreshTable">
 	<div class="modal-header">
-		<button type="button" class="close" data-dismiss="modal"
-			aria-hidden="true">×</button>
-		<h4 class="modal-title" id="myModalLabel">增加用户</h4>
+		<div class='bootstrap-dialog-header'>
+			<div class='bootstrap-dialog-close-button'
+				style='display: block;'>
+				<button class='close' data-dismiss='modal' aria-label='Close'>×</button>
+			</div>
+			<div class='bootstrap-dialog-title'>增加用户</div>
+		</div>
 	</div>
 
 	<div class="modal-body">

@@ -73,6 +73,7 @@ public class UserController extends BaseController {
 		dto.put("status", 1);
 		userService.add(dto);
 		map.put("status", 1);
+		//map.put("msg", "新增用户成功！");
 		return map;
 	}
 

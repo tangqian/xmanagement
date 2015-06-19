@@ -26,14 +26,32 @@ jQuery.validator.setDefaults({
     	                	eval(callfn+"()");
     	                }
                     }
-                    customMsg.success(responseText.msg || "成功", true);
+                    BootstrapDialog.show({
+    					type: BootstrapDialog.TYPE_SUCCESS,
+    		            title: '操作结果反馈',
+    		            message: responseText.msg || "操作成功!",
+    		            onshown: function(dialogRef){
+    		            	setTimeout(function() {
+    		            		dialogRef.close();
+    						}, 1500);
+    		            }
+    		        });
                 }
                 else{
-                	customMsg.warning(responseText.msg || "警告", false);
+                	BootstrapDialog.show({
+    					type: BootstrapDialog.TYPE_WARNING,
+    		            title: '操作结果反馈',
+    		            message: responseText.msg || "警告",
+    		        });
                 }
             },
 			error: function(XmlHttpRequest, textStatus, errorThrown) {
-				customMsg.error("操作失败,状态信息为:" + textStatus + ",异常详细信息为:" + errorThrown.message, false);
+				BootstrapDialog.show({
+					type: BootstrapDialog.TYPE_WARNING,
+		            title: '操作结果反馈',
+		            message: "操作失败!状态信息为:" + textStatus + ",异常详细信息为:" + errorThrown.message
+		        });
+				//customMsg.error("操作失败,状态信息为:" + textStatus + ",异常详细信息为:" + errorThrown.message, false);
 			}
         });
 	}

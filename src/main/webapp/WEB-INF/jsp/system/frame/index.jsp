@@ -19,6 +19,8 @@
 <!-- Bootstrap 3.3.4 -->
 <link href="${ctx}/static/AdminLTE/bootstrap/css/bootstrap.min.css"
 	rel="stylesheet" type="text/css" />
+<link href="${ctx}/static/AdminLTE/plugins/bootstrapDialog/bootstrap-dialog.min.css"
+	rel="stylesheet" type="text/css" />
 <!-- Font Awesome Icons -->
 <link href="${ctx}/static/AdminLTE/dist/css/font-awesome.min.css"
 	rel="stylesheet" type="text/css" />
@@ -84,6 +86,8 @@
 	<script
 		src="${ctx}/static/AdminLTE/plugins/datatables/dataTables.bootstrap.min.js"></script>
 	<script src="${ctx}/static/AdminLTE/plugins/iCheck/icheck.min.js"></script>
+		<script
+		src="${ctx}/static/AdminLTE/plugins/bootstrapDialog/bootstrap-dialog.min.js"></script>
 
 	<!-- custom js -->
 	<script src="${ctx}/static/js/adjust.js" type="text/javascript"></script>

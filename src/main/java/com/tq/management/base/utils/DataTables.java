@@ -29,8 +29,8 @@ public abstract class DataTables {
 	 */
 	public static void map(Map<String, Object> map, WebDto dto, Integer recordsTotal, Integer recordsFiltered, List<?> pageData) {
 		map.put("draw", dto.get("draw"));
-		map.put("recordsTotal", 10);
-		map.put("recordsFiltered", 10);
+		map.put("recordsTotal", recordsTotal);
+		map.put("recordsFiltered", recordsFiltered);
 		map.put("data", pageData);
 	}
 }

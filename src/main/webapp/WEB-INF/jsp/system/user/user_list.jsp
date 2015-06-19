@@ -6,9 +6,6 @@
 %>
 <!-- Content Header (Page header) -->
 <section class="content-header">
-	<h1>
-		用户<small>列表</small>
-	</h1>
 	<ol class="breadcrumb">
 		<li><a href="./"><i class="fa fa-dashboard"></i> 主页</a></li>
 		<li class="active">系统管理</li>
@@ -62,7 +59,7 @@
 			"ordering": false,
 			"pagingType": "full_numbers",
 			"scrollY": "350px",
-               "scrollCollapse": "true",
+            "scrollCollapse": "true",
 			"processing": true,
             "serverSide": true,
             "ajax": {
