@@ -25,7 +25,7 @@ customMsg = {
 			$('#showMsgModal').on('shown.bs.modal', function() {
 				setTimeout(function() {
 					$('#showMsgModal').modal('hide');
-				}, 1500);
+				}, 1000);
 			});
 		}
 		$('#showMsgModal').on('hide.bs.modal', function () {
@@ -58,7 +58,7 @@ $(function() {
 		$(this).removeData("bs.modal");
 	});
 
-	$("body").delegate("a[data-target='content']", "click", function() {
+	$("body").delegate("a[data-target='navTab']", "click", function() {
 		var url = $(this).attr("href");
 		var md = $(this).attr("md");
 		if (md == 'ajax') {

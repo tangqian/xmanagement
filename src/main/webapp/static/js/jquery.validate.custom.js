@@ -28,28 +28,28 @@ jQuery.validator.setDefaults({
                     }
                     BootstrapDialog.show({
     					type: BootstrapDialog.TYPE_SUCCESS,
-    		            title: '操作结果反馈',
+    		            title: '操作结果提示',
     		            message: responseText.msg || "操作成功!",
     		            onshown: function(dialogRef){
     		            	setTimeout(function() {
     		            		dialogRef.close();
-    						}, 1500);
+    						}, 1000);
     		            }
     		        });
                 }
                 else{
                 	BootstrapDialog.show({
     					type: BootstrapDialog.TYPE_WARNING,
-    		            title: '操作结果反馈',
-    		            message: responseText.msg || "警告",
+    		            title: '操作结果提示',
+    		            message: responseText.msg || "未知错误警告!请反馈给系统管理员，我们会尽快解决该问题",
     		        });
                 }
             },
 			error: function(XmlHttpRequest, textStatus, errorThrown) {
 				BootstrapDialog.show({
 					type: BootstrapDialog.TYPE_WARNING,
-		            title: '操作结果反馈',
-		            message: "操作失败!状态信息为:" + textStatus + ",异常详细信息为:" + errorThrown.message
+		            title: '操作结果提示',
+		            message: "操作失败!状态信息为:" + textStatus + ",异常详细信息为:" + errorThrown.message + "。请您反馈给系统管理员，我们会尽快解决该问题"
 		        });
 				//customMsg.error("操作失败,状态信息为:" + textStatus + ",异常详细信息为:" + errorThrown.message, false);
 			}

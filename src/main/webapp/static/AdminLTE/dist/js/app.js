@@ -403,7 +403,7 @@ function _init() {
         //Get the parent menu
         var parent = $this.parents('ul').first();
         //Close all open menus within the parent
-        var ul = parent.find('ul:visible').slideUp(animationSpeed);
+        var ul = parent.find('ul:visible').not('.using').slideUp(animationSpeed);
         //Remove the menu-open class from the parent
         ul.removeClass('menu-open');
         //Get the parent li
@@ -413,11 +413,47 @@ function _init() {
         checkElement.slideDown(animationSpeed, function () {
           //Add the class active to the parent li
           checkElement.addClass('menu-open');
-          parent.find('li.active').removeClass('active');
+          parent.find('>li.active').not('.using').removeClass('active');
           parent_li.addClass('active');
           //Fix the layout in case the sidebar stretches over the height of the window
           _this.layout.fix();
         });
+      }
+      
+      if($this.attr("data-target") != undefined){
+    	  var currentUl = $this.parent('li').parent('ul');
+      	  var pLi = currentUl.parent('li');
+      	  		pLi.prevAll().each(function(){
+		  		  var ul = $(this).children('ul');
+		      	  if (ul.is('.treeview-menu') && ul.is(':visible')) {
+		  	        //Close the menu
+		  	        ul.slideUp(animationSpeed, function () {
+		  	          ul.removeClass('menu-open');
+		  	          ul.removeClass('using');
+		  	        });
+		  	      }
+		      	  $(this).removeClass('active');
+		      	  $(this).removeClass('using');
+		      	  ul.children('li').removeClass('active');
+		  	  });
+      	  		pLi.nextAll().each(function(){
+				  var ul = $(this).children('ul');
+			  	  if (ul.is('.treeview-menu') && ul.is(':visible')) {
+			        //Close the menu
+			        ul.slideUp(animationSpeed, function () {
+			          ul.removeClass('menu-open');
+			          ul.removeClass('using');
+			        });
+			      }
+			  	  $(this).removeClass('active');
+		      	  $(this).removeClass('using');
+			      ul.children('li').removeClass('active');
+			  });
+      	  		
+      	  currentUl.children('li').removeClass('active');
+      	  currentUl.addClass('using');
+      	  pLi.addClass('using');
+    	  $this.parent("li").addClass('active');
       }
       //if this isn't a link, prevent the page from being redirected
       if (checkElement.is('.treeview-menu')) {
