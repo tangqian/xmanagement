@@ -34,8 +34,22 @@
 		select
 		<include refid="columns" />
 		from sys_user
-		where id = #{userId}
+		where id = #{id}
 	</select>
+	
+	<update id="delete" parameterType="int">
+		update sys_user set
+			status	= -1
+		where
+			id	= #{id}
+	</update>
+	
+	<update id="batchDelete" parameterType="string">
+		update sys_user set
+			status	= -1
+		where
+			id	in (${ids})
+	</update>
 
 	<select id="count" parameterType="map" resultType="int">
 		select
@@ -49,7 +63,7 @@
 		<include refid="columns" />
 		from sys_user
 		where status != -1
-		limit #{start},#{length}
+		order by id desc limit #{start},#{length} 
 	</select>
 
 </mapper>

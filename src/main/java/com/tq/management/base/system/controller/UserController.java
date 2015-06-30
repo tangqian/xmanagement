@@ -16,6 +16,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -73,7 +74,29 @@ public class UserController extends BaseController {
 		dto.put("status", 1);
 		userService.add(dto);
 		map.put("status", 1);
-		//map.put("msg", "新增用户成功！");
+		return map;
+	}
+
+	@RequestMapping(value = "/delete", method = RequestMethod.POST)
+	@ResponseBody
+	public Map<String, Object> delete(@RequestParam(required = true) Integer id) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		userService.delete(id);
+		map.put("status", 1);
+		return map;
+	}
+
+	@RequestMapping(value = "/batchDelete", method = RequestMethod.POST)
+	@ResponseBody
+	public Map<String, Object> batchDelete(@RequestParam(required = true) String ids) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		boolean result = userService.batchDelete(ids);
+		if (result) {
+			map.put("status", 1);
+		} else {
+			map.put("status", 0);
+			map.put("msg", "参数为空或者参数值不符合规定");
+		}
 		return map;
 	}
 

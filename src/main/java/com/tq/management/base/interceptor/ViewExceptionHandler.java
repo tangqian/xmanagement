@@ -47,7 +47,7 @@ public class ViewExceptionHandler extends SimpleMappingExceptionResolver {
 				try {
 					PrintWriter writer = response.getWriter();
 					Map<String, Object> map = new HashMap<String, Object>();
-					map.put("success", false);
+					map.put("status", 0);
 					map.put("msg", ex.getMessage());
 					writer.write(JSONUtils.toJSONString(map));
 					writer.flush();
@@ -65,7 +65,20 @@ public class ViewExceptionHandler extends SimpleMappingExceptionResolver {
 			}else {
 				System.out.println("ajax");
 				logger.error("view exception", ex);
-				return new ModelAndView("system/frame/500");
+				if(request.getHeader("Accept").toLowerCase().startsWith("application/json")){
+					try {
+						PrintWriter writer = response.getWriter();
+						Map<String, Object> map = new HashMap<String, Object>();
+						map.put("status", 0);
+						map.put("msg", "系统发生500错误，请告知管理员修复此问题");
+						writer.write(JSONUtils.toJSONString(map));
+						writer.flush();
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+					return null;
+				}else
+					return new ModelAndView("system/frame/500");
 				/*try {
 					PrintWriter writer = response.getWriter();
 					Map<String, Object> map = new HashMap<String, Object>();

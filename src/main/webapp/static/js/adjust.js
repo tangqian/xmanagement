@@ -60,6 +60,13 @@ function getCheckboxItem(checkBoxName) {
 	return allSel;
 }
 
+function isJson(obj) {
+	var isjson = typeof (obj) == "object"
+			&& Object.prototype.toString.call(obj).toLowerCase() == "[object object]"
+			&& !obj.length;
+	return isjson;
+}
+
 $(function() {
 	$('#defaultModal').on('show.bs.modal', function(event) {
 		var button = $(event.relatedTarget) // Button that triggered the modal
@@ -114,7 +121,8 @@ $(function() {
 		}
 
 		BootstrapDialog.show({
-			message : '操作确认',
+			title : '操作确认',
+			message : msg,
 			buttons : [ {
 				label : '取消',
 				action : function(dialogItself) {
@@ -123,8 +131,46 @@ $(function() {
 			}, {
 				label : '确认',
 				cssClass : 'btn-primary',
-				action : function() {
-					alert('Hi Orange!');
+				action : function(dialogItself) {
+					$.ajax({
+						type : "post",
+				        url : url,
+				        data : {"ids" : ids},
+				        dataType:'json',
+				        success:function(data){
+				        	dialogItself.close();
+			        		if(data.status) {
+				                if(callback)
+				                {
+				                	eval(callback + "()");
+				                }
+				                BootstrapDialog.show({
+									type: BootstrapDialog.TYPE_SUCCESS,
+						            title: '操作结果提示',
+						            message: data.msg || "操作成功!",
+						            onshown: function(dialogRef){
+						            	setTimeout(function() {
+						            		dialogRef.close();
+										}, 1000);
+						            }
+						        });
+				            }else{
+				                BootstrapDialog.show({
+									type: BootstrapDialog.TYPE_WARNING,
+						            title: '操作结果提示',
+						            message: data.msg || "未知错误警告!请您反馈给系统管理员，我们会尽快解决该问题",
+						        });
+				            }
+				        },
+				        error:function(XmlHttpRequest, textStatus, errorThrown){
+				        	dialogItself.close();
+				        	BootstrapDialog.show({
+								type: BootstrapDialog.TYPE_DANGER,
+					            title: '操作结果提示',
+					            message: "操作失败!请求状态为：" + XmlHttpRequest.status + ",状态信息为:" + textStatus + ",异常详细信息为:" + errorThrown.message + "。请您反馈给系统管理员，我们会尽快解决该问题"
+					        });
+				        }
+				    });
 				}
 			} ]
 		});

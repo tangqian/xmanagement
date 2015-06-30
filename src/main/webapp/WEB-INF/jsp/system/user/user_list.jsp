@@ -81,7 +81,7 @@
                 
 			},
 			"createdRow": function (row, data, index ) {
-				$('td:eq(0)', row).html("<input type='checkbox' name='checks' value='" + data.id + "'/>");
+				$('td:eq(0)', row).html("<input type='checkbox' name='chx_default' value='" + data.id + "'/>");
 	        },
 			"columns": [
 			            { "data": "id" },
