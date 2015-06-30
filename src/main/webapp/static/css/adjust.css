@@ -4,3 +4,9 @@
 .fa-square-o{
 	width:11px;
 }
+.sidebar-menu .treeview-menu > li.active{
+	background-color: #387fa9; 
+}
+.sidebar-menu .treeview-menu > li.active >a{
+	background-color: #387fa9; 
+}

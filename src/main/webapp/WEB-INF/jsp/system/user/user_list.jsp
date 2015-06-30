@@ -2,14 +2,14 @@
 	pageEncoding="utf-8"%>
 <%
 	String path = request.getContextPath();
-	String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
+	String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + path + "/";
 %>
 <!-- Content Header (Page header) -->
 <section class="content-header">
 	<ol class="breadcrumb">
 		<li><a href="./"><i class="fa fa-dashboard"></i> 主页</a></li>
 		<li class="active">系统管理</li>
-		<li class="active">用户管理</li>
+		<li><a href="user" data-target="navTab">用户管理</a></li>
 	</ol>
 </section>
 
@@ -19,21 +19,29 @@
 		<div class="col-xs-12">
 			<div class="box">
 				<div class="box-header">
-					<a class="btn btn-primary" title="增加用户" role="button" data-toggle="modal" href="user/add" data-target="#defaultModal">增加</a>
-					<button data-url="user/add" title="点击新增用户" data-toggle="modal" data-target="#defaultModal" class="btn btn-primary">
-						<i class="glyphicon glyphicon-plus"></i>新增
+					<a class="btn btn-primary" title="增加用户" role="button"
+						data-toggle="modal" href="user/add" data-target="#defaultModal">增加</a>
+					<button data-url="user/add" title="点击新增用户" data-toggle="modal"
+						data-target="#defaultModal" class="btn btn-primary">
+						<i class="fa fa-fw fa-plus"></i>新增
 					</button>
-					<button type="button" data-url="user/batchDelete" data-msg="确定批量删除吗？"
-						data-model="ajaxToDo" data-targetid="my_delete_modal" class="btn btn-danger">
-						<i class="glyphicon glyphicon-remove"></i>批量删除
+					<button type="button" data-url="user/batchDelete"
+						data-msg="确定批量删除用户吗？" data-model="ajaxToDo"
+						data-checkbox-name="chx_default" data-callback="refreshTable"
+						class="btn btn-danger">
+						<i class="fa fa-fw fa-remove"></i>批量删除
 					</button>
 				</div>
 				<!-- /.box-header -->
 				<div class="box-body">
-					<table id="default_table" class="table table-bordered table-hover table-striped">
+					<table id="default_table"
+						class="table table-bordered table-hover table-striped">
 						<thead>
 							<tr>
-								<th width="10px"><button class="btn btn-default btn-xs checkbox-toggle" style="font-size: 13px;"><span></span><i class="fa fa-square-o"></i></button></th>
+								<th width="10px"><button
+										class="btn btn-default btn-xs checkbox-toggle">
+										<span></span><i class="fa fa-square-o"></i>
+									</button></th>
 								<th>用户名</th>
 								<th>邮箱</th>
 								<th>电话</th>
@@ -58,8 +66,7 @@
 		defaultTable = $('#default_table').DataTable( {
 			"ordering": false,
 			"pagingType": "full_numbers",
-			"scrollY": "350px",
-            "scrollCollapse": "true",
+			"autoWidth": false,
 			"processing": true,
             "serverSide": true,
             "ajax": {
@@ -90,25 +97,25 @@
 		          "render": function(data, type, row) {
 		        	  var html = "";
 		           	  //<shiro:hasPermission name="user/edit">
-		              html += '<a href="javascript: void(0)" data-url="user/edit?id='+row.id+'" data-model="dialog" data-targetid="my_modal" data-backdrop="static"><i title="修改" class="glyphicon glyphicon-pencil"></i></a>';
+		              html += '<a href="javascript: void(0)" data-url="user/edit?id='+row.id+'" data-model="dialog"><i title="修改" class="fa fa-lg fa-fw fa-pencil"></i></a>';
 		              //</shiro:hasPermission>
 		              //<shiro:hasPermission name="user/delete">
-		              html += '<a href="javascript: void(0)" data-url="user/delete?id='+row.id+'" data-msg="确定删除吗？" data-model="ajaxToDo" data-targetid="my_delete_modal" data-form-btn="userListFormBtn"><i title="删除" class="glyphicon glyphicon-trash"></i></a>';
+		              html += '<a href="javascript: void(0)" data-url="user/delete?id='+row.id+'" data-msg="确定删除吗？" data-model="ajaxToDo" data-callback="refreshTable"><i title="删除" class="fa fa-lg fa-fw fa-trash"></i></a>';
 		              //</shiro:hasPermission>
 		              //<shiro:hasPermission name="user/editRole">
-		              html += '<a href="javascript: void(0)" data-url="user/editRole?id='+row.id+'" data-model="dialog" data-targetid="my_modal" data-backdrop="static"><i title="授权" class="glyphicon glyphicon-wrench"></i></a>';
+		              html += '<a href="javascript: void(0)" data-url="user/editRole?id='+row.id+'" data-model="dialog"><i title="分配角色" class="fa fa-lg fa-fw fa-wrench"></i></a>';
 		              //</shiro:hasPermission>
 		              return html;
 		          }
 		      }],
-		      "initComplete": function () {
+		      /* "initComplete": function () {
 					//Enable iCheck plugin for checkboxes
 					//iCheck for checkbox and radio inputs
 					$('.box-body input[type="checkbox"]').iCheck({
 						checkboxClass : 'icheckbox_flat-blue',
 						radioClass : 'iradio_flat-blue'
 					});
-		      }
+		      } */
 	  	});
 		
 

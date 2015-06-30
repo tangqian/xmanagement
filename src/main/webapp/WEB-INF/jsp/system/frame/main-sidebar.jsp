@@ -43,9 +43,9 @@
 					class="fa fa-share"></i> <span>系统管理</span><i
 					class="fa fa-angle-left pull-right"></i></a>
 				<ul class="treeview-menu">
-					<li><a href="user" data-target="content"><i
+					<li><a href="user" data-target="navTab"><i
 							class="fa fa-circle-o"></i>用户管理</a></li>
-					<li><a href="menu" data-target="content"><i
+					<li><a href="menu" data-target="navTab"><i
 							class="fa fa-circle-o"></i>菜单管理</a></li>
 				</ul></li>
 			<li class="treeview"><a href="#"><i class='fa fa-share'></i>
@@ -54,7 +54,7 @@
 					<li><a href="#"><i class="fa fa-circle-o"></i>监控1</a></li>
 					<li><a href="#"><i class="fa fa-circle-o"></i>监控2</a></li>
 				</ul></li>
-			<li><a href="menu" data-target="content"><i
+			<li><a href="menu" data-target="navTab"><i
 					class='fa fa-share'></i> <span>菜单管理</span></a></li>
 		</ul>
 		<!-- /.sidebar-menu -->

@@ -41,14 +41,14 @@
 <link href="${ctx}/static/css/adjust.css" rel="stylesheet"
 	type="text/css">
 </head>
-<body class="skin-blue fixed" data-spy="scroll" data-target="#scrollspy">
+<body class="skin-blue" data-spy="scroll" data-target="#scrollspy">
 
 	<div class="wrapper">
 		<jsp:include page="./main-header.jsp"></jsp:include>
 		<jsp:include page="./main-sidebar.jsp"></jsp:include>
 
 		<!-- Content Wrapper. Contains page content -->
-		<div class="content-wrapper" id="content-container">
+		<div class="content-wrapper" id="navTab">
 			<jsp:include page="./content.jsp"></jsp:include>
 		</div>
 		<!-- /.content-wrapper -->
