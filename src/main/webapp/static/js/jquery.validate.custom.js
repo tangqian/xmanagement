@@ -16,8 +16,8 @@ jQuery.validator.setDefaults({
 		$(form).ajaxSubmit({
             type: 'post', // 提交方式 get/post
             dataType:"json",
-            success: function(responseText) { // data 保存提交后返回的数据，一般为 json 数据
-            	if( "1" == responseText.status){
+            success: function(data) { // data 保存提交后返回的数据，一般为 json 数据
+            	if( data.status == '1'){
             		$(form).clearForm();
                     if($(form).find("*[data-dismiss='modal']").length > 0){
                     	$(form).find("*[data-dismiss='modal']").click();
@@ -29,7 +29,7 @@ jQuery.validator.setDefaults({
                     BootstrapDialog.show({
     					type: BootstrapDialog.TYPE_SUCCESS,
     		            title: '操作结果提示',
-    		            message: responseText.msg || "操作成功!",
+    		            message: data.msg || "操作成功!",
     		            onshown: function(dialogRef){
     		            	setTimeout(function() {
     		            		dialogRef.close();
@@ -38,10 +38,13 @@ jQuery.validator.setDefaults({
     		        });
                 }
                 else{
+                	if(data.status == '500'){
+	            		data.msg = customMsg.htmlContent.warnTips.replace("#status", 500);
+	            	}
                 	BootstrapDialog.show({
     					type: BootstrapDialog.TYPE_WARNING,
     		            title: '操作结果提示',
-    		            message: responseText.msg || "未知错误警告!请反馈给系统管理员，我们会尽快解决该问题",
+    		            message: data.msg || "未知错误警告!请反馈给系统管理员，我们会尽快解决该问题",
     		        });
                 }
             },
@@ -49,9 +52,8 @@ jQuery.validator.setDefaults({
 				BootstrapDialog.show({
 					type: BootstrapDialog.TYPE_WARNING,
 		            title: '操作结果提示',
-		            message: "操作失败!状态信息为:" + textStatus + ",异常详细信息为:" + errorThrown.message + "。请您反馈给系统管理员，我们会尽快解决该问题"
+		            message : customMsg.htmlContent.warnTips.replace("#status", XmlHttpRequest.status)
 		        });
-				//customMsg.error("操作失败,状态信息为:" + textStatus + ",异常详细信息为:" + errorThrown.message, false);
 			}
         });
 	}

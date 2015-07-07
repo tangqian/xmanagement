@@ -1,45 +1,68 @@
 customMsg = {
 	htmlContent : {
-		modal : "<div class='modal bootstrap-dialog type-primary fade size-normal in' id='showMsgModal' tabindex='-1' role='dialog' data-backdrop='static' aria-hidden='true'>"
-				+ "<div class='modal-dialog'>"
-				+ "<div class='modal-content'>"
-				+ "<div class='modal-header'>"
-				+ "<h4 class='modal-title'>操作结果提示</h4>"
-				+ "</div>"
-				+ "<div class='modal-body'><div class='alert #show_style'>#msg</div></div>"
-				+ "<div class='modal-footer'>"
-				+ "<button type='button' class='btn btn-default' data-dismiss='modal'>关闭</button>"
-				+ "</div>"
-				+ "</div><!-- /.modal-content -->"
-				+ "</div><!-- /.modal-dialog -->" + "</div><!-- /.modal -->"
+		modal : "<div class='modal bootstrap-dialog type-primary fade size-normal in' id='#targetId' role='dialog' aria-hidden='true' data-backdrop='static' data-keyboard='true'>"
+				+ "<div class='modal-dialog'><div class='modal-content'></div></div></div>",
+		warnTips : "<div class='error-page' style='height: 140px; margin-left: 20px; margin-top: -15px;'><h2 class='headline text-yellow'>#status</h2>"
+				+ "<div class='error-content' style='padding-top: 30px;'>"
+				+ "<h3><i class='fa fa-warning text-yellow'></i> 对不起! 系统出错了。</h3>"
+				+ "<p>请您反馈给系统管理员，我们会尽快解决该问题</p></div></div>"
 	},
-	_showMsg : function(type, msg) {
-
-	},
-	_showModal : function(css, msg, autoClose) {
-		var htmlText = this.htmlContent.modal.replace("#show_style", css);
-		htmlText = htmlText.replace("#msg", msg);
-		$("body").append(htmlText);
-		if (autoClose) {
-			$('#showMsgModal').on('shown.bs.modal', function() {
-				setTimeout(function() {
-					$('#showMsgModal').modal('hide');
-				}, 1000);
-			});
-		}
-		$('#showMsgModal').on('hide.bs.modal', function() {
-			$(this).remove();
+	_showDialog : function(targetId, url, data) {
+		var html = this.htmlContent.modal.replace("#targetId", targetId);
+		$("body").append(html)
+		$.ajax({
+			'type' : data.method || "get",
+			'url' : url,
+			'data' : data,
+			'async' : false,
+			'success' : function(data, status) {
+				if (status != 'success') {
+					$('#' + targetId).modal('hide')
+					$('#' + targetId).remove();
+					BootstrapDialog.show({
+						type : BootstrapDialog.TYPE_WARNING,
+						title : '操作提示',
+						message : "连接不存在或刷新页面后重新尝试！",
+					});
+					return;
+				} else {
+					if (data.indexOf("modal-header") == -1
+							&& data.indexOf("error-page") != -1) {// 500错误提示页,由于是在弹出框中显示，需要改为弹出框显示该错误
+						$('#' + targetId).modal('hide')
+						$('#' + targetId).remove();
+						BootstrapDialog.show({
+							type : BootstrapDialog.TYPE_WARNING,
+							title : '操作提示',
+							message : customMsg.htmlContent.warnTips.replace("#status", 500)
+						});
+					} else{
+						$("#" + targetId).find(".modal-content").html(data);
+						$('#' + targetId).modal();
+					}
+				}
+			},
+			'error' : function(XmlHttpRequest, textStatus, errorThrown) {
+				$('#' + targetId).modal('hide')
+				$('#' + targetId).remove();
+				BootstrapDialog.show({
+					type : BootstrapDialog.TYPE_WARNING,
+					title : '操作提示',
+					message : customMsg.htmlContent.warnTips.replace("#status",
+							XmlHttpRequest.status)
+				});
+				return;
+			}
 		});
-		$('#showMsgModal').modal();
+		$('#' + targetId).on('hide.bs.modal', function() {
+			$(this).remove();
+		})
 	},
-	success : function(msg, autoClose) {
-		window.top.customMsg._showModal("alert-success", msg, autoClose);
-	},
-	warning : function(msg, autoClose) {
-		window.top.customMsg._showModal("alert-warning", msg, autoClose);
-	},
-	error : function(msg, autoClose) {
-		window.top.customMsg._showModal("alert-danger", msg, autoClose);
+	dialog : function(targetId, url, data) {
+		if (window.top != window) {
+			window.top.customMsg._showDialog(targetId, url, data);
+		} else {
+			customMsg._showDialog(targetId, url, data);
+		}
 	}
 }
 
@@ -67,6 +90,16 @@ function isJson(obj) {
 	return isjson;
 }
 
+function newGuid() {
+	var guid = "";
+	for (var i = 1; i <= 32; i++) {
+		var n = Math.floor(Math.random() * 16.0).toString(16);
+		guid += n;
+	}
+	guid += new Date().getTime();
+	return guid.toUpperCase();
+}
+
 $(function() {
 	$('#defaultModal').on('show.bs.modal', function(event) {
 		var button = $(event.relatedTarget) // Button that triggered the modal
@@ -92,10 +125,26 @@ $(function() {
 		return false;
 	});
 
+	$("body").delegate("*[data-model='dialog']", "click", function() {
+		var targetId = $(this).data("targetId");
+		if (targetId == undefined) {
+			targetId = newGuid();
+		}
+		var method = $(this).data("method") || "get";
+		var url = $(this).data("url");
+		if (!url) {
+			url = $(this).attr("href")
+		}
+		window.top.customMsg.dialog(targetId, url, {
+			'method' : method
+		});
+		return false;
+	});
+
 	$("body").delegate("*[data-model='ajaxToDo']", "click", function() {
 		// 改操作分单条/批量数据操作
 		var url = $(this).data("url");
-		if(!url){
+		if (!url) {
 			url = $(this).attr("href")
 		}
 		var msg = $(this).data("msg");
@@ -142,7 +191,7 @@ $(function() {
 				        dataType:'json',
 				        success:function(data){
 				        	dialogItself.close();
-			        		if(data.status) {
+			        		if(data.status == '1') {
 				                if(callback)
 				                {
 				                	eval(callback + "()");
@@ -158,6 +207,9 @@ $(function() {
 						            }
 						        });
 				            }else{
+				            	if(data.status == '500'){
+				            		data.msg = customMsg.htmlContent.warnTips.replace("#status", 500);
+				            	}
 				                BootstrapDialog.show({
 									type: BootstrapDialog.TYPE_WARNING,
 						            title: '操作结果提示',
@@ -170,7 +222,7 @@ $(function() {
 				        	BootstrapDialog.show({
 								type: BootstrapDialog.TYPE_DANGER,
 					            title: '操作结果提示',
-					            message: "操作失败!请求状态为：" + XmlHttpRequest.status + ",状态信息为:" + textStatus + ",异常详细信息为:" + errorThrown.message + "。请您反馈给系统管理员，我们会尽快解决该问题"
+					            message: customMsg.htmlContent.warnTips.replace("#status", XmlHttpRequest.status)
 					        });
 				        }
 				    });
@@ -178,48 +230,5 @@ $(function() {
 			} ]
 		});
 		return false;
-		/*obj.callback=function(){
-		    $.ajax({
-		        url:url,
-		        data : {
-		        	"ids" : ids
-		        },
-		        dataType:'json',
-		        success:function(data){
-		        	$('#'+targetid).modal("hide");
-		            if(data.status) {
-		                if(callback)
-		                {
-		                	eval(callback + "()");
-		                }
-		                BootstrapDialog.show({
-							type: BootstrapDialog.TYPE_SUCCESS,
-				            title: '操作结果提示',
-				            message: data.msg || "操作成功!",
-				            onshown: function(dialogRef){
-				            	setTimeout(function() {
-				            		dialogRef.close();
-								}, 1000);
-				            }
-				        });
-		            }else{
-		                BootstrapDialog.show({
-							type: BootstrapDialog.TYPE_WARNING,
-				            title: '操作结果提示',
-				            message: data.msg || "未知错误警告!请您反馈给系统管理员，我们会尽快解决该问题",
-				        });
-		            }
-		        },
-		        error:function(XmlHttpRequest, textStatus, errorThrown){
-		        	$('#'+targetid).modal("hide");
-		        	BootstrapDialog.show({
-						type: BootstrapDialog.TYPE_WARNING,
-			            title: '操作结果提示',
-			            message: "操作失败!请求状态为：" + XmlHttpRequest.status + ",状态信息为:" + textStatus + ",异常详细信息为:" + errorThrown.message + "。请您反馈给系统管理员，我们会尽快解决该问题"
-			        });
-		        }
-		    });
-		}*/
-		//dialogMng.comfirm(obj);
 	});
 });

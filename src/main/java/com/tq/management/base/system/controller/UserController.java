@@ -42,10 +42,7 @@ public class UserController extends BaseController {
 	@RequestMapping
 	public ModelAndView page() {
 		ModelAndView mv = new ModelAndView();
-		logger.info("ddddd");
 		mv.setViewName("system/user/user_list");
-		User user = userService.get(1);
-		System.out.println(user);
 		return mv;
 	}
 
@@ -82,15 +79,6 @@ public class UserController extends BaseController {
 		return mv;
 	}
 	
-	@RequestMapping(value="/view", method=RequestMethod.GET)
-	public ModelAndView view(@RequestParam(required = true) Integer id){
-		ModelAndView mv = new ModelAndView();
-		User user = userService.get(id);
-		mv.addObject("entity", user);
-		mv.setViewName("system/user/user_view");
-		return mv;
-	}
-	
 	@RequestMapping(value="/edit", method=RequestMethod.POST)
 	@ResponseBody
 	public Map<String, Object> doEdit(){
@@ -107,6 +95,15 @@ public class UserController extends BaseController {
 		userService.edit(dto);
 		map.put("status", 1);
 		return map;
+	}
+	
+	@RequestMapping(value="/view", method=RequestMethod.GET)
+	public ModelAndView view(@RequestParam(required = true) Integer id){
+		ModelAndView mv = new ModelAndView();
+		User user = userService.get(id);
+		mv.addObject("entity", user);
+		mv.setViewName("system/user/user_view");
+		return mv;
 	}
 
 	@RequestMapping(value = "/delete", method = RequestMethod.POST)

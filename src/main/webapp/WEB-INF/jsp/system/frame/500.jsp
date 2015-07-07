@@ -2,7 +2,6 @@
 	pageEncoding="UTF-8"%>
 <!-- Content Header (Page header) -->
 <section class="content-header">
-	<h1>500  错误页</h1>
 	<ol class="breadcrumb">
 		<li><a href="./"><i class="fa fa-dashboard"></i> 主页</a></li>
 		<li class="active">500 错误</li>

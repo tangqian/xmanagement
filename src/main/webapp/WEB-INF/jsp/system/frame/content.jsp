@@ -3,7 +3,7 @@
 <!-- Content Header (Page header) -->
 <section class="content-header">
 	<ol class="breadcrumb">
-		<li class="active"><i class="fa fa-dashboard"></i> 主页</li>
+		<li class="active"><a href="./"><i class="fa fa-dashboard"></i> 主页</a></li>
 	</ol>
 </section>
 

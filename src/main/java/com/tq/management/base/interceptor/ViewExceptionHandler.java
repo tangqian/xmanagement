@@ -69,8 +69,7 @@ public class ViewExceptionHandler extends SimpleMappingExceptionResolver {
 					try {
 						PrintWriter writer = response.getWriter();
 						Map<String, Object> map = new HashMap<String, Object>();
-						map.put("status", 0);
-						map.put("msg", "系统发生500错误，请告知管理员修复此问题");
+						map.put("status", 500);
 						writer.write(JSONUtils.toJSONString(map));
 						writer.flush();
 					} catch (IOException e) {

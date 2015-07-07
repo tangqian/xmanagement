@@ -19,10 +19,8 @@
 		<div class="col-xs-12">
 			<div class="box">
 				<div class="box-header">
-					<a class="btn btn-primary" title="增加用户" role="button"
-						data-toggle="modal" href="user/add" data-target="#defaultModal">增加</a>
-					<button data-url="user/add" title="点击新增用户" data-toggle="modal"
-						data-target="#defaultModal" class="btn btn-primary">
+					<a class="btn btn-primary" title="增加用户" role="button" data-model="dialog" href="user/add" >增加</a>
+					<button data-url="user/add" title="点击新增用户" data-model="dialog" class="btn btn-primary">
 						<i class="fa fa-fw fa-plus"></i>新增
 					</button>
 					<button type="button" data-url="user/batchDelete"
@@ -96,15 +94,15 @@
 				 "targets": 6,
 		          "render": function(data, type, row) {
 		        	  var html = "";
-		        	  html += '<a href="user/view?id='+row.id+'" data-target="#defaultModal" data-toggle="modal"><i title="查看" class="fa fa-lg fa-fw fa-info-circle"></i></a>';
+		        	  html += '<a href="user/view?id='+row.id+'" data-model="dialog"><i title="查看" class="fa fa-lg fa-fw fa-info-circle"></i></a>';
 		           	  //<shiro:hasPermission name="user/edit">
-		              html += '<a href="user/edit?id='+row.id+'" data-target="#defaultModal" data-toggle="modal"><i title="修改" class="fa fa-lg fa-fw fa-pencil"></i></a>';
+		              html += '<a href="user/edit?id='+row.id+'" data-model="dialog"><i title="修改" class="fa fa-lg fa-fw fa-pencil"></i></a>';
 		              //</shiro:hasPermission>
 		              //<shiro:hasPermission name="user/delete">
 		              html += '<a href="user/delete?id='+row.id+'" data-msg="确定删除吗？" data-model="ajaxToDo" data-callback="refreshTable"><i title="删除" class="fa fa-lg fa-fw fa-trash"></i></a>';
 		              //</shiro:hasPermission>
 		              //<shiro:hasPermission name="user/editRole">
-		              html += '<a href="javascript: void(0)" data-url="user/editRole?id='+row.id+'" data-model="dialog"><i title="分配角色" class="fa fa-lg fa-fw fa-wrench"></i></a>';
+		              html += '<a href="user/editRole?id='+row.id+'" data-model="dialog"><i title="分配角色" class="fa fa-lg fa-fw fa-wrench"></i></a>';
 		              //</shiro:hasPermission>
 		              return html;
 		          }
