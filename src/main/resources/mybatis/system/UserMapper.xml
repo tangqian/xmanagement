@@ -3,7 +3,7 @@
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="UserMapper">
 	<cache flushInterval="60000" />
-	<sql id="columnsExcludeId">login_name,name,password,last_login,ip,status,description,email,phone,skin
+	<sql id="columnsExcludeId">login_name,name,password,last_login,ip,status,description,email,phone,skin,create_time,modify_time,creator,modifier
 	</sql>
 	<sql id="columns">
 		id,
@@ -12,23 +12,46 @@
 
 	<insert id="add" parameterType="map">
 		insert into sys_user (
-			login_name,
-			password,
-			name,
-			status,
-			description,
-			email,
-			phone
+		login_name,
+		name,
+		password,
+		status,
+		description,
+		email,
+		phone,
+		skin,
+		create_time,
+		modify_time,
+		creator,
+		modifier
 		) values (
-			#{loginName},
-			#{password},
-			#{name},
-			#{status},
-			#{description},
-			#{email},
-			#{phone}
+		#{loginName},
+		#{name},
+		#{password},
+		#{status},
+		#{description},
+		#{email},
+		#{phone},
+		#{skin},
+		#{createTime},
+		#{modifyTime},
+		#{creator},
+		#{modifier}
 		)
 	</insert>
+
+	<update id="edit" parameterType="map">
+		update sys_user set
+		<if test="password != null">
+			password = #{password},
+		</if>
+		name = #{name},
+		description = #{description},
+		email = #{email},
+		phone = #{phone}
+		where
+		id = #{id}
+	</update>
 
 	<select id="get" parameterType="int" resultType="User">
 		select
@@ -36,19 +59,19 @@
 		from sys_user
 		where id = #{id}
 	</select>
-	
+
 	<update id="delete" parameterType="int">
 		update sys_user set
-			status	= -1
+		status = -1
 		where
-			id	= #{id}
+		id = #{id}
 	</update>
-	
+
 	<update id="batchDelete" parameterType="string">
 		update sys_user set
-			status	= -1
+		status = -1
 		where
-			id	in (${ids})
+		id in (${_parameter})
 	</update>
 
 	<select id="count" parameterType="map" resultType="int">
@@ -63,7 +86,8 @@
 		<include refid="columns" />
 		from sys_user
 		where status != -1
-		order by id desc limit #{start},#{length} 
+		order by id desc limit
+		#{start},#{length}
 	</select>
 
 </mapper>

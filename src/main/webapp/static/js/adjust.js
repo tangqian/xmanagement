@@ -95,6 +95,9 @@ $(function() {
 	$("body").delegate("*[data-model='ajaxToDo']", "click", function() {
 		// 改操作分单条/批量数据操作
 		var url = $(this).data("url");
+		if(!url){
+			url = $(this).attr("href")
+		}
 		var msg = $(this).data("msg");
 		var callback = $(this).data("callback");// 回调函数
 		var checkboxName = $(this).data("checkboxName"); // 多选框NAME，批量操作时才会有值
@@ -174,7 +177,7 @@ $(function() {
 				}
 			} ]
 		});
-
+		return false;
 		/*obj.callback=function(){
 		    $.ajax({
 		        url:url,

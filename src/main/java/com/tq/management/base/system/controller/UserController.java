@@ -10,6 +10,7 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.shiro.crypto.hash.SimpleHash;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -67,12 +68,43 @@ public class UserController extends BaseController {
 	public Map<String, Object> doAdd() {
 		Map<String, Object> map = new HashMap<String, Object>();
 		WebDto dto = new WebDto(getRequest());
-		String loginName = dto.getString("loginName");
-		String password = dto.getString("password");
-		password = new SimpleHash("SHA-1", loginName, password).toString();
-		dto.put("password", password);
-		dto.put("status", 1);
 		userService.add(dto);
+		map.put("status", 1);
+		return map;
+	}
+	
+	@RequestMapping(value="/edit", method=RequestMethod.GET)
+	public ModelAndView edit(@RequestParam(required = true) Integer id){
+		ModelAndView mv = new ModelAndView();
+		User user = userService.get(id);
+		mv.addObject("entity", user);
+		mv.setViewName("system/user/user_edit");
+		return mv;
+	}
+	
+	@RequestMapping(value="/view", method=RequestMethod.GET)
+	public ModelAndView view(@RequestParam(required = true) Integer id){
+		ModelAndView mv = new ModelAndView();
+		User user = userService.get(id);
+		mv.addObject("entity", user);
+		mv.setViewName("system/user/user_view");
+		return mv;
+	}
+	
+	@RequestMapping(value="/edit", method=RequestMethod.POST)
+	@ResponseBody
+	public Map<String, Object> doEdit(){
+		Map<String, Object> map = new HashMap<String, Object>();
+		WebDto dto = new WebDto(getRequest());
+		String password = dto.getString("password");
+		if (StringUtils.isNotBlank(password)) {
+			User user = userService.get(dto.getInteger("id"));
+			password = new SimpleHash("SHA-1", user.getLoginName(), password).toString();
+			dto.put("password", password);
+		}else{
+			dto.remove("password");
+		}
+		userService.edit(dto);
 		map.put("status", 1);
 		return map;
 	}

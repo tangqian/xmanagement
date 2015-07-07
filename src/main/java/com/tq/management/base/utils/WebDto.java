@@ -30,7 +30,10 @@ public class WebDto implements Map<String, Object> {
 		Map<String, String[]> map = request.getParameterMap();
 		Set<Entry<String, String[]>> set = map.entrySet();
 		for (Entry<String, String[]> entry : set) {
-			_map.put(entry.getKey(), ArrayUtils.toString(entry.getValue()));
+			if (entry.getKey().equals("id"))
+				_map.put(entry.getKey(), ArrayUtils.toInteger(entry.getValue()));
+			else
+				_map.put(entry.getKey(), ArrayUtils.toString(entry.getValue()));
 		}
 		_map.put("start", getInteger("start"));
 		_map.put("length", getInteger("length"));

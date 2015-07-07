@@ -10,3 +10,12 @@
 .sidebar-menu .treeview-menu > li.active >a{
 	background-color: #387fa9; 
 }
+.show-only-bottom {
+	border-top:none;
+	border-left:none;
+	border-right:none;
+	background-color: #F7F7F7;
+}
+.modal-content{
+	background-color: #F7F7F7;
+}

@@ -2,14 +2,15 @@
 	pageEncoding="utf-8"%>
 <%
 	String path = request.getContextPath();
-	String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + path + "/";
+	String basePath = request.getScheme() + "://"
+			+ request.getServerName() + ":" + request.getServerPort()
+			+ path + "/";
 %>
 <form class="form-horizontal" role="form" action="user/add"
 	method="post" id="defForm" callfn="refreshTable">
 	<div class="modal-header">
 		<div class='bootstrap-dialog-header'>
-			<div class='bootstrap-dialog-close-button'
-				style='display: block;'>
+			<div class='bootstrap-dialog-close-button' style='display: block;'>
 				<button class='close' data-dismiss='modal' aria-label='Close'>×</button>
 			</div>
 			<div class='bootstrap-dialog-title'>增加用户</div>
@@ -32,6 +33,14 @@
 						<input id="password" name="password" type="password"
 							maxlength="32" minlength="2" class="form-control required"
 							placeholder="请输入密码">
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="repassword" class="col-sm-2 control-label">重复密码</label>
+					<div class="col-sm-7">
+						<input id="repassword" type="password"
+							maxlength="32" minlength="2" equalTo="#password" class="form-control required"
+							placeholder="请再次输入密码">
 					</div>
 				</div>
 				<div class="form-group">
@@ -66,11 +75,10 @@
 		</div>
 	</div>
 	<div class="modal-footer">
-		<button type="button" class="btn btn-default" data-dismiss="modal">取消
-		</button>
+		<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
 		<button type="submit" class="btn btn-primary">保存</button>
 	</div>
 </form>
 <script type="text/javascript">
-$("#defForm").validate();
+	$("#defForm").validate();
 </script>

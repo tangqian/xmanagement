@@ -6,6 +6,7 @@
 package com.tq.management.base.system.entity;
 
 import java.io.Serializable;
+import java.sql.Timestamp;
 import java.util.List;
 
 /**
@@ -13,6 +14,38 @@ import java.util.List;
  * @author tangqian
  */
 public class User implements Serializable {
+
+	public Timestamp getCreateTime() {
+		return createTime;
+	}
+
+	public void setCreateTime(Timestamp createTime) {
+		this.createTime = createTime;
+	}
+
+	public Timestamp getModifyTime() {
+		return modifyTime;
+	}
+
+	public void setModifyTime(Timestamp modifyTime) {
+		this.modifyTime = modifyTime;
+	}
+
+	public Integer getCreator() {
+		return creator;
+	}
+
+	public void setCreator(Integer creator) {
+		this.creator = creator;
+	}
+
+	public Integer getModifier() {
+		return modifier;
+	}
+
+	public void setModifier(Integer modifier) {
+		this.modifier = modifier;
+	}
 
 	public String getLoginName() {
 		return loginName;
@@ -38,11 +71,11 @@ public class User implements Serializable {
 		this.name = name;
 	}
 
-	public String getLastLogin() {
+	public Timestamp getLastLogin() {
 		return lastLogin;
 	}
 
-	public void setLastLogin(String lastLogin) {
+	public void setLastLogin(Timestamp lastLogin) {
 		this.lastLogin = lastLogin;
 	}
 
@@ -54,11 +87,11 @@ public class User implements Serializable {
 		this.ip = ip;
 	}
 
-	public Integer getStatus() {
+	public String getStatus() {
 		return status;
 	}
 
-	public void setStatus(Integer status) {
+	public void setStatus(String status) {
 		this.status = status;
 	}
 
@@ -121,12 +154,16 @@ public class User implements Serializable {
 	private String loginName; // 用户名
 	private String password; // 密码
 	private String name; // 姓名
-	private String lastLogin; // 最后登录时间
+	private Timestamp lastLogin; // 最后登录时间
 	private String ip; // 用户登录ip地址
-	private Integer status; // 状态
+	private String status; // 状态
 	private String description; // 用户登录ip地址
 	private String email; // 用户登录ip地址
 	private String phone; // 用户登录ip地址
 	private Integer skin; // 皮肤
+	private Timestamp createTime;
+	private Timestamp modifyTime;
+	private Integer creator;
+	private Integer modifier;
 
 }

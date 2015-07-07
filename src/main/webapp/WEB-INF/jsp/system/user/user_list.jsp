@@ -96,11 +96,12 @@
 				 "targets": 6,
 		          "render": function(data, type, row) {
 		        	  var html = "";
+		        	  html += '<a href="user/view?id='+row.id+'" data-target="#defaultModal" data-toggle="modal"><i title="查看" class="fa fa-lg fa-fw fa-info-circle"></i></a>';
 		           	  //<shiro:hasPermission name="user/edit">
-		              html += '<a href="javascript: void(0)" data-url="user/edit?id='+row.id+'" data-model="dialog"><i title="修改" class="fa fa-lg fa-fw fa-pencil"></i></a>';
+		              html += '<a href="user/edit?id='+row.id+'" data-target="#defaultModal" data-toggle="modal"><i title="修改" class="fa fa-lg fa-fw fa-pencil"></i></a>';
 		              //</shiro:hasPermission>
 		              //<shiro:hasPermission name="user/delete">
-		              html += '<a href="javascript: void(0)" data-url="user/delete?id='+row.id+'" data-msg="确定删除吗？" data-model="ajaxToDo" data-callback="refreshTable"><i title="删除" class="fa fa-lg fa-fw fa-trash"></i></a>';
+		              html += '<a href="user/delete?id='+row.id+'" data-msg="确定删除吗？" data-model="ajaxToDo" data-callback="refreshTable"><i title="删除" class="fa fa-lg fa-fw fa-trash"></i></a>';
 		              //</shiro:hasPermission>
 		              //<shiro:hasPermission name="user/editRole">
 		              html += '<a href="javascript: void(0)" data-url="user/editRole?id='+row.id+'" data-model="dialog"><i title="分配角色" class="fa fa-lg fa-fw fa-wrench"></i></a>';

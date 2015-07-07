@@ -12,10 +12,12 @@ import java.util.Map;
 import javax.annotation.Resource;
 
 import org.apache.commons.lang.StringUtils;
+import org.apache.shiro.crypto.hash.SimpleHash;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Service;
 
 import com.tq.management.base.system.entity.User;
+import com.tq.management.base.utils.CrudUtils;
 import com.tq.management.base.utils.DataTables;
 import com.tq.management.base.utils.PatternEnum;
 import com.tq.management.base.utils.WebDto;
@@ -39,6 +41,14 @@ public class UserService {
 	}
 
 	public void add(WebDto dto) {
+		String loginName = dto.getString("loginName").toLowerCase();
+		dto.put("loginName", loginName);// 登录名统一转换成小写
+		String password = dto.getString("password");
+		password = new SimpleHash("SHA-1", loginName, password).toString();
+		dto.put("password", password);
+		dto.put("status", "invalid");
+		dto.put("skin", 1);
+		CrudUtils.beforeAdd(dto);
 		template.insert("UserMapper.add", dto);
 	}
 
@@ -58,5 +68,9 @@ public class UserService {
 	public User get(Integer id) {
 		return template.selectOne("UserMapper.get", id);
 
+	}
+
+	public void edit(WebDto dto) {
+		template.update("UserMapper.edit", dto);
 	}
 }
