@@ -19,7 +19,6 @@
 		<div class="col-xs-12">
 			<div class="box">
 				<div class="box-header">
-					<a class="btn btn-primary" title="增加用户" role="button" data-model="dialog" href="user/add" >增加</a>
 					<button data-url="user/add" title="点击新增用户" data-model="dialog" class="btn btn-primary">
 						<i class="fa fa-fw fa-plus"></i>新增
 					</button>
@@ -41,9 +40,9 @@
 										<span></span><i class="fa fa-square-o"></i>
 									</button></th>
 								<th>用户名</th>
-								<th>邮箱</th>
+								<th>真实姓名</th>
 								<th>电话</th>
-								<th>描述</th>
+								<th>状态</th>
 								<th>最近登录</th>
 								<th>操作</th>
 							</tr>
@@ -65,6 +64,7 @@
 			"ordering": false,
 			"pagingType": "full_numbers",
 			"autoWidth": false,
+			"scrollX": true,
 			"processing": true,
             "serverSide": true,
             "ajax": {
@@ -84,9 +84,9 @@
 			"columns": [
 			            { "data": "id" },
 				        { "data": "loginName" },
-				        { "data": "email" },
+				        { "data": "name" },
 				        { "data": "phone" },
-				        { "data": "description" },
+				        { "data": "status" },
 				        { "data": "lastLogin" },
 				        { "data": null },
 			 ],

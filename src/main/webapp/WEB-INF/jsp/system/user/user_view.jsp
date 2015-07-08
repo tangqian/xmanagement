@@ -23,7 +23,7 @@
 				</div>
 			</div>
 			<div class="form-group">
-				<label for="name" class="col-sm-2 control-label">姓名</label>
+				<label for="name" class="col-sm-2 control-label">真实姓名</label>
 				<div class="col-sm-7">
 					<span class="form-control show-only-bottom">${entity.name}</span>
 				</div>
@@ -53,6 +53,16 @@
 				<label for="description" class="col-sm-2 control-label">创建时间</label>
 				<div class="col-sm-4">
 					<span class="form-control show-only-bottom"><fmt:formatDate value="${entity.createTime}" pattern="yyyy-MM-dd HH:mm"/></span>
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="description" class="col-sm-2 control-label">修改人</label>
+				<div class="col-sm-4">
+					<span class="form-control show-only-bottom">${entity.modifier}</span>
+				</div>
+				<label for="description" class="col-sm-2 control-label">修改时间</label>
+				<div class="col-sm-4">
+					<span class="form-control show-only-bottom"><fmt:formatDate value="${entity.modifyTime}" pattern="yyyy-MM-dd HH:mm"/></span>
 				</div>
 			</div>
 		</div>

@@ -92,7 +92,7 @@ public class UserController extends BaseController {
 		}else{
 			dto.remove("password");
 		}
-		userService.edit(dto);
+		userService.update(dto);
 		map.put("status", 1);
 		return map;
 	}

@@ -20,6 +20,7 @@ import com.tq.management.base.system.entity.User;
 import com.tq.management.base.utils.CrudUtils;
 import com.tq.management.base.utils.DataTables;
 import com.tq.management.base.utils.PatternEnum;
+import com.tq.management.base.utils.StatusEnum;
 import com.tq.management.base.utils.WebDto;
 
 /**
@@ -36,6 +37,9 @@ public class UserService {
 		Map<String, Object> map = new HashMap<String, Object>();
 		Integer totalNum = template.selectOne("UserMapper.count", dto);
 		List<User> lists = template.selectList("UserMapper.list", dto);
+		for (User user : lists) {
+			user.setStatus(StatusEnum.readableInfo(user.getStatus()));
+		}
 		DataTables.map(map, dto, totalNum, totalNum, lists);
 		return map;
 	}
@@ -46,20 +50,26 @@ public class UserService {
 		String password = dto.getString("password");
 		password = new SimpleHash("SHA-1", loginName, password).toString();
 		dto.put("password", password);
-		dto.put("status", "invalid");
+		dto.put("status", StatusEnum.VALID.getCode());
 		dto.put("skin", 1);
 		CrudUtils.beforeAdd(dto);
 		template.insert("UserMapper.add", dto);
 	}
 
 	public void delete(Integer id) {
-		template.delete("UserMapper.delete", id);
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("id", id);
+		CrudUtils.beforeUpdate(map);
+		template.delete("UserMapper.delete", map);
 	}
 
 	public boolean batchDelete(String ids) {
 		boolean success = false;
 		if (StringUtils.isNotBlank(ids) && PatternEnum.IDS.isValid(ids)) {
-			template.delete("UserMapper.batchDelete", ids);
+			Map<String, Object> map = new HashMap<String, Object>();
+			map.put("ids", ids);
+			CrudUtils.beforeUpdate(map);
+			template.delete("UserMapper.batchDelete", map);
 			success = true;
 		}
 		return success;
@@ -70,7 +80,8 @@ public class UserService {
 
 	}
 
-	public void edit(WebDto dto) {
-		template.update("UserMapper.edit", dto);
+	public void update(WebDto dto) {
+		CrudUtils.beforeUpdate(dto);
+		template.update("UserMapper.update", dto);
 	}
 }

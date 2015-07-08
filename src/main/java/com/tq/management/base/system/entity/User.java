@@ -9,43 +9,14 @@ import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.List;
 
+import com.alibaba.fastjson.annotation.JSONField;
+import com.tq.management.base.entity.SuperEntity;
+
 /**
  * @version 1.0
  * @author tangqian
  */
-public class User implements Serializable {
-
-	public Timestamp getCreateTime() {
-		return createTime;
-	}
-
-	public void setCreateTime(Timestamp createTime) {
-		this.createTime = createTime;
-	}
-
-	public Timestamp getModifyTime() {
-		return modifyTime;
-	}
-
-	public void setModifyTime(Timestamp modifyTime) {
-		this.modifyTime = modifyTime;
-	}
-
-	public Integer getCreator() {
-		return creator;
-	}
-
-	public void setCreator(Integer creator) {
-		this.creator = creator;
-	}
-
-	public Integer getModifier() {
-		return modifier;
-	}
-
-	public void setModifier(Integer modifier) {
-		this.modifier = modifier;
-	}
+public class User extends SuperEntity implements Serializable {
 
 	public String getLoginName() {
 		return loginName;
@@ -87,14 +58,6 @@ public class User implements Serializable {
 		this.ip = ip;
 	}
 
-	public String getStatus() {
-		return status;
-	}
-
-	public void setStatus(String status) {
-		this.status = status;
-	}
-
 	public String getDescription() {
 		return description;
 	}
@@ -127,14 +90,6 @@ public class User implements Serializable {
 		this.skin = skin;
 	}
 
-	public Integer getId() {
-		return id;
-	}
-
-	public void setId(Integer id) {
-		this.id = id;
-	}
-
 	public List<Role> getRoles() {
 		return roles;
 	}
@@ -150,20 +105,23 @@ public class User implements Serializable {
 
 	private List<Role> roles;
 
-	private Integer id; // 用户id
 	private String loginName; // 用户名
+
 	private String password; // 密码
+
 	private String name; // 姓名
+
+	@JSONField(format = "yyyy-MM-dd HH:mm:ss")
 	private Timestamp lastLogin; // 最后登录时间
+
 	private String ip; // 用户登录ip地址
-	private String status; // 状态
+
 	private String description; // 用户登录ip地址
+
 	private String email; // 用户登录ip地址
+
 	private String phone; // 用户登录ip地址
+
 	private Integer skin; // 皮肤
-	private Timestamp createTime;
-	private Timestamp modifyTime;
-	private Integer creator;
-	private Integer modifier;
 
 }

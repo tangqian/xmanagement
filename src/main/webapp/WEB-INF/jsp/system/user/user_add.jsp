@@ -44,10 +44,10 @@
 					</div>
 				</div>
 				<div class="form-group">
-					<label for="name" class="col-sm-2 control-label">姓名</label>
+					<label for="name" class="col-sm-2 control-label">真实姓名</label>
 					<div class="col-sm-7">
 						<input id="name" name="name" type="text" maxlength="32"
-							class="form-control required" placeholder="请输入姓名">
+							class="form-control required" placeholder="请输入真实姓名">
 					</div>
 				</div>
 				<div class="form-group">

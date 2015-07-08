@@ -15,8 +15,8 @@
 	border-top:none;
 	border-left:none;
 	border-right:none;
-	border-bottom:1px solid #000;
 }
 .modal-content{
 	background-color: #F7F7F7;
 }
+th, td { white-space: nowrap; }
