@@ -20,3 +20,15 @@
 	background-color: #F7F7F7;
 }
 th, td { white-space: nowrap; }
+.table-primary thead tr th {
+    background-color: #3c8dbc;
+    color: #fff;
+}
+.dataTables_scrollBody {margin-top: -1px;}
+.dropdown-menu{min-width: 80px;}
+table.dataTable thead > tr > th. {
+    padding-right: 30px;
+}
+.my-tab{
+	border-top: 3px solid #3c8dbc;
+}

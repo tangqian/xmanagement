@@ -18,26 +18,32 @@
 		<div class="container-fluid">
 			<div class="form-group">
 				<label for="loginName" class="col-sm-2 control-label">用户名</label>
-				<div class="col-sm-7">
+				<div class="col-sm-4">
 					<span class="form-control show-only-bottom">${entity.loginName}</span>
+				</div>
+				<label for="email" class="col-sm-2 control-label">账号状态</label>
+				<div class="col-sm-4">
+					<span class="form-control show-only-bottom">${entity.status}</span>
 				</div>
 			</div>
 			<div class="form-group">
 				<label for="name" class="col-sm-2 control-label">真实姓名</label>
-				<div class="col-sm-7">
+				<div class="col-sm-4">
 					<span class="form-control show-only-bottom">${entity.name}</span>
 				</div>
-			</div>
-			<div class="form-group">
-				<label for="email" class="col-sm-2 control-label">邮箱</label>
-				<div class="col-sm-7">
-					<span class="form-control show-only-bottom">${entity.email}</span>
+				<label for="description" class="col-sm-2 control-label">最近登录</label>
+				<div class="col-sm-4">
+					<span class="form-control show-only-bottom"><fmt:formatDate value="${entity.lastLogin}" pattern="yyyy-MM-dd HH:mm:ss"/></span>
 				</div>
 			</div>
 			<div class="form-group">
 				<label for="phone" class="col-sm-2 control-label">电话</label>
-				<div class="col-sm-7">
+				<div class="col-sm-4">
 					<span class="form-control show-only-bottom">${entity.phone}</span>
+				</div>
+				<label for="email" class="col-sm-2 control-label">邮箱</label>
+				<div class="col-sm-4" title="${entity.email}">
+					<span class="form-control show-only-bottom">${entity.email}</span>
 				</div>
 			</div>
 			<div class="form-group">
@@ -52,7 +58,7 @@
 				</div>
 				<label for="description" class="col-sm-2 control-label">创建时间</label>
 				<div class="col-sm-4">
-					<span class="form-control show-only-bottom"><fmt:formatDate value="${entity.createTime}" pattern="yyyy-MM-dd HH:mm"/></span>
+					<span class="form-control show-only-bottom"><fmt:formatDate value="${entity.createTime}" pattern="yyyy-MM-dd HH:mm:ss"/></span>
 				</div>
 			</div>
 			<div class="form-group">
@@ -62,7 +68,7 @@
 				</div>
 				<label for="description" class="col-sm-2 control-label">修改时间</label>
 				<div class="col-sm-4">
-					<span class="form-control show-only-bottom"><fmt:formatDate value="${entity.modifyTime}" pattern="yyyy-MM-dd HH:mm"/></span>
+					<span class="form-control show-only-bottom"><fmt:formatDate value="${entity.modifyTime}" pattern="yyyy-MM-dd HH:mm:ss"/></span>
 				</div>
 			</div>
 		</div>

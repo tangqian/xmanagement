@@ -9,8 +9,12 @@ div.dataTables_length select {
 	display: inline-block;
 }
 
-div.dataTables_filter {
+div.dataTables_length {
 	text-align: right;
+}
+
+div.dataTables_filter {
+	text-align: left;
 }
 
 div.dataTables_filter label {
@@ -28,12 +32,13 @@ div.dataTables_filter input {
 div.dataTables_info {
 	padding-top: 8px;
 	white-space: nowrap;
+	text-align: right;
 }
 
 div.dataTables_paginate {
 	margin: 0;
 	white-space: nowrap;
-	text-align: right;
+	text-align: left;
 }
 
 div.dataTables_paginate ul.pagination {

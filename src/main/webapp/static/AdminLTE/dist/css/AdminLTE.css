@@ -303,7 +303,7 @@ a:focus {
 }
 .content-header > h1 {
   margin: 0;
-  font-size: 24px;
+  float: right;
 }
 .content-header > h1 > small {
   font-size: 15px;
@@ -893,7 +893,7 @@ a:focus {
   border-color: #eee;
 }
 .dropdown-menu > li > a {
-  color: #777;
+  color: #333;
 }
 .dropdown-menu > li > a > .glyphicon,
 .dropdown-menu > li > a > .fa,
@@ -2376,7 +2376,7 @@ a:focus {
 /* NAV TABS */
 .nav-tabs-custom {
   margin-bottom: 20px;
-  background: #fff;
+  background: #f8f8f8;
   box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
   border-radius: 3px;
 }
