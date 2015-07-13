@@ -2,7 +2,6 @@
 	pageEncoding="UTF-8"%>
 <!-- Content Header (Page header) -->
 <section class="content-header">
-	<h1>&nbsp;</h1>
 	<ol class="breadcrumb">
 		<li class="active"><a href="./"><i class="fa fa-dashboard"></i> 主页</a></li>
 	</ol>

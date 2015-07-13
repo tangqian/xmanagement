@@ -300,6 +300,7 @@ a:focus {
 .content-header {
   position: relative;
   padding: 15px 15px 0 15px;
+  min-height: 35px;
 }
 .content-header > h1 {
   margin: 0;
@@ -893,7 +894,7 @@ a:focus {
   border-color: #eee;
 }
 .dropdown-menu > li > a {
-  color: #333;
+  color: #666;
 }
 .dropdown-menu > li > a > .glyphicon,
 .dropdown-menu > li > a > .fa,

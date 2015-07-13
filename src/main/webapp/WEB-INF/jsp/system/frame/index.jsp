@@ -38,6 +38,8 @@
 	rel="stylesheet" type="text/css">
 <link href="${ctx}/static/AdminLTE/plugins/iCheck/flat/blue.css"
 	rel="stylesheet" type="text/css">
+<link href="${ctx}/static/AdminLTE/plugins/iCheck/minimal/blue.css"
+	rel="stylesheet" type="text/css">
 <link href="${ctx}/static/css/adjust.css" rel="stylesheet"
 	type="text/css">
 </head>

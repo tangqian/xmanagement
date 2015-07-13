@@ -12,8 +12,6 @@ import javax.annotation.Resource;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.shiro.crypto.hash.SimpleHash;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -34,16 +32,20 @@ import com.tq.management.base.utils.WebDto;
 @RequestMapping(value = "/user")
 public class UserController extends BaseController {
 
-	private static Logger logger = LoggerFactory.getLogger(UserController.class);
+	private static final String LIST = "system/user/user_list";
+
+	private static final String ADD = "system/user/user_add";
+
+	private static final String EDIT = "system/user/user_edit";
+
+	private static final String VIEW = "system/user/user_view";
 
 	@Resource
 	private UserService userService;
 
 	@RequestMapping
 	public ModelAndView page() {
-		ModelAndView mv = new ModelAndView();
-		mv.setViewName("system/user/user_list");
-		return mv;
+		return new ModelAndView(LIST);
 	}
 
 	@RequestMapping(value = "/list")
@@ -55,9 +57,7 @@ public class UserController extends BaseController {
 
 	@RequestMapping(value = "/add", method = RequestMethod.GET)
 	public ModelAndView add() {
-		ModelAndView mv = new ModelAndView();
-		mv.setViewName("system/user/user_add");
-		return mv;
+		return new ModelAndView(ADD);
 	}
 
 	@RequestMapping(value = "/add", method = RequestMethod.POST)
@@ -69,19 +69,18 @@ public class UserController extends BaseController {
 		map.put("status", 1);
 		return map;
 	}
-	
-	@RequestMapping(value="/edit", method=RequestMethod.GET)
-	public ModelAndView edit(@RequestParam(required = true) Integer id){
-		ModelAndView mv = new ModelAndView();
+
+	@RequestMapping(value = "/edit", method = RequestMethod.GET)
+	public ModelAndView edit(@RequestParam(required = true) Integer id) {
+		ModelAndView mv = new ModelAndView(EDIT);
 		User user = userService.get(id);
 		mv.addObject("entity", user);
-		mv.setViewName("system/user/user_edit");
 		return mv;
 	}
-	
-	@RequestMapping(value="/edit", method=RequestMethod.POST)
+
+	@RequestMapping(value = "/edit", method = RequestMethod.POST)
 	@ResponseBody
-	public Map<String, Object> doEdit(){
+	public Map<String, Object> doEdit() {
 		Map<String, Object> map = new HashMap<String, Object>();
 		WebDto dto = new WebDto(getRequest());
 		String password = dto.getString("password");
@@ -89,20 +88,19 @@ public class UserController extends BaseController {
 			User user = userService.get(dto.getInteger("id"));
 			password = new SimpleHash("SHA-1", user.getLoginName(), password).toString();
 			dto.put("password", password);
-		}else{
+		} else {
 			dto.remove("password");
 		}
 		userService.update(dto);
 		map.put("status", 1);
 		return map;
 	}
-	
-	@RequestMapping(value="/view", method=RequestMethod.GET)
-	public ModelAndView view(@RequestParam(required = true) Integer id){
-		ModelAndView mv = new ModelAndView();
+
+	@RequestMapping(value = "/view", method = RequestMethod.GET)
+	public ModelAndView view(@RequestParam(required = true) Integer id) {
+		ModelAndView mv = new ModelAndView(VIEW);
 		User user = userService.get(id);
 		mv.addObject("entity", user);
-		mv.setViewName("system/user/user_view");
 		return mv;
 	}
 
