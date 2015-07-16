@@ -21,7 +21,7 @@ body {
 body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  font-family: 'Source Sans Pro', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-family: Tahoma,Verdana,Helvetica,Arial,sans-serif;
   font-weight: 400;
   overflow-x: hidden;
   overflow-y: auto;
@@ -132,7 +132,7 @@ body {
 /* Content */
 .content {
   min-height: 250px;
-  padding: 15px;
+  padding: 10px;
   margin-right: auto;
   margin-left: auto;
   padding-left: 15px;
@@ -299,7 +299,7 @@ a:focus {
 }
 .content-header {
   position: relative;
-  padding: 15px 15px 0 15px;
+  padding: 5px 10px 0 15px;
   min-height: 35px;
 }
 .content-header > h1 {
@@ -320,8 +320,7 @@ a:focus {
   font-size: 12px;
   padding: 7px 5px;
   position: absolute;
-  top: 15px;
-  right: 10px;
+  top: 10px;
   border-radius: 2px;
 }
 .content-header > .breadcrumb > li > a {

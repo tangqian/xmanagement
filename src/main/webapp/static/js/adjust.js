@@ -9,7 +9,10 @@ customMsg = {
 	},
 	_showDialog : function(targetId, url, data) {
 		var html = this.htmlContent.modal.replace("#targetId", targetId);
-		$("body").append(html)
+		$("body").append(html);
+		if(data.width){
+			$('#' + targetId).find(".modal-dialog").css("width",data.width);
+		}
 		$.ajax({
 			'type' : data.method || "get",
 			'url' : url,
@@ -127,6 +130,7 @@ $(function() {
 
 	$("body").delegate("*[data-model='dialog']", "click", function() {
 		var targetId = $(this).data("targetId");
+		var width = $(this).data("width");
 		if (targetId == undefined) {
 			targetId = newGuid();
 		}
@@ -136,7 +140,8 @@ $(function() {
 			url = $(this).attr("href")
 		}
 		window.top.customMsg.dialog(targetId, url, {
-			'method' : method
+			'method' : method,
+			'width'  : width
 		});
 		return false;
 	});

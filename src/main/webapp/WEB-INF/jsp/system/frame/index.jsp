@@ -31,7 +31,7 @@
 <!-- Theme style -->
 <link href="${ctx}/static/AdminLTE/dist/css/AdminLTE.min.css"
 	rel="stylesheet" type="text/css" />
-<link href="${ctx}/static/AdminLTE/dist/css/skins/_all-skins.min.css"
+<link href="${ctx}/static/AdminLTE/dist/css/skins/skin-blue.css"
 	rel="stylesheet" type="text/css" />
 <link
 	href="${ctx}/static/AdminLTE/plugins/datatables/dataTables.bootstrap.css"

@@ -108,7 +108,7 @@
 		        	  var html = '<div class="btn-group">'
 		        		  + '<a title="更多操作" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-lg fa-cog"></i></a>'
 		            	  + '<ul role="menu" class="dropdown-menu">'
-		            	  + '  <li><a href="user/view?id='+row.id+'" data-model="dialog"><i class="fa fa-info-circle"></i>查看</a></li>'
+		            	  + '  <li><a href="user/view?id='+row.id+'" data-model="dialog" data-width="650"><i class="fa fa-info-circle"></i>查看</a></li>'
 		            	  + '  <li><a href="user/edit?id='+row.id+'" data-model="dialog"><i class="fa fa-pencil"></i>编辑</a></li>'
 		            	  + '  <li><a href="user/delete?id='+row.id+'" data-msg="确定删除吗？" data-model="ajaxToDo" data-callback="refreshTable"><i class="fa fa-trash-o"></i>删除</a></li>'
 		            	  + '  <li class="divider"></li>'
