@@ -72,18 +72,24 @@
 	$(document).ready(function() {
 		defaultTable = $('#default_table').DataTable( {
 			"ordering": false,
-			"pagingType": "full_numbers",
+			"pagingType": "simple_numbers",
 			"autoWidth": false,
 			//"scrollX": true,
 			"processing": true,
             "serverSide": true,
+            "searching" :false,
+            "filter" : false,
+            "lengthMenu": [[10, 1, 6, -1], [10, 1, 6, "All"]],
             "ajax": {
             	"url" : "user/list",
             	"type" : "post",
             	"data": function (data) {
-                    data.loginName = $("#loginName").val();
+                    data.keyword = $("#keyword").val();
                 }
             },
+            /* "infoCallback": function( settings, start, end, max, total, pre ) {
+                return start +" to "+ end;
+             }, */
             "language": {
                 "url": "<%=basePath%>static/AdminLTE/plugins/datatables/cn.txt",
 			},
@@ -139,14 +145,33 @@
 						}
 						
 					});
-		      }
+		      },
+		      "initComplete": function () {
+		    	  $("#defTool").append('<div class="input-group input-group-sm">'
+		    			   + '<input type="text" placeholder="搜索用户名和真实姓名" name="keyword" id="keyword" class="form-control">'
+		    			   + '<span class="input-group-btn">'
+		    			   + '<button type="button" class="btn btn-primary btn-flat" id="mybtn" onclick="javacript:refreshTable(1);">搜索</button>'
+		    			   + '</span>'
+		    			   + '</div>');
+		    	  $("#defTool").keydown(function(e){ 
+		              var curKey = e.which; 
+		              if(curKey == 13){ 
+		                  $("#mybtn").click(); 
+		                  return false; 
+		              }
+		          });
+	          }
 	  	});
-		// Enable check and uncheck all functionality
 		
 	});
 	
-	function refreshTable() {
-		defaultTable.draw(true);
+	function refreshTable(toFirst) {
+		//defaultTable.ajax.reload();
+		if(toFirst){//表格重绘，并跳转到第一页
+			defaultTable.draw();
+		}else{//表格重绘，保持在当前页
+			defaultTable.draw(false);
+		}
 	}
 	
 

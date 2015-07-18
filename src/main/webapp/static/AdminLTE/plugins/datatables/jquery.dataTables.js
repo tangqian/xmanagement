@@ -2610,14 +2610,14 @@
 			dataProp = typeof column.mData=="function" ? 'function' : column.mData ;
 	
 			d.columns.push( {
-				data:       dataProp,
+				/*data:       dataProp,
 				name:       column.sName,
 				searchable: column.bSearchable,
 				orderable:  column.bSortable,
 				search:     {
 					value: columnSearch.sSearch,
 					regex: columnSearch.bRegex
-				}
+				}*/
 			} );
 	
 			param( "mDataProp_"+i, dataProp );
@@ -3401,6 +3401,12 @@
 		div.children().append(
 			settings.oLanguage.sLengthMenu.replace( '_MENU_', select[0].outerHTML )
 		);
+		
+		//add by tangq at 2015-7-18
+		settings.aoDrawCallback.push( {
+			"fn": _fnUpdateHtml,
+			"sName": "tangqCallback"
+		} );
 	
 		// Can't use `select` variable as user might provide their own and the
 		// reference is broken by the use of outerHTML
@@ -3421,7 +3427,15 @@
 		return div[0];
 	}
 	
-	
+	//add by tangq at 2015-7-18
+	function _fnUpdateHtml ( settings )
+	{
+		/* Show length about the table */
+		var tpl = "<span>，共 _TOTAL_ 条</span>"
+		var lengDiv = settings.aanFeatures.l;
+		$(lengDiv).find("span").remove();
+		$(lengDiv).find("label").after(_fnInfoMacros( settings, tpl));
+	}
 	
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 	 * Note that most of the paging logic is done in

@@ -89,8 +89,8 @@
 			sys_user
 		where
 			status != 'delete'
-		<if test="searchValue != null and searchValue != ''">
-	  	and	CONCAT(IFNULL(login_name,''),IFNULL(name,'')) like #{searchValue}
+		<if test="keyword != null and keyword != ''">
+	  	and	CONCAT(IFNULL(login_name,''),IFNULL(name,'')) like #{keyword}
 		</if>
 	</select>
 
@@ -101,8 +101,8 @@
 			sys_user
 		where 
 			status != 'delete'
-		<if test="searchValue != null and searchValue != ''">
-	  	and	CONCAT(IFNULL(login_name,''),IFNULL(name,'')) like #{searchValue}
+		<if test="keyword != null and keyword != ''">
+	  	and	CONCAT(IFNULL(login_name,''),IFNULL(name,'')) like #{keyword}
 		</if>
 		order by id desc limit #{start},#{length}
 	</select>

@@ -5,6 +5,7 @@
  */
 package com.tq.management.base.system.service;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -33,17 +34,26 @@ public class UserService {
 	@Resource
 	private SqlSessionTemplate template;
 
+	
+	@SuppressWarnings("unchecked")
 	public Map<String, Object> list(WebDto dto) {
 		Map<String, Object> map = new HashMap<String, Object>();
-		String search = dto.getString("search[value]");
+		String search = dto.getString("keyword");
 		if (StringUtils.isNotBlank(search)) {
-			dto.put("searchValue", "%" + search + "%");
+			dto.put("keyword", "%" + search + "%");
 		}
 		Integer totalNum = template.selectOne("UserMapper.count", dto);
-		List<User> lists = template.selectList("UserMapper.list", dto);
-		for (User user : lists) {
-			user.setStatus(StatusEnum.readableInfo(user.getStatus()));
+		
+		List<User> lists;
+		if(totalNum > 0){
+			lists = template.selectList("UserMapper.list", dto);
+			for (User user : lists) {
+				user.setStatus(StatusEnum.readableInfo(user.getStatus()));
+			}
+		}else{
+			lists = Collections.EMPTY_LIST;
 		}
+		
 		DataTables.map(map, dto, totalNum, totalNum, lists);
 		return map;
 	}
