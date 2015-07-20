@@ -19,6 +19,7 @@ public abstract class CrudUtils {
 
 	public static void beforeAdd(Map<String, Object> dto) {
 		Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+		dto.put("status", StatusEnum.VALID.getCode());
 		dto.put("createTime", timestamp);
 		dto.put("modifyTime", timestamp);
 		dto.put("creator", 1);

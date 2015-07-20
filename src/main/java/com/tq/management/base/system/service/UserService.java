@@ -64,7 +64,6 @@ public class UserService {
 		String password = dto.getString("password");
 		password = new SimpleHash("SHA-1", loginName, password).toString();
 		dto.put("password", password);
-		dto.put("status", StatusEnum.VALID.getCode());
 		dto.put("skin", 1);
 		CrudUtils.beforeAdd(dto);
 		template.insert("UserMapper.add", dto);

@@ -23,13 +23,13 @@
 					<li class="header">
 						<div class="btn-group">
 							<button type="button" data-url="user/add" title="点击新增用户"
-								data-model="dialog" class="btn btn-primary navbar-btn">
+								data-model="dialog" class="btn btn-primary navbar-btn btn-sm">
 								<i class="fa fa-plus"></i> 新增
 							</button>
 							<button type="button" data-url="user/batchDelete"
 								data-msg="确定批量删除用户吗？" data-model="ajaxToDo"
 								data-checkbox-name="chx_default" data-callback="refreshTable"
-								class="btn btn-danger navbar-btn">
+								class="btn btn-danger navbar-btn btn-sm">
 								<i class="fa fa-trash-o"></i> 批量删除
 							</button>
 						</div>
@@ -79,7 +79,6 @@
             "serverSide": true,
             "searching" :false,
             "filter" : false,
-            "lengthMenu": [[10, 1, 6, -1], [10, 1, 6, "All"]],
             "ajax": {
             	"url" : "user/list",
             	"type" : "post",
