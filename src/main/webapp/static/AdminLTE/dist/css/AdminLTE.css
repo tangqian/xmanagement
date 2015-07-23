@@ -1270,7 +1270,7 @@ a:focus {
 .input-group .input-group-addon {
   border-radius: 0px;
   border-color: #d2d6de;
-  background-color: #fff;
+/*  background-color: #fff;*/
 }
 /* button groups */
 .btn-group-vertical .btn.btn-flat:first-of-type,
@@ -1685,6 +1685,7 @@ a:focus {
   clear: both;
 }
 .box-header {
+  background: #f8f8f8 none repeat scroll 0 0;
   color: #444;
   display: block;
   padding: 10px;
@@ -1742,6 +1743,7 @@ a:focus {
   border-bottom-right-radius: 3px;
   border-bottom-left-radius: 3px;
   padding: 10px;
+  padding-top: 5px;
 }
 .no-header .box-body {
   border-top-right-radius: 3px;

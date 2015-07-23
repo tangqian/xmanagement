@@ -39,3 +39,10 @@ table.dataTable thead > tr > th. {
 .dropdown-toggle .fa {
     cursor: pointer;
 }
+.input-adjust {
+	margin-top: 5px;
+	margin-right: 6px;
+}
+.input-adjust label {
+	margin-bottom: 0;
+}

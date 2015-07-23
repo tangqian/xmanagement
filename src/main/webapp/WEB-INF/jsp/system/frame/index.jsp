@@ -12,6 +12,7 @@
 <base href="<%=basePath%>">
 <meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
+<link type="image/png" href="${ctx}/static/img/great_vision.png" rel="shortcut icon">
 <title>后台管理界面</title>
 <meta
 	content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no'
@@ -33,6 +34,9 @@
 	rel="stylesheet" type="text/css" />
 <link href="${ctx}/static/AdminLTE/dist/css/skins/skin-blue.css"
 	rel="stylesheet" type="text/css" />
+<link
+	href="${ctx}/static/AdminLTE/plugins/datetimepicker/bootstrap-datetimepicker.min.css"
+	rel="stylesheet" type="text/css">
 <link
 	href="${ctx}/static/AdminLTE/plugins/datatables/dataTables.bootstrap.css"
 	rel="stylesheet" type="text/css">
@@ -82,6 +86,8 @@
 		type="text/javascript"></script>
 	<script src="${ctx}/static/js/jquery.validate.custom.js"
 		type="text/javascript"></script>
+	<script
+		src="${ctx}/static/AdminLTE/plugins/datetimepicker/bootstrap-datetimepicker.min.js"></script>
 	<!-- DataTables plugin -->
 	<script
 		src="${ctx}/static/AdminLTE/plugins/datatables/jquery.dataTables.min.js"></script>

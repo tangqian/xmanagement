@@ -11,6 +11,7 @@ div.dataTables_length select {
 
 div.dataTables_length {
 	text-align: left;
+	padding-top: 2px;
 }
 
 div.dataTables_filter {
