@@ -34,10 +34,10 @@
 	<bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource"
 		init-method="init" destroy-method="close">
 		<!-- 基本属性 url、user、password -->
-		<property name="url" value="${db.mysql.url}" />
-		<property name="username" value="${db.mysql.username}" />
-		<property name="password" value="${db.mysql.password}" />
-		<property name="driverClassName" value="${driverClassName}" />
+		<property name="url" value="jdbc:mysql://localhost:3306/xmanager?autoReconnect=true&amp;useUnicode=true&amp;characterEncoding=utf8" />
+		<property name="username" value="root" />
+		<property name="password" value="123456" />
+		<property name="driverClassName" value="com.mysql.jdbc.Driver" />
 
 		<!-- 配置初始化大小、最小、最大 -->
 		<property name="initialSize" value="5" />
@@ -72,7 +72,7 @@
 
 		<!-- 配置监控统计拦截的filters, 监控统计："stat",防SQL注入："wall",组合使用： "stat,wall" -->
 		<property name="filters" value="stat" />
-	</bean>
+	</bean>  
 
 	<!-- 配置mybatis -->
 	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
@@ -81,10 +81,14 @@
 		<property name="typeAliasesPackage" value="com.tq.management.base.system.entity"></property>
 		<property name="mapperLocations" value="classpath:mybatis/*/*.xml"></property><!-- mapper扫描 -->
 	</bean>
+	
+	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+       <property name="basePackage" value="com.tq.management.base.system.mapper" />
+    </bean>
 
-	<bean id="sqlSessionTemplate" class="org.mybatis.spring.SqlSessionTemplate">
+<!-- 	<bean id="sqlSessionTemplate" class="org.mybatis.spring.SqlSessionTemplate">
 		<constructor-arg ref="sqlSessionFactory" />
-	</bean>
+	</bean> -->
 
 	<bean name="transactionManager"
 		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">

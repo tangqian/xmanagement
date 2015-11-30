@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="UserMapper">
+<mapper namespace="com.tq.management.base.system.mapper.UserMapper">
 	<cache flushInterval="60000" />
 	<sql id="columnsExcludeId">login_name,name,password,last_login,ip,status,description,email,phone,skin,create_time,modify_time,creator,modifier
 	</sql>
@@ -10,7 +10,7 @@
 		<include refid="columnsExcludeId" />
 	</sql>
 
-	<insert id="add" parameterType="map">
+	<insert id="insert" parameterType="User">
 		insert into sys_user (
 			login_name,
 			name,
@@ -40,7 +40,7 @@
 		)
 	</insert>
 
-	<update id="update" parameterType="map">
+	<update id="update" parameterType="User">
 		update sys_user set
 		<if test="password != null">
 			password = #{password},
@@ -55,7 +55,7 @@
 			id = #{id}
 	</update>
 
-	<update id="delete" parameterType="map">
+	<update id="delete" parameterType="User">
 		update sys_user set
 			status = 'delete',
 			modifier = #{modifier},
@@ -94,7 +94,7 @@
 		</if>
 	</select>
 
-	<select id="list" resultType="User">
+	<select id="getPages" resultType="User">
 		select
 			<include refid="columns" />
 		from 

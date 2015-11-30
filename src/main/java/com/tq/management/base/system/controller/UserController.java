@@ -43,18 +43,26 @@ public class UserController extends BaseController {
 	@Resource
 	private UserService userService;
 
-	@RequestMapping
-	public ModelAndView page() {
+	/**
+	 * 列表页
+	 * @return
+	 */
+	@RequestMapping(value = "/list")
+	public ModelAndView index() {
 		return new ModelAndView(LIST);
 	}
 
-	@RequestMapping(value = "/list")
+	@RequestMapping()
 	@ResponseBody
 	public Map<String, Object> list() {
 		WebDto dto = new WebDto(getRequest());
 		return userService.list(dto);
 	}
 
+	/**
+	 * 新增页
+	 * @return
+	 */
 	@RequestMapping(value = "/add", method = RequestMethod.GET)
 	public ModelAndView add() {
 		return new ModelAndView(ADD);
@@ -70,6 +78,11 @@ public class UserController extends BaseController {
 		return map;
 	}
 
+	/**
+	 * 编辑页
+	 * @param id
+	 * @return
+	 */
 	@RequestMapping(value = "/edit", method = RequestMethod.GET)
 	public ModelAndView edit(@RequestParam(required = true) Integer id) {
 		ModelAndView mv = new ModelAndView(EDIT);
@@ -96,6 +109,11 @@ public class UserController extends BaseController {
 		return map;
 	}
 
+	/**
+	 * 查看页
+	 * @param id
+	 * @return
+	 */
 	@RequestMapping(value = "/view", method = RequestMethod.GET)
 	public ModelAndView view(@RequestParam(required = true) Integer id) {
 		ModelAndView mv = new ModelAndView(VIEW);
@@ -104,6 +122,11 @@ public class UserController extends BaseController {
 		return mv;
 	}
 
+	/**
+	 * 单个删除
+	 * @param id
+	 * @return
+	 */
 	@RequestMapping(value = "/delete", method = RequestMethod.POST)
 	@ResponseBody
 	public Map<String, Object> delete(@RequestParam(required = true) Integer id) {
@@ -113,6 +136,11 @@ public class UserController extends BaseController {
 		return map;
 	}
 
+	/**
+	 * 批量删除
+	 * @param ids
+	 * @return
+	 */
 	@RequestMapping(value = "/batchDelete", method = RequestMethod.POST)
 	@ResponseBody
 	public Map<String, Object> batchDelete(@RequestParam(required = true) String ids) {

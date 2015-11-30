@@ -8,15 +8,35 @@ package com.tq.management.base.system.entity;
 import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.List;
+import java.util.Optional;
+
+import org.apache.shiro.crypto.hash.SimpleHash;
 
 import com.alibaba.fastjson.annotation.JSONField;
 import com.tq.management.base.entity.SuperEntity;
+import com.tq.management.base.utils.WebDto;
 
 /**
  * @version 1.0
  * @author tangqian
  */
 public class User extends SuperEntity implements Serializable {
+	
+	public User(){
+		
+	}
+
+	public User(WebDto dto) {
+		Optional<String> optional = Optional.ofNullable(dto.getString("loginName"));
+		optional.ifPresent((s) -> this.loginName = s.toLowerCase());// 登录名统一转换成小写
+		if(dto.getString("password") != null)
+			this.password = new SimpleHash("SHA-1", loginName, dto.getString("password")).toString();
+		this.name = dto.getString("name");
+		this.email = dto.getString("email");
+		this.description = dto.getString("description");
+		this.phone = dto.getString("phone");
+		this.skin = 1;
+	}
 
 	public String getLoginName() {
 		return loginName;

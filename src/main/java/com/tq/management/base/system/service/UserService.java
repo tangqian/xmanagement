@@ -13,11 +13,10 @@ import java.util.Map;
 import javax.annotation.Resource;
 
 import org.apache.commons.lang.StringUtils;
-import org.apache.shiro.crypto.hash.SimpleHash;
-import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Service;
 
 import com.tq.management.base.system.entity.User;
+import com.tq.management.base.system.mapper.UserMapper;
 import com.tq.management.base.utils.CrudUtils;
 import com.tq.management.base.utils.DataTables;
 import com.tq.management.base.utils.PatternEnum;
@@ -32,21 +31,20 @@ import com.tq.management.base.utils.WebDto;
 public class UserService {
 
 	@Resource
-	private SqlSessionTemplate template;
+	private UserMapper mapper;
 
 	
 	@SuppressWarnings("unchecked")
 	public Map<String, Object> list(WebDto dto) {
-		Map<String, Object> map = new HashMap<String, Object>();
 		String search = dto.getString("keyword");
 		if (StringUtils.isNotBlank(search)) {
 			dto.put("keyword", "%" + search + "%");
 		}
-		Integer totalNum = template.selectOne("UserMapper.count", dto);
+		Integer totalNum = mapper.count(dto);
 		
 		List<User> lists;
 		if(totalNum > 0){
-			lists = template.selectList("UserMapper.list", dto);
+			lists = mapper.getPages(dto);
 			for (User user : lists) {
 				user.setStatus(StatusEnum.readableInfo(user.getStatus()));
 			}
@@ -54,26 +52,22 @@ public class UserService {
 			lists = Collections.EMPTY_LIST;
 		}
 		
+		Map<String, Object> map = new HashMap<String, Object>();
 		DataTables.map(map, dto, totalNum, totalNum, lists);
 		return map;
 	}
 
 	public void add(WebDto dto) {
-		String loginName = dto.getString("loginName").toLowerCase();
-		dto.put("loginName", loginName);// 登录名统一转换成小写
-		String password = dto.getString("password");
-		password = new SimpleHash("SHA-1", loginName, password).toString();
-		dto.put("password", password);
-		dto.put("skin", 1);
-		CrudUtils.beforeAdd(dto);
-		template.insert("UserMapper.add", dto);
+		User user = new User(dto);
+		CrudUtils.beforeAdd(user);
+		mapper.insert(user);
 	}
 
 	public void delete(Integer id) {
-		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("id", id);
-		CrudUtils.beforeUpdate(map);
-		template.delete("UserMapper.delete", map);
+		User user = new User();
+		user.setId(id);
+		CrudUtils.beforeUpdate(user);
+		mapper.delete(user);
 	}
 
 	public boolean batchDelete(String ids) {
@@ -82,19 +76,20 @@ public class UserService {
 			Map<String, Object> map = new HashMap<String, Object>();
 			map.put("ids", ids);
 			CrudUtils.beforeUpdate(map);
-			template.delete("UserMapper.batchDelete", map);
+			mapper.batchDelete(map);
 			success = true;
 		}
 		return success;
 	}
 
 	public User get(Integer id) {
-		return template.selectOne("UserMapper.get", id);
+		return mapper.get(id);
 
 	}
 
 	public void update(WebDto dto) {
-		CrudUtils.beforeUpdate(dto);
-		template.update("UserMapper.update", dto);
+		User user = new User(dto);
+		CrudUtils.beforeUpdate(user);
+		mapper.update(user);
 	}
 }

@@ -3,101 +3,130 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%
 	String path = request.getContextPath();
-	String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + path + "/";
+	String basePath = request.getScheme() + "://"
+			+ request.getServerName() + ":" + request.getServerPort()
+			+ path + "/";
 %>
 <c:set var="ctx" value="${pageContext.request.contextPath}" />
 <!DOCTYPE html>
 <html>
 <head>
-<base href="<%=basePath%>">
-<meta charset="UTF-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<link type="image/png" href="${ctx}/static/img/great_vision.png" rel="shortcut icon">
-<title>后台管理界面</title>
-<meta
-	content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no'
-	name='viewport'>
-<!-- Bootstrap 3.3.4 -->
-<link href="${ctx}/static/AdminLTE/bootstrap/css/bootstrap.min.css"
-	rel="stylesheet" type="text/css" />
-<link href="${ctx}/static/AdminLTE/plugins/bootstrapDialog/bootstrap-dialog.min.css"
-	rel="stylesheet" type="text/css" />
-<!-- Font Awesome Icons -->
-<link href="${ctx}/static/AdminLTE/dist/css/font-awesome.min.css"
-	rel="stylesheet" type="text/css" />
-<%-- <!-- Ionicons -->
-<link
-	href="${ctx}/static/AdminLTE/dist/css/ionicons.min.css"
-	rel="stylesheet" type="text/css" /> --%>
-<!-- Theme style -->
-<link href="${ctx}/static/AdminLTE/dist/css/AdminLTE.min.css"
-	rel="stylesheet" type="text/css" />
-<link href="${ctx}/static/AdminLTE/dist/css/skins/skin-blue.css"
-	rel="stylesheet" type="text/css" />
-<link
-	href="${ctx}/static/AdminLTE/plugins/datetimepicker/bootstrap-datetimepicker.min.css"
-	rel="stylesheet" type="text/css">
-<link
-	href="${ctx}/static/AdminLTE/plugins/datatables/dataTables.bootstrap.css"
-	rel="stylesheet" type="text/css">
-<link href="${ctx}/static/AdminLTE/plugins/iCheck/flat/blue.css"
-	rel="stylesheet" type="text/css">
-<link href="${ctx}/static/AdminLTE/plugins/iCheck/minimal/blue.css"
-	rel="stylesheet" type="text/css">
-<link href="${ctx}/static/css/adjust.css" rel="stylesheet"
-	type="text/css">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta charset="utf-8" />
+<title>Ace管理后台首页</title>
+
+<meta name="description" content="管理后台" />
+<meta name="viewport"
+	content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+
+<!-- bootstrap & fontawesome -->
+<link rel="stylesheet" href="${ctx}/static/Ace/css/bootstrap.min.css" />
+<link rel="stylesheet" href="${ctx}/static/Ace/css/bootstrap-dialog.min.css" />
+<link rel="stylesheet"
+	href="${ctx}/static/Ace/font-awesome/4.2.0/css/font-awesome.min.css" />
+
+<!-- page specific plugin styles -->
+
+<!-- text fonts -->
+<link rel="stylesheet"
+	href="${ctx}/static/Ace/fonts/fonts.googleapis.com.css" />
+
+<!-- ace styles -->
+<link rel="stylesheet" href="${ctx}/static/Ace/css/ace.min.css"
+	class="ace-main-stylesheet" id="main-ace-style" />
+
+<!--[if lte IE 9]>
+			<link rel="stylesheet" href="${ctx}/static/Ace/css/ace-part2.min.css" class="ace-main-stylesheet" />
+		<![endif]-->
+
+<!--[if lte IE 9]>
+		  <link rel="stylesheet" href="${ctx}/static/Ace/css/ace-ie.min.css" />
+		<![endif]-->
+
+<!-- inline styles related to this page -->
+
+<!-- ace settings handler -->
+<script src="${ctx}/static/Ace/js/ace-extra.min.js"></script>
+
+<!-- HTML5shiv and Respond.js for IE8 to support HTML5 elements and media queries -->
+
+<!--[if lte IE 8]>
+		<script src="${ctx}/static/Ace/js/html5shiv.min.js"></script>
+		<script src="${ctx}/static/Ace/js/respond.min.js"></script>
+		<![endif]-->
 </head>
-<body class="skin-blue" data-spy="scroll" data-target="#scrollspy">
 
-	<div class="wrapper">
-		<jsp:include page="./main-header.jsp"></jsp:include>
+<body class="no-skin">
+
+	<jsp:include page="./main-header.jsp"></jsp:include>
+
+	<div class="main-container" id="main-container">
+		<script type="text/javascript">
+			try {
+				ace.settings.check('main-container', 'fixed')
+			} catch (e) {
+			}
+		</script>
 		<jsp:include page="./main-sidebar.jsp"></jsp:include>
-
-		<!-- Content Wrapper. Contains page content -->
-		<div class="content-wrapper" id="navTab">
-			<jsp:include page="./content.jsp"></jsp:include>
+		<div class="main-content">
+			<div class="main-content-inner" id="navTab">
+				<jsp:include page="./content.jsp"></jsp:include>
+			</div>
 		</div>
-		<!-- /.content-wrapper -->
-
 		<jsp:include page="./main-footer.jsp"></jsp:include>
-		<jsp:include page="./control-sidebar.jsp"></jsp:include>
+		<a href="#" id="btn-scroll-up"
+			class="btn-scroll-up btn btn-sm btn-inverse"> <i
+			class="ace-icon fa fa-angle-double-up icon-only bigger-110"></i>
+		</a>
 	</div>
-	<!-- ./wrapper -->
-	<jsp:include page="./modal-placeholder.jsp"></jsp:include>
+	<!-- /.main-container -->
 
+	<!-- basic scripts -->
 
-	<!-- jQuery 2.1.4 -->
-	<script src="${ctx}/static/AdminLTE/plugins/jQuery/jQuery-2.1.4.min.js"></script>
-	<!-- Bootstrap 3.3.2 JS -->
-	<script src="${ctx}/static/AdminLTE/bootstrap/js/bootstrap.min.js"
-		type="text/javascript"></script>
-	<!-- AdminLTE App -->
-	<script src="${ctx}/static/AdminLTE/dist/js/app.min.js"
-		type="text/javascript"></script>
-	<!-- SlimScroll 1.3.0 -->
-	<script
-		src="${ctx}/static/AdminLTE/plugins/slimScroll/jquery.slimscroll.min.js"
-		type="text/javascript"></script>
-	<!-- jquery form 3.51.0 -->
+	<!--[if !IE]> -->
+	<script src="${ctx}/static/Ace/js/jquery.2.1.1.min.js"></script>
+
+	<!-- <![endif]-->
+
+	<!--[if IE]>
+<script src="${ctx}/static/Ace/js/jquery.1.11.1.min.js"></script>
+<![endif]-->
+
+	<!--[if !IE]> -->
+	<script type="text/javascript">
+			window.jQuery || document.write("<script src='${ctx}/static/Ace/js/jquery.min.js'>"+"<"+"/script>");
+		</script>
+
+	<!-- <![endif]-->
+
+	<!--[if IE]>
+<script type="text/javascript">
+ window.jQuery || document.write("<script src='${ctx}/static/Ace/js/jquery1x.min.js'>"+"<"+"/script>");
+</script>
+<![endif]-->
+	<script type="text/javascript">
+			if('ontouchstart' in document.documentElement) document.write("<script src='${ctx}/static/Ace/js/jquery.mobile.custom.min.js'>"+"<"+"/script>");
+		</script>
+	<script src="${ctx}/static/Ace/js/bootstrap.min.js"></script>
 	<script src="${ctx}/static/js/jquery.form.min.js"
 		type="text/javascript"></script>
 	<!-- jquery valid 1.13.1 -->
-	<script src="${ctx}/static/js/jquery.validate.min.js"
-		type="text/javascript"></script>
-	<script src="${ctx}/static/js/jquery.validate.custom.js"
-		type="text/javascript"></script>
-	<script
-		src="${ctx}/static/AdminLTE/plugins/datetimepicker/bootstrap-datetimepicker.min.js"></script>
-	<!-- DataTables plugin -->
-	<script
-		src="${ctx}/static/AdminLTE/plugins/datatables/jquery.dataTables.min.js"></script>
-	<script
-		src="${ctx}/static/AdminLTE/plugins/datatables/dataTables.bootstrap.min.js"></script>
-	<script src="${ctx}/static/AdminLTE/plugins/iCheck/icheck.min.js"></script>
-		<script
-		src="${ctx}/static/AdminLTE/plugins/bootstrapDialog/bootstrap-dialog.min.js"></script>
+	<script src="${ctx}/static/js/jquery.validate.min.js" type="text/javascript"></script>
+	<script src="${ctx}/static/js/jquery.validate.custom.js" type="text/javascript"></script>
 
-	<!-- custom js -->
-	<script src="${ctx}/static/js/adjust.js" type="text/javascript"></script>
+	<!-- page specific plugin scripts -->
+	<script src="${ctx}/static/AdminLTE/plugins/datatables/jquery.dataTables.min.js"></script>
+	<script src="${ctx}/static/AdminLTE/plugins/datatables/dataTables.bootstrap.min.js"></script>
+	<script src="${ctx}/static/Ace/js/bootstrap-dialog.min.js"></script>
+	
+<%-- 	<script src="${ctx}/static/AdminLTE/plugins/datatables/jquery.dataTables.min.js"></script>
+	<script src="${ctx}/static/AdminLTE/plugins/datatables/dataTables.bootstrap.min.js"></script> --%>
+	
+	<script src="${ctx}/static/Ace/js/dataTables.tableTools.min.js"></script>
+
+	<!-- ace scripts -->
+	<script src="${ctx}/static/Ace/js/ace-elements.min.js"></script>
+	<script src="${ctx}/static/Ace/js/ace.min.js"></script>
+	<script src="${ctx}/static/js/adjust.js"></script>
 </body>
 </html>

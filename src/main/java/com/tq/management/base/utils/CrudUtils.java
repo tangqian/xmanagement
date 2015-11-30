@@ -8,6 +8,8 @@ package com.tq.management.base.utils;
 import java.sql.Timestamp;
 import java.util.Map;
 
+import com.tq.management.base.entity.SuperEntity;
+
 /**
  * 增删改查操作工具类
  * 
@@ -17,13 +19,19 @@ import java.util.Map;
  */
 public abstract class CrudUtils {
 
-	public static void beforeAdd(Map<String, Object> dto) {
+	public static void beforeAdd(SuperEntity entity) {
 		Timestamp timestamp = new Timestamp(System.currentTimeMillis());
-		dto.put("status", StatusEnum.VALID.getCode());
-		dto.put("createTime", timestamp);
-		dto.put("modifyTime", timestamp);
-		dto.put("creator", 1);
-		dto.put("modifier", 1);
+		entity.setStatus(StatusEnum.VALID.getCode());
+		entity.setCreateTime(timestamp);
+		entity.setModifyTime(timestamp);
+		entity.setModifier(1);
+		entity.setCreator(1);
+	}
+
+	public static void beforeUpdate(SuperEntity entity) {
+		Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+		entity.setModifyTime(timestamp);
+		entity.setModifier(2);
 	}
 
 	public static void beforeUpdate(Map<String, Object> dto) {

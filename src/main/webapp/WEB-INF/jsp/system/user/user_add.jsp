@@ -24,7 +24,7 @@
 					<label for="loginName" class="col-sm-2 control-label">用户名</label>
 					<div class="col-sm-7">
 						<input id="loginName" name="loginName" type="text" maxlength="32"
-							minlength="2" class="form-control required" placeholder="请输入用户名">
+							minlength="3" class="form-control required" placeholder="请输入用户名">
 					</div>
 				</div>
 				<div class="form-group">
@@ -54,14 +54,14 @@
 					<label for="email" class="col-sm-2 control-label">邮箱</label>
 					<div class="col-sm-7">
 						<input id="email" name="email" type="text" maxlength="32"
-							class="form-control required" placeholder="请输入邮箱">
+							class="form-control email" placeholder="请输入邮箱">
 					</div>
 				</div>
 				<div class="form-group">
 					<label for="phone" class="col-sm-2 control-label">电话</label>
 					<div class="col-sm-7">
 						<input id="phone" name="phone" type="text" maxlength="32"
-							class="form-control required" placeholder="请输入电话">
+							class="form-control" placeholder="请输入电话">
 					</div>
 				</div>
 				<div class="form-group">

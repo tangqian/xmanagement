@@ -36,7 +36,11 @@ public class WebDto implements Map<String, Object> {
 				_map.put(entry.getKey(), ArrayUtils.toString(entry.getValue()));
 		}
 		_map.put("start", getInteger("start"));
-		_map.put("length", getInteger("length"));
+		Integer length = getInteger("length");
+		if(length != null && length == -1){
+			length = Integer.MAX_VALUE;
+		}
+		_map.put("length", length);
 	}
 
 	public String getString(Object key) {
