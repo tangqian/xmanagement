@@ -21,6 +21,7 @@
 
 <!-- bootstrap & fontawesome -->
 <link rel="stylesheet" href="${ctx}/static/Ace/css/bootstrap.min.css" />
+<%-- <link rel="stylesheet" href="${ctx}/static/AdminLTE/plugins/bootstrapDialog/bootstrap-dialog.min.css" /> --%>
 <link rel="stylesheet" href="${ctx}/static/Ace/css/bootstrap-dialog.min.css" />
 <link rel="stylesheet"
 	href="${ctx}/static/Ace/font-awesome/4.2.0/css/font-awesome.min.css" />
@@ -34,6 +35,8 @@
 <!-- ace styles -->
 <link rel="stylesheet" href="${ctx}/static/Ace/css/ace.min.css"
 	class="ace-main-stylesheet" id="main-ace-style" />
+<link rel="stylesheet"
+	href="${ctx}/static/css/adjust.css" />
 
 <!--[if lte IE 9]>
 			<link rel="stylesheet" href="${ctx}/static/Ace/css/ace-part2.min.css" class="ace-main-stylesheet" />
@@ -112,6 +115,7 @@
 		type="text/javascript"></script>
 	<!-- jquery valid 1.13.1 -->
 	<script src="${ctx}/static/js/jquery.validate.min.js" type="text/javascript"></script>
+	<script src="${ctx}/static/js/messages_zh.min.js" type="text/javascript"></script>
 	<script src="${ctx}/static/js/jquery.validate.custom.js" type="text/javascript"></script>
 
 	<!-- page specific plugin scripts -->

@@ -45,6 +45,7 @@ public class UserController extends BaseController {
 
 	/**
 	 * 列表页
+	 * 
 	 * @return
 	 */
 	@RequestMapping(value = "/list")
@@ -61,6 +62,7 @@ public class UserController extends BaseController {
 
 	/**
 	 * 新增页
+	 * 
 	 * @return
 	 */
 	@RequestMapping(value = "/add", method = RequestMethod.GET)
@@ -70,16 +72,23 @@ public class UserController extends BaseController {
 
 	@RequestMapping(value = "/add", method = RequestMethod.POST)
 	@ResponseBody
-	public Map<String, Object> doAdd() {
+	public Map<String, Object> doAdd(User user) {
 		Map<String, Object> map = new HashMap<String, Object>();
-		WebDto dto = new WebDto(getRequest());
-		userService.add(dto);
+		user.setLoginName(user.getLoginName().toLowerCase());// 登录名统一转换成小写
+		// Optional<String> optional = Optional.ofNullable(user.getLoginName());
+		// optional.ifPresent((s) ->
+		// user.setLoginName(user.getLoginName().toLowerCase()));// 登录名统一转换成小写
+		user.setPassword(new SimpleHash("SHA-1", user.getLoginName(), user
+				.getPassword()).toString());
+		user.setSkin(1);
+		userService.add(user);
 		map.put("status", 1);
 		return map;
 	}
 
 	/**
 	 * 编辑页
+	 * 
 	 * @param id
 	 * @return
 	 */
@@ -93,24 +102,24 @@ public class UserController extends BaseController {
 
 	@RequestMapping(value = "/edit", method = RequestMethod.POST)
 	@ResponseBody
-	public Map<String, Object> doEdit() {
+	public Map<String, Object> doEdit(User user) {
 		Map<String, Object> map = new HashMap<String, Object>();
-		WebDto dto = new WebDto(getRequest());
-		String password = dto.getString("password");
+		String password = user.getPassword();
 		if (StringUtils.isNotBlank(password)) {
-			User user = userService.get(dto.getInteger("id"));
-			password = new SimpleHash("SHA-1", user.getLoginName(), password).toString();
-			dto.put("password", password);
+			User oldUser = userService.get(user.getId());
+			user.setPassword(new SimpleHash("SHA-1", oldUser.getLoginName(),
+					password).toString());
 		} else {
-			dto.remove("password");
+			user.setPassword(null);
 		}
-		userService.update(dto);
+		userService.update(user);
 		map.put("status", 1);
 		return map;
 	}
 
 	/**
 	 * 查看页
+	 * 
 	 * @param id
 	 * @return
 	 */
@@ -124,6 +133,7 @@ public class UserController extends BaseController {
 
 	/**
 	 * 单个删除
+	 * 
 	 * @param id
 	 * @return
 	 */
@@ -138,12 +148,14 @@ public class UserController extends BaseController {
 
 	/**
 	 * 批量删除
+	 * 
 	 * @param ids
 	 * @return
 	 */
 	@RequestMapping(value = "/batchDelete", method = RequestMethod.POST)
 	@ResponseBody
-	public Map<String, Object> batchDelete(@RequestParam(required = true) String ids) {
+	public Map<String, Object> batchDelete(
+			@RequestParam(required = true) String ids) {
 		Map<String, Object> map = new HashMap<String, Object>();
 		boolean result = userService.batchDelete(ids);
 		if (result) {

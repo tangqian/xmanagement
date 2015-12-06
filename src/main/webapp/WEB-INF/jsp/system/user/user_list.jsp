@@ -15,19 +15,16 @@
 	<ul class="breadcrumb">
 		<li><i class="ace-icon fa fa-home home-icon"></i> <a href="./">主页</a>
 		</li>
-		<li><a href="user/list" data-target='navTab'>用户管理</a></li>
-		<li class="active">总览</li>
+		<li class="active"><a href="user/list" data-target='navTab'>用户管理</a></li>
 	</ul>
 	<!-- /.breadcrumb -->
 
-	<div class="nav-search" id="nav-search">
-		<form class="form-search">
-			<span class="input-icon"> <input type="text"
-				placeholder="Search ..." class="nav-search-input"
-				id="nav-search-input" autocomplete="off" /> <i
-				class="ace-icon fa fa-search nav-search-icon"></i>
+	<div class="nav-search" id="nav-search" title="搜索用户名,姓名,电话和邮箱">
+					<span class="input-icon"> <input type="text" name="keyword"
+				placeholder="搜索..." class="nav-search-input"
+				id="keyword" autocomplete="off" /> <i id="search-icon"
+				class="ace-icon fa fa-search nav-search-icon click" title="点击搜索"></i>
 			</span>
-		</form>
 	</div>
 	<!-- /.nav-search -->
 </div>
@@ -47,15 +44,16 @@
 					class="table table-striped table-bordered table-hover">
 					<thead>
 						<tr>
-							<th class="center"><label class="pos-rel"> <input
+							<th class="center" width="6%"><label class="pos-rel"> <input
 									type="checkbox" class="ace" id="defaultCheck" /> <span class="lbl"></span>
 							</label></th>
-							<th>用户名</th>
-							<th>真实姓名</th>
-							<th>电话</th>
-							<th>状态</th>
-							<th>最近登录</th>
-							<th width="250px"></th>
+							<th width="13%">用户名</th>
+							<th width="10%">真实姓名</th>
+							<th width="11%">电话</th>
+							<th width="15%">邮箱</th>
+							<th width="5%">状态</th>
+							<th width="20%">最近登录</th>
+							<th width="20%"></th>
 						</tr>
 					</thead>
 				</table>
@@ -65,10 +63,10 @@
 </div>
 
 <script type="text/javascript">
-var oTable1;
-jQuery(function($) {
+var defaultTable;
+$(document).ready(function() {
 		//initiate dataTables plugin
-	oTable1 = $('#dynamic-table').dataTable({
+	defaultTable = $('#dynamic-table').DataTable({
 		/* "aoColumns" : [ {
 			"bSortable" : false
 		}, null, null, null, null, null, {
@@ -97,6 +95,7 @@ jQuery(function($) {
 			{ "data": "loginName" },
 			{ "data": "name" },
 			{ "data": "phone" },
+			{ "data": "email" },
 			{ "data": "status" },
 			{ "data": "lastLogin" },
 			{ "data": null },
@@ -110,7 +109,7 @@ jQuery(function($) {
 				+ '</label>'
 				return html;
 			}},{
-			"targets": 6,
+			"targets": 7,
 			"render": function(data, type, row) {
 				var html = '<div class="hidden-sm hidden-xs btn-group">'
 				+ '<button class="btn btn-xs btn-success" data-model="dialog" data-url="user/view?id=' + row.id + '">'
@@ -136,7 +135,7 @@ jQuery(function($) {
 		},
 	});
 	
-	var tableTools_obj = new $.fn.dataTable.TableTools( oTable1, {
+	var tableTools_obj = new $.fn.dataTable.TableTools( defaultTable, {
 		"sRowSelector": "td:not(:last-child)",
 		"sRowSelect": "multi",
 		"fnRowSelected": function(row) {
@@ -168,10 +167,18 @@ jQuery(function($) {
 		if(!this.checked) tableTools_obj.fnSelect(row);
 		else tableTools_obj.fnDeselect($(this).closest('tr').get(0));
 	});
-
-	//table checkboxes
-	$('th input[type=checkbox], td input[type=checkbox]').prop('checked',
-			false);
+	
+	$("#nav-search").keydown(function(e) {
+		var curKey = e.which;
+		if (curKey == 13) {
+			refreshTable(1);
+			return false;
+		}
+	});
+	
+	$('#search-icon').on('click', function(){
+		refreshTable(1);
+	});
 
 	/* $(document).on('click', '#dynamic-table .dropdown-toggle', function(e) {
 		e.stopImmediatePropagation();
@@ -179,14 +186,15 @@ jQuery(function($) {
 		e.preventDefault();
 	}); */
 
+	
 });
 
 function refreshTable(toFirst) {
 	//defaultTable.ajax.reload();
 	if(toFirst){//表格重绘，并跳转到第一页
-		oTable1.draw();
+		defaultTable.draw();
 	}else{//表格重绘，保持在当前页
-		oTable1.draw(false);
+		defaultTable.draw(false);
 	}
 }
 </script>
