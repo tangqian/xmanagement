@@ -22,6 +22,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.tq.management.base.controller.BaseController;
 import com.tq.management.base.system.entity.User;
 import com.tq.management.base.system.service.UserService;
+import com.tq.management.base.utils.StatusEnum;
 import com.tq.management.base.utils.WebDto;
 
 /**
@@ -127,6 +128,7 @@ public class UserController extends BaseController {
 	public ModelAndView view(@RequestParam(required = true) Integer id) {
 		ModelAndView mv = new ModelAndView(VIEW);
 		User user = userService.get(id);
+		user.setStatus(StatusEnum.readable(user.getStatus()));
 		mv.addObject("entity", user);
 		return mv;
 	}

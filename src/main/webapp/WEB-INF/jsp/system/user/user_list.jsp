@@ -30,6 +30,21 @@
 </div>
 
 <div class="page-content">
+
+	<div class="page-header">
+		<button class="btn btn-white btn-info btn-round" data-model="dialog" data-url="user/add">
+			<i class="ace-icon fa fa-floppy-o bigger-120 blue"></i> 新增
+		</button>
+		<button class="btn btn-white btn-danger btn-round" data-url="user/batchDelete"
+								data-msg="确定删除这些用户吗？" data-model="ajaxToDo"
+								data-checkbox-name="chx_default" data-callback="refreshTable">
+			<i class="ace-icon fa fa-trash-o bigger-120 orange"></i> 删除
+		</button>
+		
+		<a class="btn btn-white btn-danger btn-round" href="user/import/list" data-target='navTab'>
+			<i class="ace-icon fa fa-trash-o bigger-120 orange"></i> 导入
+		</a>
+	</div>
 	<div class="row">
 		<div class="col-xs-12">
 
@@ -179,12 +194,6 @@ $(document).ready(function() {
 	$('#search-icon').on('click', function(){
 		refreshTable(1);
 	});
-
-	/* $(document).on('click', '#dynamic-table .dropdown-toggle', function(e) {
-		e.stopImmediatePropagation();
-		e.stopPropagation();
-		e.preventDefault();
-	}); */
 
 	
 });

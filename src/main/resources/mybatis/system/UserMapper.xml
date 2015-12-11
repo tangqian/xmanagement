@@ -2,7 +2,6 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.tq.management.base.system.mapper.UserMapper">
-	<cache flushInterval="60000" />
 	<sql id="columnsExcludeId">login_name,name,password,last_login,ip,status,description,email,phone,skin,create_time,modify_time,creator,modifier
 	</sql>
 	<sql id="columns">

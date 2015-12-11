@@ -8,6 +8,8 @@ package com.tq.management.base.entity;
 import java.io.Serializable;
 import java.sql.Timestamp;
 
+import com.alibaba.fastjson.annotation.JSONField;
+
 /**
  * @version 1.0
  * @author tangqian
@@ -68,8 +70,10 @@ public class SuperEntity implements Serializable {
 
 	private String status; // 状态
 
+	@JSONField(format = "yyyy-MM-dd HH:mm:ss")
 	private Timestamp createTime;
 
+	@JSONField(format = "yyyy-MM-dd HH:mm:ss")
 	private Timestamp modifyTime;
 
 	private Integer creator;

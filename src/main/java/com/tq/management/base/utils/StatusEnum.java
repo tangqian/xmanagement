@@ -43,7 +43,7 @@ public enum StatusEnum {
 	 * @param code
 	 * @return
 	 */
-	public static String readableInfo(String code) {
+	public static String readable(String code) {
 		StatusEnum ret = null;
 		for (StatusEnum e : StatusEnum.values()) {
 			if (e.code.equals(code)) {

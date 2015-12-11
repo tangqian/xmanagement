@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tq.management.base.system.mapper.ImportLogMapper">
+	<!-- <cache flushInterval="60000" /> -->
+	<sql id="columns">
+		id,name,total_num,success_num,status,output_path,type,create_time,creator
+	</sql>
+
+	<insert id="insert" parameterType="com.tq.management.base.entity.ImportLog">
+		insert into import_log (
+			name,
+			total_num,
+			success_num,
+			status,
+			output_path,
+			type,
+			create_time,
+			creator
+		) values (
+			#{name},
+			#{totalNum},
+			#{successNum},
+			#{status},
+			#{outputPath},
+			#{type},
+			#{createTime},
+			#{creator}
+		)
+	</insert>
+
+	<update id="update" parameterType="com.tq.management.base.entity.ImportLog">
+		update import_log set
+		<if test="password != null">
+			password = #{password},
+		</if>
+			name = #{name},
+			description = #{description},
+			email = #{email},
+			phone = #{phone},
+			modifier = #{modifier},
+			modify_time = #{modifyTime}
+		where
+			id = #{id}
+	</update>
+	
+	<select id="get" parameterType="int" resultType="com.tq.management.base.entity.ImportLog">
+		select
+			<include refid="columns" />
+		from 
+			import_log
+		where 
+			id = #{id}
+	</select>
+
+	<select id="count" parameterType="map" resultType="int">
+		select
+			count(1)
+		from
+			import_log
+		where
+			status != 'delete'
+		<if test="keyword != null and keyword != ''">
+	  		and	name like #{keyword}
+		</if>
+		<if test="type != null">
+	  		and	type = #{type}
+		</if>
+	</select>
+
+	<select id="getPages" resultType="com.tq.management.base.entity.ImportLog">
+		select
+			<include refid="columns" />
+		from 
+			import_log
+		where 
+			status != 'delete'
+		<if test="keyword != null and keyword != ''">
+	  		and	name like #{keyword}
+		</if>
+		<if test="type != null">
+	  		and	type = #{type}
+		</if>
+		order by id desc limit #{start},#{length}
+	</select>
+
+</mapper>

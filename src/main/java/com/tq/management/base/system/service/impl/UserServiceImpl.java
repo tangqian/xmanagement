@@ -47,7 +47,7 @@ public class UserServiceImpl implements UserService {
 		if (totalNum > 0) {
 			lists = mapper.getPages(dto);
 			for (User user : lists) {
-				user.setStatus(StatusEnum.readableInfo(user.getStatus()));
+				user.setStatus(StatusEnum.readable(user.getStatus()));
 			}
 		} else {
 			lists = Collections.EMPTY_LIST;
