@@ -36,10 +36,9 @@
 		<button class="btn btn-white btn-info btn-round" data-model="dialog" data-url="user/add">
 			<i class="ace-icon glyphicon glyphicon-upload bigger-120 blue"></i> 导入
 		</button>
-		<button class="btn btn-white btn-info btn-round" data-url="user/import/download/template" data-model="dialog">
+		<a class="pull-right btn btn-white btn-info btn-round" href="user/import/download/template">
 			<i class="ace-icon glyphicon glyphicon-download bigger-120 blue"></i> 模板下载
-			
-		</button>
+		</a>
 	</div>
 	<div class="row">
 		<div class="col-xs-12">

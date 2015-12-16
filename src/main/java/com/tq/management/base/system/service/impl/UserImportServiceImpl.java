@@ -5,24 +5,21 @@
  */
 package com.tq.management.base.system.service.impl;
 
-import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
+import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import jxl.Workbook;
-import jxl.read.biff.BiffException;
-import jxl.write.Label;
-import jxl.write.WritableSheet;
-import jxl.write.WritableWorkbook;
-
 import org.apache.commons.lang.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import com.tq.management.base.entity.ImportLog;
@@ -32,6 +29,7 @@ import com.tq.management.base.system.service.UserImportService;
 import com.tq.management.base.utils.CrudUtils;
 import com.tq.management.base.utils.DataTables;
 import com.tq.management.base.utils.WebDto;
+import com.tq.management.base.utils.file.DataTemplate;
 
 /**
  * @version 1.0
@@ -39,11 +37,11 @@ import com.tq.management.base.utils.WebDto;
  */
 @Service
 public class UserImportServiceImpl implements UserImportService {
+	
+	private static Logger logger = LoggerFactory.getLogger(UserImportServiceImpl.class);
 
 	@Resource
 	private ImportLogMapper mapper;
-	
-	private static final String TEMPLATE_NAME = "D:/sys_user.xls";
 
 	@SuppressWarnings("unchecked")
 	@Override
@@ -80,21 +78,30 @@ public class UserImportServiceImpl implements UserImportService {
 	}
 
 	@Override
-	public void downloadTemplate(HttpServletRequest request, HttpServletResponse response) throws Exception{
-		WritableWorkbook writeBook = Workbook.createWorkbook(new File(TEMPLATE_NAME));  
-  
-        // 2、新建工作表(sheet)对象，并声明其属于第几页  
-        WritableSheet firstSheet = writeBook.createSheet("第一个工作簿", 1);// 第一个参数为工作簿的名称，第二个参数为页数  
-        WritableSheet secondSheet = writeBook.createSheet("第二个工作簿", 0);  
-  
-        // 3、创建单元格(Label)对象，  
-        Label label1 = new Label(1, 2, "test1");// 第一个参数指定单元格的列数、第二个参数指定单元格的行数，第三个指定写的字符串内容  
-        firstSheet.addCell(label1);  
-        Label label2 = new Label(1, 2, "test2");  
-        secondSheet.addCell(label2);  
-        // 4、打开流，开始写文件  
-        writeBook.write();  
-        // 5、关闭流  
-        writeBook.close();    
+	public void downloadTemplate(HttpServletRequest request, HttpServletResponse response){
+		InputStream inputStream = null;
+		ServletOutputStream out;
+		try {  
+			inputStream = DataTemplate.getUserTemplate();
+			response.reset();
+			response.setContentType("multipart/form-data");
+			response.addHeader("Content-Disposition", "attachment;filename=111.xls");
+            out = response.getOutputStream();
+            int len;
+            byte[] buffer = new byte[1024];
+            while ((len = inputStream.read(buffer)) > 0)
+                out.write(buffer,0,len);
+            inputStream.close();
+            out.close();
+            out.flush();
+        } catch (IOException e) {
+        	if(inputStream != null){
+        		try {
+					inputStream.close();
+				} catch (IOException e1) {
+				}
+        	}
+        	logger.error("用户导入模板下载发生异常!", e);
+        }
 	}
 }

@@ -11,7 +11,10 @@ http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd">
 		<param-value>/yw/logback.xml</param-value>
 	</context-param>
 	<listener>
-		<listener-class>com.tq.management.home.spring.LogbackConfigListener</listener-class>
+		<listener-class>com.tq.management.spring.listener.LogbackConfigListener</listener-class>
+	</listener>
+	<listener>
+		<listener-class>com.tq.management.spring.listener.SystemParamListener</listener-class>
 	</listener>
 	<!-- end logback configuration -->
 

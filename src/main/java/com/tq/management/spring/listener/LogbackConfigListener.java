@@ -3,7 +3,7 @@
  * distributed with this file and available online at
  * http://www.gvtv.com.cn/
  */
-package com.tq.management.home.spring;
+package com.tq.management.spring.listener;
 
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;

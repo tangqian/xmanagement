@@ -9,8 +9,6 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
@@ -30,8 +28,6 @@ import com.tq.management.base.utils.WebDto;
 @Controller
 @RequestMapping(value = "/menu")
 public class MenuController extends BaseController {
-	
-	private static Logger logger = LoggerFactory.getLogger(MenuController.class);
 
 	@Resource
 	private MenuService menuService;

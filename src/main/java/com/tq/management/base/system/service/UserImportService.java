@@ -5,13 +5,10 @@
  */
 package com.tq.management.base.system.service;
 
-import java.io.IOException;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import jxl.read.biff.BiffException;
 
 import com.tq.management.base.entity.ImportLog;
 import com.tq.management.base.utils.WebDto;
@@ -31,6 +28,6 @@ public interface UserImportService {
 	/**
 	 * 下载用户导入模板
 	 */
-	public void downloadTemplate(HttpServletRequest request, HttpServletResponse response) throws Exception;
+	public void downloadTemplate(HttpServletRequest request, HttpServletResponse response);
 
 }

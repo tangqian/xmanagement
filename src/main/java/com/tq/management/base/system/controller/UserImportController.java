@@ -5,14 +5,11 @@
  */
 package com.tq.management.base.system.controller;
 
-import java.io.IOException;
 import java.util.Map;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import jxl.read.biff.BiffException;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -50,10 +47,8 @@ public class UserImportController extends BaseController {
 	}
 
 	@RequestMapping(value = "/download/template", method = RequestMethod.GET)
-	@ResponseBody
-	public ModelAndView download(HttpServletRequest request, HttpServletResponse response) throws Exception {
+	public void download(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		userImportService.downloadTemplate(request, response);
-		return null;
 	}
 
 }
