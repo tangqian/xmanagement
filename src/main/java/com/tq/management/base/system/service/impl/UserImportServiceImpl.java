@@ -5,18 +5,19 @@
  */
 package com.tq.management.base.system.service.impl;
 
+import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
+import java.io.UnsupportedEncodingException;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
-import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -37,11 +38,29 @@ import com.tq.management.base.utils.file.DataTemplate;
  */
 @Service
 public class UserImportServiceImpl implements UserImportService {
-	
+
 	private static Logger logger = LoggerFactory.getLogger(UserImportServiceImpl.class);
 
 	@Resource
 	private ImportLogMapper mapper;
+
+	private static String TPL_IE;
+
+	private static String TPL_FIREFOX;
+
+	static {
+		TPL_IE = "attachment; filename=";
+		try {
+			TPL_IE += java.net.URLEncoder.encode("用户导入模板.xls", "UTF-8");
+		} catch (UnsupportedEncodingException e) {
+		}
+
+		TPL_FIREFOX = "attachment; filename=";
+		try {
+			TPL_FIREFOX += new String("用户导入模板.xls".getBytes("UTF-8"), "ISO-8859-1");
+		} catch (UnsupportedEncodingException e) {
+		}
+	}
 
 	@SuppressWarnings("unchecked")
 	@Override
@@ -78,30 +97,28 @@ public class UserImportServiceImpl implements UserImportService {
 	}
 
 	@Override
-	public void downloadTemplate(HttpServletRequest request, HttpServletResponse response){
-		InputStream inputStream = null;
-		ServletOutputStream out;
-		try {  
-			inputStream = DataTemplate.getUserTemplate();
+	public void downloadTemplate(HttpServletRequest request, HttpServletResponse response) {
+		try {
+			File template = DataTemplate.getUserTemplate();
 			response.reset();
 			response.setContentType("multipart/form-data");
-			response.addHeader("Content-Disposition", "attachment;filename=111.xls");
-            out = response.getOutputStream();
-            int len;
-            byte[] buffer = new byte[1024];
-            while ((len = inputStream.read(buffer)) > 0)
-                out.write(buffer,0,len);
-            inputStream.close();
-            out.close();
-            out.flush();
-        } catch (IOException e) {
-        	if(inputStream != null){
-        		try {
-					inputStream.close();
-				} catch (IOException e1) {
-				}
-        	}
-        	logger.error("用户导入模板下载发生异常!", e);
-        }
+			if (isMSIE(request)) {
+				response.addHeader("Content-Disposition", TPL_IE);
+			} else {
+				response.addHeader("Content-Disposition", TPL_FIREFOX);
+			}
+			response.addHeader("Content-Length", "" + template.length());
+			FileUtils.copyFile(template, response.getOutputStream());
+		} catch (IOException e) {//发生异常表明下载失败,在统计下载次数时千万不能加1
+			logger.error("用户导入模板下载发生异常!");
+		} finally {
+			//System.out.println("下载流已经完成");
+		}
+	}
+
+	private boolean isMSIE(HttpServletRequest request) {
+		String agent = request.getHeader("User-Agent");
+		boolean isMSIE = (agent.contains("MSIE")  || agent.contains("Trident"));
+		return isMSIE;
 	}
 }
