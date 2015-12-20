@@ -33,8 +33,8 @@
 <div class="page-content">
 
 	<div class="page-header">
-		<button class="btn btn-white btn-info btn-round" data-model="dialog" data-url="user/add">
-			<i class="ace-icon glyphicon glyphicon-upload bigger-120 blue"></i> 导入
+		<button class="btn btn-white btn-info btn-round" data-model="dialog" data-url="user/import/upload">
+			<i class="ace-icon glyphicon glyphicon-upload bigger-120 blue"></i> 用户导入
 		</button>
 		<a class="pull-right btn btn-white btn-info btn-round" href="user/import/download/template">
 			<i class="ace-icon glyphicon glyphicon-download bigger-120 blue"></i> 模板下载
