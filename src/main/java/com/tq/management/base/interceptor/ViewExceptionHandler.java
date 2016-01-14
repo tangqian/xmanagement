@@ -7,8 +7,6 @@ package com.tq.management.base.interceptor;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.HashMap;
-import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -19,6 +17,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.SimpleMappingExceptionResolver;
 
 import com.alibaba.druid.support.json.JSONUtils;
+import com.tq.management.base.dto.JsonCallDto;
 
 /**
  * @version 1.0
@@ -46,10 +45,8 @@ public class ViewExceptionHandler extends SimpleMappingExceptionResolver {
 			} else {// JSON格式返回
 				try {
 					PrintWriter writer = response.getWriter();
-					Map<String, Object> map = new HashMap<String, Object>();
-					map.put("status", 0);
-					map.put("msg", ex.getMessage());
-					writer.write(JSONUtils.toJSONString(map));
+					JsonCallDto dto = new JsonCallDto(0, ex.getMessage());
+					writer.write(JSONUtils.toJSONString(dto));
 					writer.flush();
 				} catch (IOException e) {
 					e.printStackTrace();
@@ -68,9 +65,8 @@ public class ViewExceptionHandler extends SimpleMappingExceptionResolver {
 				if(request.getHeader("Accept").toLowerCase().startsWith("application/json")){
 					try {
 						PrintWriter writer = response.getWriter();
-						Map<String, Object> map = new HashMap<String, Object>();
-						map.put("status", 500);
-						writer.write(JSONUtils.toJSONString(map));
+						JsonCallDto dto = new JsonCallDto(500, ex.getMessage());
+						writer.write(JSONUtils.toJSONString(dto));
 						writer.flush();
 					} catch (IOException e) {
 						e.printStackTrace();

@@ -44,7 +44,7 @@ jQuery.validator.setDefaults({
                 	BootstrapDialog.show({
     					type: BootstrapDialog.TYPE_WARNING,
     		            title: '操作结果提示',
-    		            message: data.msg || "未知错误警告!请反馈给系统管理员，我们会尽快解决该问题",
+    		            message: data.msg || "系统错误警告!请反馈给系统管理员，我们会尽快解决该问题",
     		        });
                 }
             },

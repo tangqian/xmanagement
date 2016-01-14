@@ -21,16 +21,17 @@ import com.tq.management.base.utils.WebDto;
  * @author tangqian
  */
 public class User extends SuperEntity implements Serializable {
-	
-	public User(){
-		
+
+	public User() {
+
 	}
 
 	public User(WebDto dto) {
 		Optional<String> optional = Optional.ofNullable(dto.getString("loginName"));
 		optional.ifPresent((s) -> this.loginName = s.toLowerCase());// 登录名统一转换成小写
-		if(dto.getString("password") != null)
-			this.password = new SimpleHash("SHA-1", loginName, dto.getString("password")).toString();
+		if (dto.getString("password") != null)
+			this.password = new SimpleHash("SHA-1", loginName, dto.getString("password"))
+					.toString();
 		this.name = dto.getString("name");
 		this.email = dto.getString("email");
 		this.description = dto.getString("description");
@@ -143,5 +144,21 @@ public class User extends SuperEntity implements Serializable {
 	private String phone; // 用户登录ip地址
 
 	private Integer skin; // 皮肤
+
+	/**
+	 * 实体对象赋初始值
+	 */
+	public void init() {
+		if (name == null)
+			name = "";
+		if (email == null)
+			email = "";
+		if (phone == null)
+			phone = "";
+		if (skin == null)
+			skin = 1;
+		if (description == null)
+			description = "";
+	}
 
 }

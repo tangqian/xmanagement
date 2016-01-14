@@ -1,13 +1,15 @@
 package com.tq.management.base.utils.file;
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStream;
 
-import jxl.Workbook;
-import jxl.write.Label;
-import jxl.write.WritableSheet;
-import jxl.write.WritableWorkbook;
-
+import org.apache.commons.io.IOUtils;
+import org.apache.poi.hssf.usermodel.HSSFSheet;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.Row;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -42,25 +44,26 @@ public abstract class DataTemplate {
 
 	private static File createUserTemplate() {
 		File file = new File(getUserFilename());
+		OutputStream os = null;
 		try {
-			WritableWorkbook writeBook = Workbook.createWorkbook(file);
-			WritableSheet sheet1 = writeBook.createSheet("Sheet1", 0);// 第一个参数为工作簿的名称，第二个参数为页数
-
+			HSSFWorkbook writeBook = new HSSFWorkbook();
+			HSSFSheet sheet1 = writeBook.createSheet();
 			String[] header = new String[] { "用户名", "姓名", "邮箱", "电话" };
-			String[] row1 = new String[] { "zhangsan", "张三", "zhangsan@163.com", "15812124848" };
+			String[] rowArr1 = new String[] { "zhangsan", "张三", "zhangsan@163.com", "15812124848" };
+			Row row = sheet1.createRow(0);
 			for (int i = 0; i < header.length; i++) {
-				sheet1.setColumnView(i, 25);// 设置列宽
-				// 创建单元格(Label)对象，第一个参数指定单元格的列数、第二个参数指定单元格的行数，第三个指定写的字符串内容
-				Label label = new Label(i, 0, header[i]);
-				sheet1.addCell(label);
+				Cell cell = row.createCell(i);
+				cell.setCellValue(header[i]);
 			}
-			for (int i = 0; i < row1.length; i++) {
-				Label label = new Label(i, 1, row1[i]);
-				sheet1.addCell(label);
+			Row row1 = sheet1.createRow(1);
+			for (int i = 0; i < rowArr1.length; i++) {
+				Cell cell = row1.createCell(i);
+				cell.setCellValue(rowArr1[i]);
 			}
-			writeBook.write();
+			writeBook.write(new FileOutputStream(file));
 			writeBook.close();
 		} catch (Exception e) {
+			IOUtils.closeQuietly(os);
 			logger.error("创建用户导入模板失败,异常为：" + e);
 		}
 		return file;

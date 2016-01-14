@@ -5,7 +5,6 @@
  */
 package com.tq.management.base.system.controller;
 
-import java.util.HashMap;
 import java.util.Map;
 
 import javax.annotation.Resource;
@@ -20,6 +19,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.tq.management.base.controller.BaseController;
+import com.tq.management.base.dto.JsonCallDto;
 import com.tq.management.base.system.entity.User;
 import com.tq.management.base.system.service.UserService;
 import com.tq.management.base.utils.StatusEnum;
@@ -73,8 +73,7 @@ public class UserController extends BaseController {
 
 	@RequestMapping(value = "/add", method = RequestMethod.POST)
 	@ResponseBody
-	public Map<String, Object> doAdd(User user) {
-		Map<String, Object> map = new HashMap<String, Object>();
+	public JsonCallDto doAdd(User user) {
 		user.setLoginName(user.getLoginName().toLowerCase());// 登录名统一转换成小写
 		// Optional<String> optional = Optional.ofNullable(user.getLoginName());
 		// optional.ifPresent((s) ->
@@ -83,8 +82,7 @@ public class UserController extends BaseController {
 				.getPassword()).toString());
 		user.setSkin(1);
 		userService.add(user);
-		map.put("status", 1);
-		return map;
+		return new JsonCallDto(1);
 	}
 
 	/**
@@ -103,8 +101,7 @@ public class UserController extends BaseController {
 
 	@RequestMapping(value = "/edit", method = RequestMethod.POST)
 	@ResponseBody
-	public Map<String, Object> doEdit(User user) {
-		Map<String, Object> map = new HashMap<String, Object>();
+	public JsonCallDto doEdit(User user) {
 		String password = user.getPassword();
 		if (StringUtils.isNotBlank(password)) {
 			User oldUser = userService.get(user.getId());
@@ -114,8 +111,7 @@ public class UserController extends BaseController {
 			user.setPassword(null);
 		}
 		userService.update(user);
-		map.put("status", 1);
-		return map;
+		return new JsonCallDto(1);
 	}
 
 	/**
@@ -141,11 +137,9 @@ public class UserController extends BaseController {
 	 */
 	@RequestMapping(value = "/delete", method = RequestMethod.POST)
 	@ResponseBody
-	public Map<String, Object> delete(@RequestParam(required = true) Integer id) {
-		Map<String, Object> map = new HashMap<String, Object>();
+	public JsonCallDto delete(@RequestParam(required = true) Integer id) {
 		userService.delete(id);
-		map.put("status", 1);
-		return map;
+		return new JsonCallDto(1);
 	}
 
 	/**
@@ -156,17 +150,16 @@ public class UserController extends BaseController {
 	 */
 	@RequestMapping(value = "/batchDelete", method = RequestMethod.POST)
 	@ResponseBody
-	public Map<String, Object> batchDelete(
+	public JsonCallDto batchDelete(
 			@RequestParam(required = true) String ids) {
-		Map<String, Object> map = new HashMap<String, Object>();
+		JsonCallDto dto = new JsonCallDto();
 		boolean result = userService.batchDelete(ids);
 		if (result) {
-			map.put("status", 1);
+			dto.setStatus(1);
 		} else {
-			map.put("status", 0);
-			map.put("msg", "参数为空或者参数值不符合规定");
+			dto.setMsg("参数为空或者参数值不符合规定");
 		}
-		return map;
+		return dto;
 	}
 
 }

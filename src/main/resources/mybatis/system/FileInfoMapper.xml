@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tq.management.base.system.mapper.FileInfoMapper">
+	<sql id="columns">
+		id,save_path,original_name,size,ext,status,md5,content_type,temp,type,create_time,creator
+	</sql>
+
+	<insert id="insert" parameterType="com.tq.management.base.entity.FileInfo" useGeneratedKeys="true" keyProperty="id">
+		insert into file_info (
+			save_path,
+			original_name,
+			size,
+			ext,
+			status,
+			md5,
+			content_type,
+			temp,
+			type,
+			create_time,
+			creator
+		) values (
+			#{savePath},
+			#{originalName},
+			#{size},
+			#{ext},
+			#{status},
+			#{md5},
+			#{contentType},
+			#{temp},
+			#{type},
+			#{createTime},
+			#{creator}
+		)
+	</insert>
+	
+	<select id="get" parameterType="int" resultType="com.tq.management.base.entity.FileInfo">
+		select
+			<include refid="columns" />
+		from 
+			file_info
+		where 
+			id = #{id}
+	</select>
+
+</mapper>

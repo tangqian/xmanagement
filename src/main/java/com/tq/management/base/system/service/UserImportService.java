@@ -5,12 +5,16 @@
  */
 package com.tq.management.base.system.service;
 
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.tq.management.base.dto.ServiceCallDto;
+import com.tq.management.base.entity.FileInfo;
 import com.tq.management.base.entity.ImportLog;
+import com.tq.management.base.system.dto.UserImportDto;
 import com.tq.management.base.utils.WebDto;
 
 /**
@@ -22,6 +26,8 @@ public interface UserImportService {
 	public Map<String, Object> list(WebDto dto);
 
 	public void add(ImportLog log);
+	
+	public ServiceCallDto<List<UserImportDto>> fileImport(FileInfo fileInfo);
 
 	public ImportLog get(Integer id);
 	

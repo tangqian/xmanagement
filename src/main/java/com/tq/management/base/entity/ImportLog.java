@@ -31,14 +31,6 @@ public class ImportLog extends SuperEntity {
 		this.successNum = successNum;
 	}
 
-	public String getOutputPath() {
-		return outputPath;
-	}
-
-	public void setOutputPath(String outputPath) {
-		this.outputPath = outputPath;
-	}
-
 	public Integer getType() {
 		return type;
 	}
@@ -47,13 +39,21 @@ public class ImportLog extends SuperEntity {
 		this.type = type;
 	}
 
+	public Integer getFileId() {
+		return fileId;
+	}
+
+	public void setFileId(Integer fileId) {
+		this.fileId = fileId;
+	}
+
 	private String name;
 
 	private Integer totalNum;
 
 	private Integer successNum;
 
-	private String outputPath;
+	private Integer fileId;
 
 	private Integer type;
 
