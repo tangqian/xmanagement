@@ -97,8 +97,8 @@ public class FileInfoServiceImpl implements FileInfoService {
 	}
 
 	private String generateRandomName(String ext) {
-		return StringUtils.isEmpty(ext) ? RandomUtils.getRandomString(8) : RandomUtils
-				.getRandomString(8) + "." + ext;
+		return StringUtils.isEmpty(ext) ? RandomUtils.getRandomString(10) : RandomUtils
+				.getRandomString(10) + "." + ext;
 	}
 
 	@Override

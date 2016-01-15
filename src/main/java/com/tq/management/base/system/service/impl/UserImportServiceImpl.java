@@ -17,8 +17,10 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -29,7 +31,6 @@ import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.DateUtil;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
@@ -43,6 +44,7 @@ import com.tq.management.base.dto.ServiceCallDto;
 import com.tq.management.base.entity.FileInfo;
 import com.tq.management.base.entity.ImportLog;
 import com.tq.management.base.enums.ImportTypeEnum;
+import com.tq.management.base.exception.DataCheckException;
 import com.tq.management.base.system.dto.UserImportDto;
 import com.tq.management.base.system.entity.User;
 import com.tq.management.base.system.mapper.ImportLogMapper;
@@ -54,6 +56,7 @@ import com.tq.management.base.utils.DataTables;
 import com.tq.management.base.utils.DateUtils;
 import com.tq.management.base.utils.WebDto;
 import com.tq.management.base.utils.file.DataTemplate;
+import com.tq.management.base.utils.file.ExcelHelper;
 
 /**
  * @version 1.0
@@ -125,47 +128,7 @@ public class UserImportServiceImpl implements UserImportService {
 		mapper.insert(log);
 	}
 
-	/**
-	 * 取单元格的值
-	 * 
-	 * @param cell
-	 *            单元格对象
-	 * @param treatAsStr
-	 *            为true时，当做文本来取值 (取到的是文本，不会把“1”取成“1.0”)
-	 * @return
-	 */
-	private String getValue(Cell cell, boolean treatAsStr) {
-		if (cell == null)
-			return null;
 
-		if (treatAsStr) {
-			// 虽然excel中设置的都是文本，但是数字文本还被读错，如“1”取成“1.0”
-			// 加上下面这句，临时把它当做文本来读取
-			cell.setCellType(Cell.CELL_TYPE_STRING);
-		}
-
-		String value = null;
-		switch (cell.getCellType()) {
-		case Cell.CELL_TYPE_STRING:
-			value = cell.getStringCellValue();
-			break;
-		case Cell.CELL_TYPE_NUMERIC:
-			if (DateUtil.isCellDateFormatted(cell)) {
-				value = cell.getDateCellValue().toString();
-			} else {
-				value = String.valueOf(cell.getNumericCellValue());
-			}
-			break;
-		case Cell.CELL_TYPE_BOOLEAN:
-			value = String.valueOf(cell.getBooleanCellValue());
-			break;
-		case Cell.CELL_TYPE_FORMULA:
-			value = String.valueOf(cell.getCellFormula());
-			break;
-		default:
-		}
-		return value;
-	}
 
 	@Override
 	public ServiceCallDto<List<UserImportDto>> fileImport(FileInfo fileInfo) {
@@ -190,16 +153,24 @@ public class UserImportServiceImpl implements UserImportService {
 				log.setTotalNum(imports.size());
 				int successNum = 0;
 				
+				//数据库中已存在用户名集合
+				Set<String> userNameSet = getAllLoginName();
 				for (UserImportDto temp : imports) {
 					try {
-						process(temp.getUser());
+						process(temp.getUser(), userNameSet);
 						userMapper.insert(temp.getUser());
 						temp.setSuccess();
 						successNum++;
+						userNameSet.add(temp.getUser().getLoginName());
 					} catch (Exception e) {
-						logger.error("导入用户失败!", e);
+						if(e instanceof DataCheckException){
+							temp.setReason(e.getMessage());
+						}else{
+							//此处不能直接设置为e.getMessage(),会暴露数据库信息
+							temp.setReason("数据不符合规范");
+							logger.error("导入用户失败!", e);
+						}
 						temp.setFailure();
-						temp.setReason(e.getMessage());
 					}
 					setResultToCell(wb, temp);
 				}
@@ -222,10 +193,10 @@ public class UserImportServiceImpl implements UserImportService {
 	        }
 		} catch (FileNotFoundException e) {
 			logger.error("导入文件未找到", e);
-			result.setMsg("导入文件未找到");
+			result.setMsg("文件未找到");
 		} catch (Exception e) {
 			logger.error("文件格式不对,或者IO异常", e);
-			result.setMsg("文件格式不对,或者IO异常");
+			result.setMsg("文件格式不符合规范");
 		} finally {
 			if(wb != null){
 				try {
@@ -237,6 +208,15 @@ public class UserImportServiceImpl implements UserImportService {
 			IOUtils.closeQuietly(out);
 		}
 		return result;
+	}
+
+	private Set<String> getAllLoginName() {
+		Set<String> userNameSet = new HashSet<String>();
+		List<User> users = userMapper.getAll();
+		for (User user : users) {
+			userNameSet.add(user.getLoginName());
+		}
+		return userNameSet;
 	}
 
 	private void setResultToCell(Workbook wb, UserImportDto dto) {
@@ -254,6 +234,7 @@ public class UserImportServiceImpl implements UserImportService {
 	private List<UserImportDto> parseData(Workbook rwb) {
 		Sheet sheet = rwb.getSheetAt(0);
 		int rows = sheet.getPhysicalNumberOfRows();// 获取工作表中的总行数
+		sheet.setColumnWidth(4, 25*256);//50 characters wide
 
 		List<UserImportDto> importList = new ArrayList<UserImportDto>();
 		for (int i = 1; i < rows; i++) {
@@ -262,7 +243,7 @@ public class UserImportServiceImpl implements UserImportService {
 				User user = new User();
 				int columns = row.getLastCellNum();
 				for (int j = 0; j < columns; j++) {
-					setAttr(user, j, getValue(row.getCell(j), true));
+					setAttr(user, j, ExcelHelper.getValue(row.getCell(j), true));
 				}
 				UserImportDto dto = new UserImportDto(user);
 				dto.setRowNum(i);
@@ -291,8 +272,16 @@ public class UserImportServiceImpl implements UserImportService {
 		}
 	}
 
-	private void process(User user) {
-		user.setLoginName(user.getLoginName().toLowerCase());// 登录名统一转换成小写
+	private void process(User user, Set<String> userNameSet) throws DataCheckException{
+		String loginName = user.getLoginName();
+		if(StringUtils.isBlank(loginName)){
+			throw new DataCheckException("用户名不能为空");
+		}
+		loginName = loginName.toLowerCase();
+		if(userNameSet.contains(loginName)){
+			throw new DataCheckException("用户名已被使用");
+		}
+		user.setLoginName(loginName);// 登录名统一转换成小写
 		user.setPassword(new SimpleHash("SHA-1", user.getLoginName(), DEFAULT_PWD).toString());
 		user.init();
 		CrudUtils.beforeAdd(user);

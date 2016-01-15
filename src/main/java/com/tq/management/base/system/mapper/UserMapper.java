@@ -20,4 +20,6 @@ public interface UserMapper {
 	public int count(Map<String, Object> map);
      
     public List<User> getPages(Map<String, Object> map);  
+    
+    public List<User> getAll();  
 }

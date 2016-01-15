@@ -5,6 +5,7 @@
  */
 package com.tq.management.base.system.controller;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
@@ -20,6 +21,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.alibaba.fastjson.JSON;
 import com.tq.management.base.controller.BaseController;
 import com.tq.management.base.dto.JsonCallDto;
 import com.tq.management.base.dto.ServiceCallDto;
@@ -59,8 +61,7 @@ public class UserImportController extends BaseController {
 	}
 
 	@RequestMapping(value = "/upload", method = RequestMethod.POST)
-	@ResponseBody
-	public JsonCallDto doUpload(@RequestParam(value = "file", required = false) MultipartFile file) {
+	public void doUpload(@RequestParam(value = "file", required = false) MultipartFile file, HttpServletResponse response) throws IOException {
 		JsonCallDto dto = new JsonCallDto();
 		FileInfo fileInfo = fileInfoService.add(file, FileEnums.TypeEnum.USER_EXCEL, FileEnums.TempEnum.NO);
 		
@@ -70,7 +71,8 @@ public class UserImportController extends BaseController {
 			ServiceCallDto<List<UserImportDto>> result = userImportService.fileImport(fileInfo);
 			dto.setAll(result);
 		}
-		return dto;
+		response.setContentType("text/html;charset=UTF-8");
+		response.getWriter().print(JSON.toJSONString(dto));
 	}
 
 	@RequestMapping()

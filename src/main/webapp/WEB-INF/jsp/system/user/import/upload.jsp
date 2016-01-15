@@ -76,23 +76,43 @@
 			{
             	if( data.status == '1'){
             		var theForm = $("#defForm");
-            		theForm.clearForm();
-                    if(theForm.find("*[data-dismiss='modal']").length > 0){
-                    	theForm.find("*[data-dismiss='modal']").click();
-    	                var callfn = theForm.attr("callfn");
-    	                if(callfn){
-    	                	eval(callfn+"()");
-    	                }
-                    }
+            		var failureNum = 0;
+            		var trDiv = '';
+            		var rows = data.data;
+		            for(var i=0; i < rows.length; i++){
+		            	if(!rows[i].success){
+		            		failureNum++;
+		            		trDiv += '<tr><td>' + (rows[i].rowNum+1) + '</td><td>' + rows[i].loginName + '</td><td>' + rows[i].reason + '</td></tr>';
+		            	}
+		            }
+		            var showDiv;
+		            if(failureNum == 0){
+		            	showDiv = customMsg.htmlContent.importAllSuccess.replace("#allNum", rows.length);
+		            }else {
+		            	showDiv = customMsg.htmlContent.importPartSuccess.replace("#failureNum", failureNum).replace("#successNum", rows.length - failureNum);
+	                    showDiv += '<table id="simple-table" class="table table-striped table-bordered table-hover">' +
+	            		'<thead><tr><th>行号</th><th>用户名</th><th>失败原因</th></tr></thead><tbody>' + trDiv + '</tbody></table>';
+		            }
                     BootstrapDialog.show({
     					type: BootstrapDialog.TYPE_SUCCESS,
-    		            title: '导入结果提示',
-    		            message: data.msg || "导入成功!",
-    		            onshown: function(dialogRef){
-    		            	setTimeout(function() {
-    		            		dialogRef.close();
-    						}, 1000);
-    		            }
+    		            title: '导入结果',
+    		            message: showDiv,
+    		            closable: false,
+    		            buttons: [{
+    		                label: '关闭',
+    		                cssClass: 'btn-success',
+    		                action: function(dialogRef){
+    		            		var callfn = theForm.attr("callfn");
+    		            		theForm.clearForm();
+    		                    if(theForm.find("*[data-dismiss='modal']").length > 0){
+    		                    	theForm.find("*[data-dismiss='modal']").click();
+    		                    }
+    		                    dialogRef.close();
+    			                if(callfn){
+    			                	eval(callfn+"()");
+    			                }
+    		                }
+    		            }]
     		        });
                 }
                 else{

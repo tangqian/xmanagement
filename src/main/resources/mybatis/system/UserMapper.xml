@@ -105,5 +105,14 @@
 		</if>
 		order by id desc limit #{start},#{length}
 	</select>
+	
+	<select id="getAll" resultType="User">
+		select
+			login_name
+		from 
+			sys_user
+		where 
+			status != 'delete'
+	</select>
 
 </mapper>

@@ -5,7 +5,9 @@ customMsg = {
 		warnTips : "<div class='error-page' style='height: 140px; margin-left: 20px; margin-top: -15px;'><h2 class='headline text-yellow'>#status</h2>"
 				+ "<div class='error-content' style='padding-top: 30px;'>"
 				+ "<h3><i class='fa fa-warning text-yellow'></i> 对不起! 系统出错了。</h3>"
-				+ "<p>请您反馈给系统管理员，我们会尽快解决该问题</p></div></div>"
+				+ "<p>请您反馈给系统管理员，我们会尽快解决该问题</p></div></div>",
+		importAllSuccess : '<div class="alert alert-info"><i class="ace-icon fa fa-hand-o-right"></i>恭喜您！全部数据导入成功，共导入#allNum条</div>',
+		importPartSuccess : '<div class="alert alert-danger"><i class="ace-icon fa fa-hand-o-right"></i>存在导入失败数据！导入成功#successNum条，导入失败#failureNum条，失败原因如下</div>',
 	},
 	_showDialog : function(targetId, url, data) {
 		var html = this.htmlContent.modal.replace("#targetId", targetId);

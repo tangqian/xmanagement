@@ -1,9 +1,11 @@
 package com.tq.management.base.system.dto;
 
+import com.alibaba.fastjson.annotation.JSONField;
 import com.tq.management.base.system.entity.User;
 
 public class UserImportDto {
 
+	@JSONField(serialize = false)
 	private User user;
 
 	private boolean success;
@@ -11,6 +13,8 @@ public class UserImportDto {
 	private String reason;
 
 	private int rowNum;
+	
+	private String loginName;
 	
 	public UserImportDto() {
 	}
@@ -53,6 +57,10 @@ public class UserImportDto {
 
 	public void setRowNum(int rowNum) {
 		this.rowNum = rowNum;
+	}
+
+	public String getLoginName() {
+		return user != null ? user.getLoginName() : loginName;
 	}
 
 }
