@@ -1,11 +1,22 @@
 package com.tq.management.base.utils.file;
 
+import java.io.IOException;
+import java.io.InputStream;
+
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.DateUtil;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 public abstract class ExcelHelper {
 
-	//private static Logger logger = LoggerFactory.getLogger(ExcelHelper.class);
+	// private static Logger logger =
+	// LoggerFactory.getLogger(ExcelHelper.class);
+
+	private static final String EXTENSION_XLS = "xls";
+
+	private static final String EXTENSION_XLSX = "xlsx";
 
 	/**
 	 * 取单元格的值
@@ -46,9 +57,19 @@ public abstract class ExcelHelper {
 			break;
 		default:
 		}
-		if(value != null)
+		if (value != null)
 			value = value.trim();
 		return value;
+	}
+
+	public static Workbook getWorkbook(InputStream is, String filePath) throws IOException {
+		Workbook wb = null;
+		if (filePath.endsWith(EXTENSION_XLS)) {
+			wb = new HSSFWorkbook(is);
+		} else if (filePath.endsWith(EXTENSION_XLSX)) {
+			wb = new XSSFWorkbook(is);
+		}
+		return wb;
 	}
 
 }

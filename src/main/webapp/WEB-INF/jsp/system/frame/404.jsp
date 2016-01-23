@@ -1,16 +1,22 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<!-- Content Header (Page header) -->
-<section class="content-header">
-	<h1>404  错误页</h1>
-	<ol class="breadcrumb">
-		<li><a href="./"><i class="fa fa-dashboard"></i> 主页</a></li>
-		<li class="active">404 错误</li>
-	</ol>
-</section>
+<div class="breadcrumbs" id="breadcrumbs">
+	<script type="text/javascript">
+		try {
+			ace.settings.check('breadcrumbs', 'fixed')
+		} catch (e) {
+		}
+	</script>
 
-<!-- Main content -->
-<section class="content">
+	<ul class="breadcrumb">
+		<li><i class="ace-icon fa fa-home home-icon"></i> <a href="./">主页</a>
+		</li>
+		<li class="active">404错误</li>
+	</ul>
+	<!-- /.breadcrumb -->
+</div>
+
+<div class="page-content">
 
 	<div class="error-page">
 		<h2 class="headline text-yellow">404</h2>
@@ -24,6 +30,4 @@
 		</div>
 		<!-- /.error-content -->
 	</div>
-	<!-- /.error-page -->
-</section>
-<!-- /.content -->
+</div>

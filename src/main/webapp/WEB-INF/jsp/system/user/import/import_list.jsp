@@ -33,10 +33,10 @@
 <div class="page-content">
 
 	<div class="page-header">
-		<button class="btn btn-white btn-info btn-round" data-model="dialog" data-url="user/import/upload">
+		<button class="btn btn-white btn-info btn-round" data-width="560" data-model="dialog" data-url="user/import/upload">
 			<i class="ace-icon glyphicon glyphicon-upload bigger-120 blue"></i> 用户导入
 		</button>
-		<a class="pull-right btn btn-white btn-info btn-round" href="user/import/download/template">
+		<a class="pull-right btn btn-white btn-info btn-round" href="user/import/template">
 			<i class="ace-icon glyphicon glyphicon-download bigger-120 blue"></i> 模板下载
 		</a>
 	</div>
@@ -55,7 +55,6 @@
 					<thead>
 						<tr>
 							<th width="20%">导入名称</th>
-							<th width="15%">状态</th>
 							<th width="15%">成功数/总数</th>
 							<th width="15%">创建时间</th>
 							<th width="15%">操作人</th>
@@ -92,7 +91,6 @@ $(document).ready(function() {
 		},
 		"columns": [
 			{ "data": "name" },
-			{ "data": "status" },
 			{ "data": "null" },
 			{ "data": "createTime" },
 			{ "data": "creator" },
@@ -101,24 +99,14 @@ $(document).ready(function() {
 		"columnDefs": [{
 			"targets": 1,
 			"render": function(data, type, row) {
-				var html;
-				if(row.status == 'running'){
-					html = '<i class="ace-icon fa fa-spinner fa-spin orange bigger-175" title="正在拼命导入..."></i>';
-				}else{
-					html = '已完成';
-				}
-				return html;
-			}},{
-			"targets": 2,
-			"render": function(data, type, row) {
 				return row.successNum + '/' + row.totalNum;
 			}},{
-			"targets": 5,
+			"targets": 4,
 			"render": function(data, type, row) {
 				var html = '<div class="hidden-sm hidden-xs btn-group">'
-				+ '<button class="btn btn-xs btn-success" title="查看导入结果明细" data-model="dialog" data-url="user/view?id=' + row.id + '">'
+				+ '<a class="btn btn-xs btn-success" title="下载导入文件" data-target="file" data-id=' + row.fileId + ' href="#" >'
 					+ '<i class="ace-icon fa fa-download bigger-120"></i>'
-				+ '</button>'
+				+ '</a>'
 				+ '</div>';
 				if(row.status == 'running'){
 					html = '';

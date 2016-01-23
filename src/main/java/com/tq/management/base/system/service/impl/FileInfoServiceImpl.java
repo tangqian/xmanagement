@@ -1,10 +1,14 @@
 package com.tq.management.base.system.service.impl;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.Date;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,6 +23,7 @@ import com.tq.management.base.utils.BigFileMD5;
 import com.tq.management.base.utils.CrudUtils;
 import com.tq.management.base.utils.DateUtils;
 import com.tq.management.base.utils.RandomUtils;
+import com.tq.management.base.utils.file.FileServiceHelper;
 import com.tq.management.spring.utils.SystemParamUtil;
 
 /**
@@ -41,7 +46,7 @@ public class FileInfoServiceImpl implements FileInfoService {
 			return null;
 
 		String fileName = file.getOriginalFilename();
-		String ext = getExt(fileName);
+		String ext = FileServiceHelper.getExt(fileName);
 
 		String relativePath = generatePath(typeEnum);
 		File targetFile = generateNewFile(relativePath, ext);
@@ -62,17 +67,6 @@ public class FileInfoServiceImpl implements FileInfoService {
 
 	public String getAbsolutePath(String relativePath) {
 		return UPLOAD_ABSOLUTE_PATE + relativePath;
-	}
-
-	/**
-	 * 文件后缀统一小写
-	 * 
-	 * @param fileName
-	 * @return
-	 */
-	private String getExt(String fileName) {
-		return fileName.lastIndexOf('.') != -1 ? fileName.substring(fileName.lastIndexOf('.') + 1)
-				.toLowerCase() : "";
 	}
 
 	private File generateNewFile(String relativePath, String ext) {
@@ -106,5 +100,30 @@ public class FileInfoServiceImpl implements FileInfoService {
 
 		return null;
 	}
+
+	@Override
+	public void download(String path, String fileName, HttpServletRequest request,
+			HttpServletResponse response) throws IOException {
+		response.reset();
+		File file = new File(getAbsolutePath(path));
+		response.setContentType("multipart/form-data");
+		response.addHeader("Content-Disposition", FileServiceHelper.getDownloadName(fileName, request));
+		response.addHeader("Content-Length", "" + file.length());
+		FileUtils.copyFile(file, response.getOutputStream());
+	}
+
+
+	@Override
+	public FileInfo getInfoOnExsit(Integer id) {
+		FileInfo info = mapper.get(id);
+		if(info != null){
+			File file = new File(getAbsolutePath(info.getSavePath()));
+			if(file.exists()){
+				return info;
+			}
+		}
+		return null;
+	}
+
 
 }

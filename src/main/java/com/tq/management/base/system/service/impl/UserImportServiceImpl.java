@@ -12,7 +12,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
@@ -29,12 +28,10 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringUtils;
-import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.apache.shiro.crypto.hash.SimpleHash;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -57,6 +54,7 @@ import com.tq.management.base.utils.DateUtils;
 import com.tq.management.base.utils.WebDto;
 import com.tq.management.base.utils.file.DataTemplate;
 import com.tq.management.base.utils.file.ExcelHelper;
+import com.tq.management.base.utils.file.FileServiceHelper;
 
 /**
  * @version 1.0
@@ -76,29 +74,7 @@ public class UserImportServiceImpl implements UserImportService {
 	@Resource
 	private FileInfoService fileInfoService;
 
-	private static String TPL_IE;
-
-	private static String TPL_FIREFOX;
-
 	private static final String DEFAULT_PWD = "123456";
-
-	private static final String EXTENSION_XLS = "xls";
-
-	private static final String EXTENSION_XLSX = "xlsx";
-
-	static {
-		TPL_IE = "attachment; filename=";
-		try {
-			TPL_IE += java.net.URLEncoder.encode("用户导入模板.xls", "UTF-8");
-		} catch (UnsupportedEncodingException e) {
-		}
-
-		TPL_FIREFOX = "attachment; filename=";
-		try {
-			TPL_FIREFOX += new String("用户导入模板.xls".getBytes("UTF-8"), "ISO-8859-1");
-		} catch (UnsupportedEncodingException e) {
-		}
-	}
 
 	@SuppressWarnings("unchecked")
 	@Override
@@ -139,11 +115,7 @@ public class UserImportServiceImpl implements UserImportService {
 		try {
 			String filePath = fileInfoService.getAbsolutePath(fileInfo.getSavePath());
 	        is = new FileInputStream(filePath);
-	        if (filePath.endsWith(EXTENSION_XLS)) {
-	            wb = new HSSFWorkbook(is);
-	        } else if (filePath.endsWith(EXTENSION_XLSX)) {
-	            wb = new XSSFWorkbook(is);
-	        }
+	        wb = ExcelHelper.getWorkbook(is, filePath);
 	        
 	        List<UserImportDto> imports = parseData(wb);
 	        if(imports.isEmpty()){
@@ -299,11 +271,7 @@ public class UserImportServiceImpl implements UserImportService {
 			File template = DataTemplate.getUserTemplate();
 			response.reset();
 			response.setContentType("multipart/form-data");
-			if (isMSIE(request)) {
-				response.addHeader("Content-Disposition", TPL_IE);
-			} else {
-				response.addHeader("Content-Disposition", TPL_FIREFOX);
-			}
+			response.addHeader("Content-Disposition", FileServiceHelper.getDownloadName("用户导入模板.xls", request));
 			response.addHeader("Content-Length", "" + template.length());
 			FileUtils.copyFile(template, response.getOutputStream());
 		} catch (IOException e) {// 发生异常表明下载失败,在统计下载次数时千万不能加1
@@ -313,9 +281,5 @@ public class UserImportServiceImpl implements UserImportService {
 		}
 	}
 
-	private boolean isMSIE(HttpServletRequest request) {
-		String agent = request.getHeader("User-Agent");
-		boolean isMSIE = (agent.contains("MSIE") || agent.contains("Trident"));
-		return isMSIE;
-	}
+
 }

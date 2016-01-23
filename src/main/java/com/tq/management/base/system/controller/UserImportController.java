@@ -55,6 +55,13 @@ public class UserImportController extends BaseController {
 		return new ModelAndView(LIST);
 	}
 	
+	@RequestMapping()
+	@ResponseBody
+	public Map<String, Object> list() {
+		WebDto dto = new WebDto(getRequest());
+		return userImportService.list(dto);
+	}
+	
 	@RequestMapping(value="/upload", method = RequestMethod.GET)
 	public ModelAndView upload(){
 		return new ModelAndView(UPLOAD);
@@ -75,14 +82,7 @@ public class UserImportController extends BaseController {
 		response.getWriter().print(JSON.toJSONString(dto));
 	}
 
-	@RequestMapping()
-	@ResponseBody
-	public Map<String, Object> list() {
-		WebDto dto = new WebDto(getRequest());
-		return userImportService.list(dto);
-	}
-
-	@RequestMapping(value = "/download/template", method = RequestMethod.GET)
+	@RequestMapping(value = "/template", method = RequestMethod.GET)
 	public void download(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		userImportService.downloadTemplate(request, response);
 	}

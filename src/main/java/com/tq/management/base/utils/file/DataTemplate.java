@@ -30,7 +30,7 @@ public abstract class DataTemplate {
 		File folder = new File(fullPath);
 		boolean result = (folder.exists() && folder.isDirectory()) ? true : folder.mkdirs();
 		if (!result) {
-			logger.error("数据模板目录生成失败!请检查路径 {}", new Object[] { fullPath });
+			logger.error("数据模板目录生成失败!请检查路径 {}", fullPath);
 		} else {
 			DOWNLOAD_ABSOLUTE_PATE = fullPath;
 			createUserTemplate();
@@ -52,6 +52,7 @@ public abstract class DataTemplate {
 			String[] rowArr1 = new String[] { "zhangsan", "张三", "zhangsan@163.com", "15812124848" };
 			Row row = sheet1.createRow(0);
 			for (int i = 0; i < header.length; i++) {
+				sheet1.setColumnWidth(i, 25*256);
 				Cell cell = row.createCell(i);
 				cell.setCellValue(header[i]);
 			}

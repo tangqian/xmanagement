@@ -37,4 +37,11 @@ public class LoginController {
 		mv.setViewName("system/frame/index");
 		return mv;
 	}
+	
+	@RequestMapping(value = "/404")
+	public ModelAndView notFound() {
+		ModelAndView mv = new ModelAndView();
+		mv.setViewName("system/frame/404");
+		return mv;
+	}
 }

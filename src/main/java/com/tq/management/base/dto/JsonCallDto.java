@@ -15,7 +15,6 @@ public class JsonCallDto {
 	private Object data;
 
 	public JsonCallDto() {
-		super();
 	}
 	
 	public JsonCallDto(int status) {

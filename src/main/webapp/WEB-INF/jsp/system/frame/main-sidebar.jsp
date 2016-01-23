@@ -49,8 +49,8 @@
 						class="menu-icon fa fa-caret-right"></i> 用户管理
 				</a> <b class="arrow"></b></li>
 
-				<li class=""><a href="jqgrid.html"> <i
-						class="menu-icon fa fa-caret-right"></i> jqGrid plugin
+				<li class=""><a href="404" data-target='navTab'> <i
+						class="menu-icon fa fa-caret-right"></i> 404page
 				</a> <b class="arrow"></b></li>
 			</ul></li>
 

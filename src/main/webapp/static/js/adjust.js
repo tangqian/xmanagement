@@ -2,10 +2,18 @@ customMsg = {
 	htmlContent : {
 		modal : "<div class='modal bootstrap-dialog type-primary fade size-normal in' id='#targetId' role='dialog' aria-hidden='true' data-backdrop='static' data-keyboard='true'>"
 				+ "<div class='modal-dialog'><div class='modal-content'></div></div></div>",
-		warnTips : "<div class='error-page' style='height: 140px; margin-left: 20px; margin-top: -15px;'><h2 class='headline text-yellow'>#status</h2>"
-				+ "<div class='error-content' style='padding-top: 30px;'>"
-				+ "<h3><i class='fa fa-warning text-yellow'></i> 对不起! 系统出错了。</h3>"
-				+ "<p>请您反馈给系统管理员，我们会尽快解决该问题</p></div></div>",
+		warnTips : "<div class='row'>"
+				+ "<div class='col-xs-12 col-lg-4'>"
+				+	"<div style='padding-top: 15px; text-align:right'>"
+				+ 		"<span class=' bigger-275' style='color:#d15b47 !important'><i class='ace-icon fa fa-wrench icon-animated-wrench'></i> #status</span>"
+				+	"</div>" 
+				+ "</div>"
+				+ "<div class='col-xs-12 col-lg-8'>" 
+				+ 	"<div>"
+				+ 		"<h3><i class='fa fa-warning' style='color:#d15b47 !important'></i> 对不起! 系统出错了。</h3><p>请您反馈给系统管理员，我们会尽快解决该问题</p>"
+				+ 	"</div>" 
+				+ "</div>" 
+				+ "</div>",
 		importAllSuccess : '<div class="alert alert-info"><i class="ace-icon fa fa-hand-o-right"></i>恭喜您！全部数据导入成功，共导入#allNum条</div>',
 		importPartSuccess : '<div class="alert alert-danger"><i class="ace-icon fa fa-hand-o-right"></i>存在导入失败数据！导入成功#successNum条，导入失败#failureNum条，失败原因如下</div>',
 	},
@@ -127,6 +135,38 @@ $(function() {
 		} else {
 			$("#navTab").load(url);
 		}
+		return false;
+	});
+	
+	$("body").delegate("a[data-target='file']", "click", function() {
+		var id = $(this).data("id");
+		$.ajax({
+			'type' : "get",
+			'url' : "file/auth",
+			'data' : {"id" : id},
+			'success' : function(data, status) {
+				if( data.status == '1'){
+					window.location.href='file/download?responseContent=' + data.data.responseContent + '&path=' + data.data.path;
+				}else{
+					if(data.status == '500'){
+	            		data.msg = customMsg.htmlContent.warnTips.replace("#status", 500);
+	            	}
+                	BootstrapDialog.show({
+    					type: BootstrapDialog.TYPE_WARNING,
+    		            title: '操作结果提示',
+    		            message: data.msg || "系统错误警告!请反馈给系统管理员，我们会尽快解决该问题",
+    		        });
+				}
+			},
+			'error' : function(XmlHttpRequest, textStatus, errorThrown) {
+				BootstrapDialog.show({
+					type : BootstrapDialog.TYPE_WARNING,
+					title : '操作提示',
+					message : customMsg.htmlContent.warnTips.replace("#status",
+							XmlHttpRequest.status)
+				});
+			}
+		});
 		return false;
 	});
 
