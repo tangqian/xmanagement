@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tq.management.base.system.mapper.MenuMapper">
+	<sql id="columns">
+		id,name,url,parent_id,order_id,icon,type,description,status,create_time,modify_time,creator,modifier
+	</sql>
+
+	<insert id="insert" parameterType="Menu">
+		insert into sys_menu (
+			name,
+			url,
+			parent_id,
+			order_id,
+			icon,
+			type,
+			description,
+			status,
+			create_time,
+			modify_time,
+			creator,
+			modifier
+		) values (
+			#{name},
+			#{url},
+			#{parentId},
+			#{orderId},
+			#{icon},
+			#{type},
+			#{description},
+			#{status},
+			#{createTime},
+			#{modifyTime},
+			#{creator},
+			#{modifier}
+		)
+	</insert>
+
+	<update id="update" parameterType="Menu">
+		update sys_menu set
+			name = #{name},
+			url = #{url},
+			icon = #{icon},
+			description = #{description},
+			modifier = #{modifier},
+			modify_time = #{modifyTime}
+		where
+			id = #{id}
+	</update>
+
+	<update id="updateSort">
+		update sys_menu set
+			order_id = #{orderId}
+		where
+			id = #{id}
+	</update>
+
+	<update id="delete" parameterType="Menu">
+		update sys_menu set
+			status = 'delete',
+			modifier = #{modifier},
+			modify_time = #{modifyTime}
+		where
+			id = #{id}
+	</update>
+
+	<update id="batchDelete" parameterType="map">
+		update sys_menu set
+			status = 'delete',
+			modifier = #{modifier},
+			modify_time = #{modifyTime}
+		where
+			id in (${ids})
+	</update>
+	
+	<select id="get" parameterType="int" resultType="Menu">
+		select
+			<include refid="columns" />
+		from 
+			sys_menu
+		where 
+			id = #{id}
+	</select>
+
+	<select id="count" parameterType="map" resultType="int">
+		select
+			count(1)
+		from
+			sys_menu
+		where
+			status != 'delete'
+		<if test="keyword != null and keyword != ''">
+	  	and	CONCAT(IFNULL(name,''),IFNULL(url,'')) like #{keyword}
+		</if>
+	</select>
+
+	<select id="getPages" resultType="Menu">
+		select
+			<include refid="columns" />
+		from 
+			sys_menu
+		where 
+			status != 'delete'
+		<if test="keyword != null and keyword != ''">
+	  	and	CONCAT(IFNULL(name,''),IFNULL(url,'')) like #{keyword}
+		</if>
+		order by order_id limit #{start},#{length}
+	</select>
+	
+	<select id="getAll" resultType="Menu">
+		select
+			<include refid="columns" />
+		from 
+			sys_menu
+		where 
+			status != 'delete'
+	</select>
+	
+	<select id="getOneLevel" resultType="Menu">
+		select
+			<include refid="columns" />
+		from 
+			sys_menu
+		where 
+			status != 'delete' and parent_id = 0 and type = 1 
+		order by order_id, id desc
+	</select>
+	
+	<select id="getTwoLevel" resultType="Menu">
+		select
+			<include refid="columns" />
+		from 
+			sys_menu
+		where 
+			status != 'delete' and parent_id = #{parentId} and type = 2 
+		order by order_id, id desc
+	</select>
+
+</mapper>

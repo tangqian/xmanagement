@@ -1,8 +1,3 @@
-/*
- * Copyright(c) 2015 gvtv.com.cn All rights reserved.
- * distributed with this file and available online at
- * http://www.gvtv.com.cn/
- */
 package com.tq.management.base.system.entity;
 
 import java.io.Serializable;
@@ -148,7 +143,7 @@ public class User extends SuperEntity implements Serializable {
 	/**
 	 * 实体对象赋初始值
 	 */
-	public void init() {
+	public void addInit() {
 		if (name == null)
 			name = "";
 		if (email == null)

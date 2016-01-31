@@ -15,9 +15,9 @@ import javax.annotation.Resource;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Service;
 
-import com.tq.management.base.system.entity.User;
-import com.tq.management.base.system.mapper.UserMapper;
-import com.tq.management.base.system.service.UserService;
+import com.tq.management.base.system.entity.Menu;
+import com.tq.management.base.system.mapper.MenuMapper;
+import com.tq.management.base.system.service.MenuService;
 import com.tq.management.base.utils.CrudUtils;
 import com.tq.management.base.utils.DataTables;
 import com.tq.management.base.utils.PatternEnum;
@@ -29,10 +29,10 @@ import com.tq.management.base.utils.WebDto;
  * @author tangqian
  */
 @Service
-public class UserServiceImpl implements UserService {
+public class MenuServiceImpl implements MenuService {
 
 	@Resource
-	private UserMapper mapper;
+	private MenuMapper mapper;
 
 	@SuppressWarnings("unchecked")
 	@Override
@@ -43,11 +43,11 @@ public class UserServiceImpl implements UserService {
 		}
 		Integer totalNum = mapper.count(dto);
 
-		List<User> lists;
+		List<Menu> lists;
 		if (totalNum > 0) {
 			lists = mapper.getPages(dto);
-			for (User user : lists) {
-				user.setStatus(StatusEnum.readable(user.getStatus()));
+			for (Menu menu : lists) {
+				menu.setStatus(StatusEnum.readable(menu.getStatus()));
 			}
 		} else {
 			lists = Collections.EMPTY_LIST;
@@ -59,17 +59,17 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public void add(User user) {
-		CrudUtils.beforeAdd(user);
-		mapper.insert(user);
+	public void add(Menu menu) {
+		CrudUtils.beforeAdd(menu);
+		mapper.insert(menu);
 	}
 
 	@Override
 	public void delete(Integer id) {
-		User user = new User();
-		user.setId(id);
-		CrudUtils.beforeUpdate(user);
-		mapper.delete(user);
+		Menu menu = new Menu();
+		menu.setId(id);
+		CrudUtils.beforeUpdate(menu);
+		mapper.delete(menu);
 	}
 
 	@Override
@@ -86,14 +86,32 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public User get(Integer id) {
+	public Menu get(Integer id) {
 		return mapper.get(id);
 
 	}
 
 	@Override
-	public void update(User user) {
-		CrudUtils.beforeUpdate(user);
-		mapper.update(user);
+	public void update(Menu menu) {
+		CrudUtils.beforeUpdate(menu);
+		mapper.update(menu);
+	}
+
+	@Override
+	public List<Menu> getOneLevel() {
+		return mapper.getOneLevel();
+	}
+
+	@Override
+	public List<Menu> getTwoLevel(Integer parentId) {
+		return mapper.getTwoLevel(parentId);
+	}
+
+	@Override
+	public void sort(Integer[] idArr) {
+		for (int i = 0; i < idArr.length; i++) {
+			Integer id = idArr[i];
+			mapper.updateSort(id, i);
+		}
 	}
 }

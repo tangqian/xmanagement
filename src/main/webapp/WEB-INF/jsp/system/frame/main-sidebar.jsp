@@ -48,6 +48,10 @@
 				<li class="active"><a href="user/list" data-target='navTab'> <i
 						class="menu-icon fa fa-caret-right"></i> 用户管理
 				</a> <b class="arrow"></b></li>
+				
+				<li class=""><a href="menu/tree" data-target='navTab'> <i
+						class="menu-icon fa fa-caret-right"></i> 菜单管理
+				</a> <b class="arrow"></b></li>
 
 				<li class=""><a href="404" data-target='navTab'> <i
 						class="menu-icon fa fa-caret-right"></i> 404page

@@ -57,4 +57,8 @@ public class ImportLog extends SuperEntity {
 
 	private Integer type;
 
+	@Override
+	public void addInit() {
+	}
+
 }

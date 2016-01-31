@@ -1,7 +1,7 @@
 /*
- * Copyright(c) 2015 gvtv.com.cn All rights reserved.
+ * Copyright(c) 2015 tangqian.com.cn All rights reserved.
  * distributed with this file and available online at
- * http://www.gvtv.com.cn/
+ * http://www.tangqian.com.cn/
  */
 package com.tq.management.base.utils;
 
@@ -20,6 +20,7 @@ import com.tq.management.base.entity.SuperEntity;
 public abstract class CrudUtils {
 
 	public static void beforeAdd(SuperEntity entity) {
+		entity.addInit();
 		Timestamp timestamp = new Timestamp(System.currentTimeMillis());
 		entity.setStatus(StatusEnum.VALID.getCode());
 		entity.setCreateTime(timestamp);

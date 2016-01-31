@@ -34,10 +34,10 @@
 
 	<div class="page-header">
 		<button class="btn btn-white btn-info btn-round" data-width="560" data-model="dialog" data-url="user/import/upload">
-			<i class="ace-icon glyphicon glyphicon-upload bigger-120 blue"></i> 用户导入
+			<i class="ace-icon glyphicon glyphicon-upload bigger-120 blue"></i> 导入用户
 		</button>
 		<a class="pull-right btn btn-white btn-info btn-round" href="user/import/template">
-			<i class="ace-icon glyphicon glyphicon-download bigger-120 blue"></i> 模板下载
+			<i class="ace-icon glyphicon glyphicon-download bigger-120 blue"></i> 下载模板
 		</a>
 	</div>
 	<div class="row">
@@ -104,7 +104,7 @@ $(document).ready(function() {
 			"targets": 4,
 			"render": function(data, type, row) {
 				var html = '<div class="hidden-sm hidden-xs btn-group">'
-				+ '<a class="btn btn-xs btn-success" title="下载导入文件" data-target="file" data-id=' + row.fileId + ' href="#" >'
+				+ '<a class="btn btn-xs btn-success" title="下载详细导入结果" data-target="file" data-id=' + row.fileId + ' href="#" >'
 					+ '<i class="ace-icon fa fa-download bigger-120"></i>'
 				+ '</a>'
 				+ '</div>';

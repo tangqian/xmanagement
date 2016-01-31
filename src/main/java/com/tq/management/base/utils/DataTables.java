@@ -1,7 +1,7 @@
 /*
- * Copyright(c) 2015 gvtv.com.cn All rights reserved.
+ * Copyright(c) 2015 tangqian.com.cn All rights reserved.
  * distributed with this file and available online at
- * http://www.gvtv.com.cn/
+ * http://www.tangqian.com.cn/
  */
 package com.tq.management.base.utils;
 

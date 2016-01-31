@@ -4,155 +4,197 @@
 	String path = request.getContextPath();
 	String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + path + "/";
 %>
-<!-- Content Header (Page header) -->
-<section class="content-header">
-	<ol class="breadcrumb">
-		<li><a href="./"><i class="fa fa-dashboard"></i> 主页</a></li>
-		<li class="active">系统管理</li>
-		<li><a href="user" data-target="navTab">用户管理</a></li>
-	</ol>
-</section>
+<div class="breadcrumbs" id="breadcrumbs">
+	<script type="text/javascript">
+		try {
+			ace.settings.check('breadcrumbs', 'fixed')
+		} catch (e) {
+		}
+	</script>
 
-<!-- Main content -->
-<section class="content">
+	<ul class="breadcrumb">
+		<li><i class="ace-icon fa fa-home home-icon"></i> <a href="./">主页</a>
+		</li>
+		<li class="active"><a href="menu/list" data-target='navTab'>菜单管理</a></li>
+	</ul>
+	<!-- /.breadcrumb -->
+
+	<div class="nav-search" id="nav-search" title="搜索菜单名,姓名,电话和邮箱">
+					<span class="input-icon"> <input type="text" name="keyword"
+				placeholder="搜索..." class="nav-search-input"
+				id="keyword" autocomplete="off" /> <i id="search-icon"
+				class="ace-icon fa fa-search nav-search-icon click" title="点击搜索"></i>
+			</span>
+	</div>
+	<!-- /.nav-search -->
+</div>
+
+<div class="page-content">
+
+	<div class="page-header">
+		<button class="btn btn-white btn-info btn-round" data-model="dialog" data-url="menu/add">
+			<i class="ace-icon fa fa-floppy-o bigger-120 blue"></i> 新增
+		</button>
+		<button class="btn btn-white btn-danger btn-round" data-url="menu/batchDelete"
+								data-msg="确定删除这些菜单吗？" data-model="ajaxToDo"
+								data-checkbox-name="chx_default" data-callback="refreshTable">
+			<i class="ace-icon fa fa-trash-o bigger-120 orange"></i> 删除
+		</button>
+		
+	</div>
 	<div class="row">
 		<div class="col-xs-12">
-			<!-- Custom Tabs -->
-			<div class="nav-tabs-custom my-tab">
-				<ul class="nav nav-tabs">
-					<li class="header">
-						<div class="btn-group">
-							<button type="button" data-url="user/add" title="点击新增用户"
-								data-model="dialog" class="btn btn-primary navbar-btn btn-sm">
-								<i class="fa fa-plus"></i> 新增
-							</button>
-							<button type="button" data-url="user/batchDelete"
-								data-msg="确定批量删除用户吗？" data-model="ajaxToDo"
-								data-checkbox-name="chx_default" data-callback="refreshTable"
-								class="btn btn-danger navbar-btn btn-sm">
-								<i class="fa fa-trash-o"></i> 批量删除
-							</button>
-						</div>
-					</li>
 
-					<li class="pull-right"><a href="javascript:;" class="text-muted"><i
-							class="fa fa-gear"></i></a></li>
-				</ul>
-				<div class="tab-content">
-					<div class="tab-pane active" id="tab_1">
-						<table id="default_table"
-							class="table table-primary table-hover table-striped">
-							<thead>
-								<tr>
-									<th width="10px" style="padding-right: 12px;"><input
-										title="全选" type='checkbox' id="defaultCheck" /></th>
-									<th width="20px" style="padding-right: 12px;"></th>
-									<th>用户名</th>
-									<th>真实姓名</th>
-									<th>电话</th>
-									<th>状态</th>
-									<th>最近登录</th>
-								</tr>
-							</thead>
-						</table>
-					</div>
-					<!-- /.tab-pane -->
-				</div>
-				<!-- /.tab-content -->
+			<div class="clearfix">
+				<div class="pull-right tableTools-container"></div>
 			</div>
-			<!-- nav-tabs-custom -->
+			
+			<!-- div.table-responsive -->
+			<!-- div.dataTables_borderWrap -->
+			<div>
+				<table id="dynamic-table"
+					class="table table-striped table-bordered table-hover">
+					<thead>
+						<tr>
+							<th class="center" width="6%"><label class="pos-rel"> <input
+									type="checkbox" class="ace" id="defaultCheck" /> <span class="lbl"></span>
+							</label></th>
+							<th width="20%">菜单名称</th>
+							<th width="20%">url</th>
+							<th width="20%">菜单图标</th>
+							<th width="34%"></th>
+						</tr>
+					</thead>
+				</table>
+			</div>
 		</div>
-		<!-- /.col -->
 	</div>
-	<!-- /.row -->
-</section>
+</div>
+
 <script type="text/javascript">
 var defaultTable;
 $(document).ready(function() {
-	defaultTable = $('#default_table').DataTable( {
-		"ordering": false,
-		"pagingType": "simple_numbers",
-		"autoWidth": false,
-		//"scrollX": true,
-		"processing": true,
-		"serverSide": true,
-		"searching" :false,
+		//initiate dataTables plugin
+	defaultTable = $('#dynamic-table').DataTable({
+		/* "aoColumns" : [ {
+			"bSortable" : false
+		}, null, null, null, null, null, {
+			"bSortable" : false
+		} ], */
+
+		"ordering" : false,
+		"pagingType" : "simple_numbers",
+		"autoWidth" : false,
+		"processing" : true,
+		"serverSide" : true,
+		"searching" : false,
 		"filter" : false,
-		"ajax": {
-			"url" : "user/list",
+		"ajax" : {
+			"url" : "menu",
 			"type" : "post",
-			"data": function (data) {
+			"data" : function(data) {
 				data.keyword = $("#keyword").val();
 			}
 		},
-		"language": {
-			"url": "<%=basePath%>static/AdminLTE/plugins/datatables/cn.txt",
+		"language" : {
+			"url" : "<%=basePath%>static/AdminLTE/plugins/datatables/cn.txt",
 		},
 		"columns": [
 			{ "data": null },
-			{ "data": null },
-			{ "data": "loginName" },
 			{ "data": "name" },
-			{ "data": "phone" },
-			{ "data": "status" },
-			{ "data": "lastLogin" },
+			{ "data": "url" },
+			{ "data": "icon" },
+			{ "data": null },
 		],
 		"columnDefs": [{
 			"targets": 0,
 			"render": function(data, type, row) {
-				var html = "<input type='checkbox' name='chx_default' value='" + row.id + "'/>"
+				var html = '<label class="pos-rel">'
+				+ '<input class="ace" type="checkbox" name="chx_default" value="' + row.id + '"/>'
+				+ '<span class="lbl"></span>'
+				+ '</label>'
 				return html;
-			}
-			},{
-			"targets": 1,
+			}},{
+			"targets": 4,
 			"render": function(data, type, row) {
-				var html = htmlTpl.dropdown.prefix
-				+ '  <li><a href="user/view?id='+row.id+'" data-model="dialog" data-width="650"><i class="fa fa-info-circle"></i>查看</a></li>'
-				+ '  <li><a href="user/edit?id='+row.id+'" data-model="dialog"><i class="fa fa-pencil"></i>编辑</a></li>'
-				+ '  <li><a href="user/delete?id='+row.id+'" data-msg="确定删除吗？" data-model="ajaxToDo" data-callback="refreshTable"><i class="fa fa-trash-o"></i>删除</a></li>'
-				+ '  <li class="divider"></li>'
-				+ '  <li><a href="user/editRole?id='+row.id+'" data-model="dialog">分配角色</a></li>'
-				+ htmlTpl.dropdown.suffix;
+				var html = '<div class="hidden-sm hidden-xs btn-group">'
+				+ '<button class="btn btn-xs btn-success" data-model="dialog" data-url="menu/view?id=' + row.id + '">'
+					+ '<i class="ace-icon fa fa-search-plus bigger-120"></i>'
+				+ '</button>'
+				+ '<button class="btn btn-xs btn-info" data-model="dialog" data-url="menu/edit?id=' + row.id + '">'
+					+ '<i class="ace-icon fa fa-pencil bigger-120"></i>'
+				+ '</button>'
+				+ '<button class="btn btn-xs btn-danger" data-model="ajaxToDo" data-callback="refreshTable" data-msg="确定删除吗？" data-url="menu/delete?id=' + row.id + '">'
+					+ '<i class="ace-icon fa fa-trash-o bigger-120"></i>'
+				+ '</button>'
+				+ '<button class="btn btn-xs btn-warning" data-model="dialog" data-url="menu/editRole?id=' + row.id + '">'
+					+ '<i class="ace-icon fa fa-flag bigger-120"></i>'
+				+ '</button>'
+				+ '</div>';
 				return html;
-			}
-		}],
+			}}],
+		"createdRow": function ( row, data, index ) {
+			$('td', row).eq(0).addClass("center");
+        },
 		"drawCallback": function (settings) {
-			drawICheck('defaultCheck', 'chx_default');
+			//drawAceCheck('defaultCheck', 'chx_default');
 		},
-		"initComplete": function () {
-			var others = '<div class="input-group input-group-sm input-adjust">'
-				+ '<div class="input-group-addon">'
-				+ '<label for="startTime"><i class="fa fa-calendar"></i></label>'
-				+ '</div>' 
-				+ '<input id="startTime" readonly name="startTime" type="text" class="form-control" placeholder="请输入开始时间" />'
-				+ '</div>'
-			initSearchForm(others, "搜索用户名和真实姓名");
-			$("#startTime").datetimepicker({
-				format : 'yyyy-mm-dd hh:ii',
-				language : 'zh',
-				weekStart : 1,
-				todayBtn : 1,
-				autoclose : 1,
-				todayHighlight : 1,
-				startView : 2,
-				minView : 0,
-				forceParse : 0,
-				showMeridian : 0,
-				pickerPosition : "bottom-left"
-			});
+	});
+	
+	var tableTools_obj = new $.fn.dataTable.TableTools( defaultTable, {
+		"sRowSelector": "td:not(:last-child)",
+		"sRowSelect": "multi",
+		"fnRowSelected": function(row) {
+			//check checkbox when row is selected
+			try { $(row).find('input[type=checkbox]').get(0).checked = true }
+			catch(e) {}
+		},
+		"fnRowDeselected": function(row) {
+			//uncheck checkbox
+			try { $(row).find('input[type=checkbox]').get(0).checked = false }
+			catch(e) {}
+		},
+		"sSelectedClass": "success",
+	});
+	
+	$('#dynamic-table > thead > tr > th input[type=checkbox]').eq(0).on('click', function(){
+		var th_checked = this.checked;//checkbox inside "TH" table header
+		
+		$(this).closest('table').find('tbody > tr').each(function(){
+			var row = this;
+			if(th_checked) tableTools_obj.fnSelect(row);
+			else tableTools_obj.fnDeselect(row);
+		});
+	});
+	
+	//select/deselect a row when the checkbox is checked/unchecked
+	$('#dynamic-table').on('click', 'td input[type=checkbox]' , function(){
+		var row = $(this).closest('tr').get(0);
+		if(!this.checked) tableTools_obj.fnSelect(row);
+		else tableTools_obj.fnDeselect($(this).closest('tr').get(0));
+	});
+	
+	$("#nav-search").keydown(function(e) {
+		var curKey = e.which;
+		if (curKey == 13) {
+			refreshTable(1);
+			return false;
 		}
 	});
-});
 	
-	function refreshTable(toFirst) {
-		//defaultTable.ajax.reload();
-		if(toFirst){//表格重绘，并跳转到第一页
-			defaultTable.draw();
-		}else{//表格重绘，保持在当前页
-			defaultTable.draw(false);
-		}
-	}
-	
+	$('#search-icon').on('click', function(){
+		refreshTable(1);
+	});
 
 	
+});
+
+function refreshTable(toFirst) {
+	//defaultTable.ajax.reload();
+	if(toFirst){//表格重绘，并跳转到第一页
+		defaultTable.draw();
+	}else{//表格重绘，保持在当前页
+		defaultTable.draw(false);
+	}
+}
 </script>

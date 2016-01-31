@@ -1,46 +1,38 @@
 /*
- * Copyright(c) 2015 gvtv.com.cn All rights reserved.
+ * Copyright(c) 2015 tangqian.com.cn All rights reserved.
  * distributed with this file and available online at
- * http://www.gvtv.com.cn/
+ * http://www.tangqian.com.cn/
  */
 package com.tq.management.base.system.service;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.List;
-
-import javax.annotation.Resource;
-
-import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.RowMapper;
-import org.springframework.stereotype.Service;
+import java.util.Map;
 
 import com.tq.management.base.system.entity.Menu;
+import com.tq.management.base.utils.WebDto;
 
 /**
  * @version 1.0
  * @author tangqian
  */
-@Service
-public class MenuService {
+public interface MenuService {
 
-	@Resource
-	private JdbcTemplate jdbcTemplate;
+	public Map<String, Object> list(WebDto dto);
 
-	public List<Menu> getList() {
-		String sql = "select * from sys_menu ";
-		List<Menu> list = jdbcTemplate.query(sql, new RowMapper<Menu>() {
+	public void add(Menu menu);
 
-			@Override
-			public Menu mapRow(ResultSet rs, int rowNum) throws SQLException {
-				Menu menu = new Menu();
-				menu.setId(rs.getInt("id"));
-				menu.setMenuName(rs.getString("menu_name"));
-				return menu;
-			}
+	public Menu get(Integer id);
 
-		});
-		return list;
-	}
+	public void update(Menu menu);
+	
+	public List<Menu> getOneLevel();
+	
+	public List<Menu> getTwoLevel(Integer parentId);
+
+	public void delete(Integer id);
+
+	public boolean batchDelete(String ids);
+
+	public void sort(Integer[] idArr);
 
 }

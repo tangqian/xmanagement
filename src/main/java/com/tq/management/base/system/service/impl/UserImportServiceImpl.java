@@ -1,7 +1,7 @@
 /*
- * Copyright(c) 2015 gvtv.com.cn All rights reserved.
+ * Copyright(c) 2015 tangqian.com.cn All rights reserved.
  * distributed with this file and available online at
- * http://www.gvtv.com.cn/
+ * http://www.tangqian.com.cn/
  */
 package com.tq.management.base.system.service.impl;
 
@@ -125,6 +125,13 @@ public class UserImportServiceImpl implements UserImportService {
 				log.setTotalNum(imports.size());
 				int successNum = 0;
 				
+				Row row = wb.getSheetAt(0).getRow(0);
+				Cell cell = row.getCell(4);
+				if (cell == null)
+					cell = row.createCell(4);
+				cell.setCellType(Cell.CELL_TYPE_STRING);
+				cell.setCellValue("导入结果");
+				
 				//数据库中已存在用户名集合
 				Set<String> userNameSet = getAllLoginName();
 				for (UserImportDto temp : imports) {
@@ -191,6 +198,11 @@ public class UserImportServiceImpl implements UserImportService {
 		return userNameSet;
 	}
 
+	/**
+	 * 设置每行的导入结果信息
+	 * @param wb
+	 * @param dto
+	 */
 	private void setResultToCell(Workbook wb, UserImportDto dto) {
 		Row row = wb.getSheetAt(0).getRow(dto.getRowNum());
 		Cell cell = row.getCell(4);
@@ -255,7 +267,6 @@ public class UserImportServiceImpl implements UserImportService {
 		}
 		user.setLoginName(loginName);// 登录名统一转换成小写
 		user.setPassword(new SimpleHash("SHA-1", user.getLoginName(), DEFAULT_PWD).toString());
-		user.init();
 		CrudUtils.beforeAdd(user);
 	}
 

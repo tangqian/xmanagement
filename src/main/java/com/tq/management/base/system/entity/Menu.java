@@ -1,40 +1,46 @@
-/*
- * Copyright(c) 2015 gvtv.com.cn All rights reserved.
- * distributed with this file and available online at
- * http://www.gvtv.com.cn/
- */
 package com.tq.management.base.system.entity;
 
+import java.io.Serializable;
 import java.util.List;
+
+import com.tq.management.base.entity.SuperEntity;
 
 /**
  * @version 1.0
  * @author tangqian
  */
-public class Menu implements java.io.Serializable {
+public class Menu extends SuperEntity implements Serializable {
 
-	public Integer getId() {
-		return id;
+	public Menu getParent() {
+		return parent;
 	}
 
-	public void setId(Integer id) {
-		this.id = id;
+	public void setParent(Menu parent) {
+		this.parent = parent;
 	}
 
-	public String getMenuName() {
-		return menuName;
+	public List<Menu> getSubs() {
+		return subs;
 	}
 
-	public void setMenuName(String menuName) {
-		this.menuName = menuName;
+	public void setSubs(List<Menu> subs) {
+		this.subs = subs;
 	}
 
-	public String getMenuUrl() {
-		return menuUrl;
+	public String getName() {
+		return name;
 	}
 
-	public void setMenuUrl(String menuUrl) {
-		this.menuUrl = menuUrl;
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getUrl() {
+		return url;
+	}
+
+	public void setUrl(String url) {
+		this.url = url;
 	}
 
 	public Integer getParentId() {
@@ -45,36 +51,28 @@ public class Menu implements java.io.Serializable {
 		this.parentId = parentId;
 	}
 
-	public Integer getMenuOrder() {
-		return menuOrder;
+	public Integer getOrderId() {
+		return orderId;
 	}
 
-	public void setMenuOrder(Integer menuOrder) {
-		this.menuOrder = menuOrder;
+	public void setOrderId(Integer orderId) {
+		this.orderId = orderId;
 	}
 
-	public String getMenuIcon() {
-		return menuIcon;
+	public String getIcon() {
+		return icon;
 	}
 
-	public void setMenuIcon(String menuIcon) {
-		this.menuIcon = menuIcon;
+	public void setIcon(String icon) {
+		this.icon = icon;
 	}
 
-	public Integer getMenuType() {
-		return menuType;
+	public Integer getType() {
+		return type;
 	}
 
-	public void setMenuType(Integer menuType) {
-		this.menuType = menuType;
-	}
-
-	public Integer getRemovable() {
-		return removable;
-	}
-
-	public void setRemovable(Integer removable) {
-		this.removable = removable;
+	public void setType(Integer type) {
+		this.type = type;
 	}
 
 	public String getDescription() {
@@ -85,56 +83,34 @@ public class Menu implements java.io.Serializable {
 		this.description = description;
 	}
 
-	public Integer getStatus() {
-		return status;
-	}
-
-	public void setStatus(Integer status) {
-		this.status = status;
-	}
-
-	public Menu getParentMenu() {
-		return parentMenu;
-	}
-
-	public void setParentMenu(Menu parentMenu) {
-		this.parentMenu = parentMenu;
-	}
-
-	public List<Menu> getSubMenu() {
-		return subMenu;
-	}
-
-	public void setSubMenu(List<Menu> subMenu) {
-		this.subMenu = subMenu;
-	}
-
-	public List<Authority> getAuthorities() {
-		return authorities;
-	}
-
-	public void setAuthorities(List<Authority> authorities) {
-		this.authorities = authorities;
-	}
-
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
 
-	private Menu parentMenu;
-	private List<Menu> subMenu;
-	private List<Authority> authorities;
-
-	private Integer id;
-	private String menuName;
-	private String menuUrl;
+	private Menu parent;
+	private List<Menu> subs;
+	private String name;
+	private String url;
 	private Integer parentId;
-	private Integer menuOrder;
-	private String menuIcon;
-	private Integer menuType;
-	private Integer removable;
+	private Integer orderId;
+	private String icon;
+	private Integer type;
 	private String description;
-	private Integer status;
+
+	@Override
+	public void addInit() {
+		if (parentId == null)
+			parentId = 0;
+		if (orderId == null)
+			orderId = 0;
+		if (icon == null)
+			icon = "";
+		if (type == null)
+			type = 1;
+		if (description == null)
+			description = "";
+
+	}
 
 }

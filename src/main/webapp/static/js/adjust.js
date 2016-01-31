@@ -14,8 +14,8 @@ customMsg = {
 				+ 	"</div>" 
 				+ "</div>" 
 				+ "</div>",
-		importAllSuccess : '<div class="alert alert-info"><i class="ace-icon fa fa-hand-o-right"></i>恭喜您！全部数据导入成功，共导入#allNum条</div>',
-		importPartSuccess : '<div class="alert alert-danger"><i class="ace-icon fa fa-hand-o-right"></i>存在导入失败数据！导入成功#successNum条，导入失败#failureNum条，失败原因如下</div>',
+		importAllSuccess : '<div class="alert alert-info"><i class="ace-icon fa fa-hand-o-right"></i> 恭喜您！全部数据导入成功，共导入#allNum条</div>',
+		importPartSuccess : '<div class="alert alert-danger"><i class="ace-icon fa fa-hand-o-right"></i> 导入成功#successNum条，导入失败#failureNum条，失败原因如下</div>',
 	},
 	_showDialog : function(targetId, url, data) {
 		var html = this.htmlContent.modal.replace("#targetId", targetId);
@@ -130,6 +130,11 @@ $(function() {
 	$("body").delegate("a[data-target='navTab']", "click", function() {
 		var url = $(this).attr("href");
 		var md = $(this).attr("md");
+		if(url.indexOf("?") == -1){
+			url += "?t=" + new Date().getTime();
+		}else{
+			url += "&t=" + new Date().getTime();
+		}
 		if (md == 'ajax') {
 
 		} else {
@@ -154,7 +159,7 @@ $(function() {
                 	BootstrapDialog.show({
     					type: BootstrapDialog.TYPE_WARNING,
     		            title: '操作结果提示',
-    		            message: data.msg || "系统错误警告!请反馈给系统管理员，我们会尽快解决该问题",
+    		            message: data.msg || "系统出错了!请反馈给系统管理员，我们会尽快解决该问题",
     		        });
 				}
 			},
@@ -260,7 +265,7 @@ $(function() {
 				                BootstrapDialog.show({
 									type: BootstrapDialog.TYPE_WARNING,
 						            title: '操作结果提示',
-						            message: data.msg || "未知错误警告!请您反馈给系统管理员，我们会尽快解决该问题",
+						            message: data.msg || "系统出错了!请您反馈给系统管理员，我们会尽快解决该问题",
 						        });
 				            }
 				        },

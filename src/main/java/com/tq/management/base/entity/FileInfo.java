@@ -103,4 +103,9 @@ public class FileInfo extends SuperEntity {
 
 	private Integer type;
 
+	@Override
+	public void addInit() {
+		
+	}
+
 }

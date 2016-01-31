@@ -1,7 +1,7 @@
 /*
- * Copyright(c) 2015 gvtv.com.cn All rights reserved.
+ * Copyright(c) 2015 tangqian.com.cn All rights reserved.
  * distributed with this file and available online at
- * http://www.gvtv.com.cn/
+ * http://www.tangqian.com.cn/
  */
 package com.tq.management.base.entity;
 
@@ -14,9 +14,11 @@ import com.alibaba.fastjson.annotation.JSONField;
  * @version 1.0
  * @author tangqian
  */
-public class SuperEntity implements Serializable {
+public abstract class SuperEntity implements Serializable {
 
 	private static final long serialVersionUID = 1L;
+	
+	public abstract void addInit();
 
 	public Integer getId() {
 		return id;
