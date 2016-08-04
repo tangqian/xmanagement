@@ -18,6 +18,9 @@
 <meta name="description" content="管理后台" />
 <meta name="viewport"
 	content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+	
+<link rel="stylesheet" href="${ctx}/static/Ace/css/pace.css" />
+<script data-pace-options='{ "ajax": true, "document": true, "eventLag": false, "elements": false }' src="${ctx}/static/Ace/js/pace.js"></script>
 
 <!-- bootstrap & fontawesome -->
 <link rel="stylesheet" href="${ctx}/static/Ace/css/bootstrap.min.css" />
@@ -72,8 +75,36 @@
 		</script>
 		<jsp:include page="./main-sidebar.jsp"></jsp:include>
 		<div class="main-content">
-			<div class="main-content-inner" id="navTab">
-				<jsp:include page="./content.jsp"></jsp:include>
+			<div class="main-content-inner">
+			
+				<div class="breadcrumbs" id="breadcrumbs">
+					<script type="text/javascript">
+						try {
+							ace.settings.check('breadcrumbs', 'fixed')
+						} catch (e) {
+						}
+					</script>
+				
+					<ul class="breadcrumb">
+						<li><i class="ace-icon fa fa-home home-icon"></i> <a href="./">主页</a>
+						</li>
+					</ul>
+					<!-- /.breadcrumb -->
+				
+					<div class="nav-search" id="nav-search">
+									<span class="input-icon"> <input type="text" name="keyword"
+								placeholder="搜索..." class="nav-search-input"
+								id="keyword" autocomplete="off" /> <i id="search-icon"
+								class="ace-icon fa fa-search nav-search-icon click" title="点击搜索"></i>
+							</span>
+					</div>
+					<!-- /.nav-search -->
+				</div>
+				
+				<div class="page-content">
+					<div class="page-content-area" id="navTab">
+					</div>
+				</div>
 			</div>
 		</div>
 		<jsp:include page="./main-footer.jsp"></jsp:include>
@@ -131,6 +162,18 @@
 	<!-- ace scripts -->
 	<script src="${ctx}/static/Ace/js/ace-elements.min.js"></script>
 	<script src="${ctx}/static/Ace/js/ace.min.js"></script>
+	<script type="text/javascript">
+
+		$('#navTab').ace_ajax({
+			content_url : function(hash) {
+				//hash is the value from document url hash
+				//take "url" param and return the relevant url to load
+				return hash;
+			},
+			default_url : '404',
+			loading_icon : "fa fa-spin fa-spinner fa-2x orange"
+		});
+	</script>
 	<script src="${ctx}/static/js/adjust.js"></script>
 </body>
 </html>

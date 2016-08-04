@@ -1,11 +1,17 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
 	pageEncoding="utf-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%
 	String path = request.getContextPath();
 	String basePath = request.getScheme() + "://"
 			+ request.getServerName() + ":" + request.getServerPort()
 			+ path + "/";
 %>
+<style type="text/css">
+.myLabel{
+	margin-right: 5px;
+}
+</style>
 <form class="form-horizontal" role="form" action="menu/add"
 	method="post" id="defForm" callfn="refreshTable">
 	<div class="modal-header">
@@ -37,8 +43,14 @@
 				<div class="form-group">
 					<label for="icon" class="col-sm-2 control-label">图标</label>
 					<div class="col-sm-7">
-						<input id="icon" name="icon" type="text" maxlength="32"
-							class="form-control" placeholder="请输入图标">
+						<!-- <input id="icon" name="icon" type="text" maxlength="32"
+							class="form-control" placeholder="请输入图标"> -->
+					<c:forEach var="icon" items="${icons }">
+						<label class="myLabel">
+							<input type="radio" class="ace form-control required" name="icon" value="${icon }">
+							<span class="lbl"> <i class="${icon }"></i></span>
+						</label>
+					</c:forEach>
 					</div>
 				</div>
 				<div class="form-group">

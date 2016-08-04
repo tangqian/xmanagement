@@ -127,21 +127,30 @@ $(function() {
 		$(this).removeData("bs.modal");
 	});
 
-	$("body").delegate("a[data-target='navTab']", "click", function() {
+	/*$("body").delegate("a[data-target='navTab']", "click", function() {
 		var url = $(this).attr("href");
-		var md = $(this).attr("md");
 		if(url.indexOf("?") == -1){
 			url += "?t=" + new Date().getTime();
 		}else{
 			url += "&t=" + new Date().getTime();
 		}
-		if (md == 'ajax') {
-
-		} else {
-			$("#navTab").load(url);
+		var type = $(this).data("type");
+		if (type == 'sidebar') {
+			$("ul.nav-list li").removeClass("active");
+			//$(this).parent().parent().children("li").removeClass("active");
+			var rootLi = $(this).parent();
+			rootLi.addClass("active");
+			var ul = rootLi.parent();
+			while(!ul.hasClass("nav-list")){
+				rootLi = ul.parent();
+				rootLi.addClass("active");
+				ul = rootLi.parent();
+			}
 		}
+		
+		//$("#navTab").load(url);
 		return false;
-	});
+	});*/
 	
 	$("body").delegate("a[data-target='file']", "click", function() {
 		var id = $(this).data("id");

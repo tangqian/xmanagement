@@ -3,7 +3,7 @@ jQuery.validator.setDefaults({
 	errorElement: "p",
     errorClass:"text-danger col-sm-3 p-error",
     errorPlacement: function(error, element) {                             //错误信息位置设置方法
-        error.appendTo( element.parent().parent());                            //这里的element是录入数据的对象
+        error.appendTo($(element).closest('.form-group'));                            //这里的element是录入数据的对象
     },
     highlight : function(element) {
         $(element).closest('.form-group').addClass('has-error');

@@ -5,6 +5,8 @@
  */
 package com.tq.management.base.system.controller;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
@@ -44,6 +46,16 @@ public class MenuController extends BaseController {
 
 	@Resource
 	private MenuService menuService;
+	
+	private List<String> getIcons(){
+		List<String> lists = new ArrayList<String>();
+		lists.add("fa fa-desktop");
+		lists.add("fa fa-list");
+		lists.add("fa fa-pencil-square-o");
+		lists.add("fa fa-list-alt");
+		lists.add("fa fa-file-o");
+		return lists;
+	}
 
 	/**
 	 * 列表页
@@ -76,7 +88,9 @@ public class MenuController extends BaseController {
 	 */
 	@RequestMapping(value = "/add", method = RequestMethod.GET)
 	public ModelAndView add() {
-		return new ModelAndView(ADD);
+		ModelAndView mv = new ModelAndView(ADD);
+		mv.addObject("icons", getIcons());
+		return mv;
 	}
 
 	@RequestMapping(value = "/add", method = RequestMethod.POST)
@@ -97,6 +111,7 @@ public class MenuController extends BaseController {
 		ModelAndView mv = new ModelAndView(EDIT);
 		Menu menu = menuService.get(id);
 		mv.addObject("entity", menu);
+		mv.addObject("icons", getIcons());
 		return mv;
 	}
 

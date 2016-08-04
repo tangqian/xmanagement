@@ -39,45 +39,74 @@
 
 	<ul class="nav nav-list" style="top: 0px;">
 
-		<li class="active open"><a class="dropdown-toggle" href="#">
+		<li class=""><a class="dropdown-toggle" href="#">
 				<i class="menu-icon fa fa-list"></i> <span class="menu-text">
-					系统管理 </span> <b class="arrow fa fa-angle-down"></b>
-		</a> <b class="arrow"></b>
+					系统管理 </span> <b class="arrow fa fa-angle-down"></b></a> <b class="arrow"></b>
 
 			<ul class="submenu">
-				<li class="active"><a href="user/list" data-target='navTab'> <i
+				<li class=""><a href="#user/list" data-url="user/list" > <i
 						class="menu-icon fa fa-caret-right"></i> 用户管理
 				</a> <b class="arrow"></b></li>
 				
-				<li class=""><a href="menu/tree" data-target='navTab'> <i
+				<li class=""><a href="#menu/tree" data-url="menu/tree"> <i
 						class="menu-icon fa fa-caret-right"></i> 菜单管理
 				</a> <b class="arrow"></b></li>
-
-				<li class=""><a href="404" data-target='navTab'> <i
+	
+				<li class=""><a href="#404" data-url="404"> <i
 						class="menu-icon fa fa-caret-right"></i> 404page
 				</a> <b class="arrow"></b></li>
-			</ul></li>
+			</ul>
+		</li>
+			
+<!-- 		<li class="">
+			<a href="#" class="dropdown-toggle">
+				<i class="menu-icon fa fa-list"></i>
+				<span class="menu-text"> Tables </span>
 
-		<li class=""><a href="widgets.html"> <i
+				<b class="arrow fa fa-angle-down"></b>
+			</a><b class="arrow"></b>
+
+			<ul class="submenu">
+				<li class="">
+					<a href="user/list" data-type="sidebar" data-target='navTab'>
+						<i class="menu-icon fa fa-caret-right"></i>
+						Simple &amp; Dynamic
+					</a>
+
+					<b class="arrow"></b>
+				</li>
+
+				<li class="">
+					<a href="menu/tree" data-type="sidebar" data-target='navTab'>
+						<i class="menu-icon fa fa-caret-right"></i>
+						jqGrid plugin
+					</a>
+
+					<b class="arrow"></b>
+				</li>
+			</ul>
+		</li>
+
+		<li class=""><a href="menu/tree" data-type="sidebar" data-target='navTab'> <i
 				class="menu-icon fa fa-list-alt"></i> <span class="menu-text">
-					插件 </span>
-		</a> <b class="arrow"></b></li>
+					插件 </span></a> <b class="arrow"></b>
+		</li>
 
 		<li class=""><a class="dropdown-toggle" href="#"> <i
 				class="menu-icon fa fa-file-o"></i> <span class="menu-text">
 					Other Pages <span class="badge badge-primary">5</span>
-			</span> <b class="arrow fa fa-angle-down"></b>
-		</a> <b class="arrow"></b>
+			</span> <b class="arrow fa fa-angle-down"></b></a> <b class="arrow"></b>
 
 			<ul class="submenu">
-				<li class=""><a href="faq.html"> <i
+				<li class=""><a href="menu/tree" data-type="sidebar" data-target='navTab'>  <i
 						class="menu-icon fa fa-caret-right"></i> FAQ
 				</a> <b class="arrow"></b></li>
 
-				<li class=""><a href="error-404.html"> <i
+				<li class=""><a href="404" data-type="sidebar" data-target='navTab'> <i
 						class="menu-icon fa fa-caret-right"></i> Error 404
 				</a> <b class="arrow"></b></li>
-			</ul></li>
+			</ul>
+		</li> -->
 	</ul>
 	<!-- /.nav-list -->
 

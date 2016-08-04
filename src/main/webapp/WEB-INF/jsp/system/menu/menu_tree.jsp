@@ -43,8 +43,8 @@
 				<ol class="dd-list">
 				<c:forEach var="menu" items="${menus}">
 					<li class="dd-item dd2-item" data-id="${menu.id}">
-						<div class="dd-handle dd2-handle" title="拖放菜单可排序">
-							<i class="normal-icon ace-icon fa fa-comments blue bigger-130"></i>
+						<div class="dd-handle dd2-handle" title="拖放菜单可进行排序">
+							<i class="normal-icon ace-icon ${menu.icon } blue bigger-130"></i>
 
 							<i class="drag-icon ace-icon fa fa-arrows bigger-125"></i>
 						</div>

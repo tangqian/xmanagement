@@ -1,23 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<div class="breadcrumbs" id="breadcrumbs">
-	<script type="text/javascript">
-		try {
-			ace.settings.check('breadcrumbs', 'fixed')
-		} catch (e) {
-		}
-	</script>
-
-	<ul class="breadcrumb">
-		<li><i class="ace-icon fa fa-home home-icon"></i> <a href="./">主页</a>
-		</li>
-		<li class="active">404错误</li>
-	</ul>
-	<!-- /.breadcrumb -->
-</div>
-
-<div class="page-content">
-
+	<title>404错误 - Ace管理后台</title>
 	<div class="error-page">
 		<h2 class="headline text-yellow">404</h2>
 		<div class="error-content" style="padding-top: 30px;">
@@ -30,4 +13,9 @@
 		</div>
 		<!-- /.error-content -->
 	</div>
-</div>
+
+<script type="text/javascript">
+	var scripts = [null, null]
+	$('.page-content-area').ace_ajax('loadScripts', scripts, function() {
+	});
+</script>

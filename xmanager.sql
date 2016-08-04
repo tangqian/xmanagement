@@ -176,3 +176,20 @@ CREATE TABLE `sys_user_role` (
 -- ----------------------------
 -- Records of sys_user_role
 -- ----------------------------
+
+CREATE TABLE `file_info` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `save_path` varchar(225) NOT NULL DEFAULT '' COMMENT '文件保存路径',
+  `original_name` varchar(225) NOT NULL DEFAULT '' COMMENT '原始名称',
+  `size` int(11) NOT NULL DEFAULT '0' COMMENT '文件大小',
+  `ext` varchar(100) NOT NULL DEFAULT '' COMMENT '文件后缀名',
+  `status` enum('delete','invalid','valid') NOT NULL DEFAULT 'valid' COMMENT '状态',
+  `md5` varchar(225) NOT NULL DEFAULT '' COMMENT 'md5值',
+  `content_type` varchar(100) NOT NULL DEFAULT '',
+  `temp` tinyint(3) unsigned NOT NULL DEFAULT '0' COMMENT '是否临时文件',
+  `type` tinyint(3) unsigned NOT NULL DEFAULT '1',
+  `create_time` datetime NOT NULL,
+  `creator` int(11) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COMMENT='文件信息表';
+
